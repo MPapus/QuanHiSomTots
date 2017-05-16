@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>QuanHiSomTots</title>
+	<!--[if IE]><link rel="shortcut icon" href="favicon.ico"><![endif]-->
+	<link rel="icon" href="favicon.ico">
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="js/vendor/pace.min.js"></script>
+	<link href="css/vendor/loader.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/vendor/animate.css">
+	<script>
+        Pace.on('hide', function() {
+            $('.btnEnter').show();
+        });
+	</script>
+    <!-- Latest compiled and minified CSS -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/vendor/jquery-ui.css">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<link href="css/vendor/styles.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<div class="portadaFull">
+</div>
+<div class="portada">
+	<button type="button" class="btn btn-default btnEnter" style="position: absolute; font-size:30px; top: 60%; left: 38%; display: none;">
+		<span></span>Entrar
+	</button>
+	<div>
+		<p style="text-align: center">Un documental de Diana Morena, Meritxell Ortiz i Marc Reventós</p>
+	</div>
+</div>
+
+<!-- VIDEO screen-->
+<div class="intro" style="display: none">
+	<div class="videoFS fullScreen">
+		<video id="videoIntro" class="videoIntro" preload>
+			<source src="videos/Por.mp4"/>
+		</video>
+	</div>
+	<div>
+		<button type="button" class="btn btn-default btnSaltar" style="position: absolute; font-size:30px; top: 90%; left: 90%; z-index: 601; display: none;">
+			<span></span>Saltar
+		</button>
+	</div>
+</div>
+<div class="castell">
+    <div class="aixeneta boleta aixeneta" id="aixeneta"></div>
+    <div class="aixecador boleta aixecador" id="aixecador"></div>
+    <div class="dosos1 boleta dosos" id="dosos1"></div>
+    <div class="tersos2 boleta tersos" id="tersos2"></div>
+    <div class="dosos2 boleta dosos" id="dosos2"></div>
+    <div class="tersos1 boleta tersos" id="tersos1"></div>
+    <div class="segons2 boleta segons" id="segons2"></div>
+    <div class="tersos3 boleta tersos" id="tersos3"></div>
+    <div class="segons1 boleta segons" id="segons1"></div>
+    <div class="tersos4 boleta tersos" id="tersos4"></div>
+    <div class="segons3 boleta segons" id="segons3"></div>
+    <div class="segons4 boleta segons" id="segons4"></div>
+    <div class="baixos1 boleta baixos" id="baixos1"></div>
+    <div class="baixos2 boleta baixos" id="baixos2"></div>
+    <div class="baixos3 boleta baixos" id="baixos3"></div>
+    <div class="baixos4 boleta baixos" id="baixos44">
+    </div>
+</div>
+<div id="divVideos" style="display: none">
+    <div class="videoFS fullScreen" id="divVideoAlegriaMariona" style="display: none">
+        <video class="videoAlegriaMariona" id="videoAlegriaMariona" preload="none">
+            <source src="videos/popcornplug.mp4"/>
+        </video>
+    </div>
+</div>
+<div class="proyectoPag" style="display: none">
+	<div class="textoPagsc">
+		<h2>QUAN HI SOM TOTS</h2>
+		<p>Quan Hi Som Tots és un documental interactiu que es focalitza en les emocions relacionades amb el món dels castells. </p>
+	</div>
+</div>
+<div class="creditosPag" style="display: none">
+	<div class="columnaGrande">
+		<div class="columna">
+			<div class="textoPags">
+				<p>Direcció, realització y producció:</p>
+				<br>
+				<br>
+				<br>
+				<br>
+				<p>Programació: </p>
+				<br>
+				<br>
+				<p>Tutors del projecte: </p>
+				<br>
+				<br>
+				<br>
+				<br>
+				<p>Agraïments especials:</p>
+				<br>
+				<br>
+				<br>
+				<br>
+				<p>Agraïments: </p>
+				<br>
+				<br>
+				<br>
+				<br>
+			</div>
+		</div>
+		<div class="columna">
+			<div class="textoPags">
+				<p>Meritxell Ortiz</p>
+				<p>Diana Morena</p>
+				<br>
+				<br>
+				<p>Marc Reventós</p>
+				<br>
+				<br>
+				<p>Joaquim Colàs</p>
+				<p>Carles Sora</p>
+				<br>
+				<br>
+				<br>
+				<p>Colla 1</p>
+				<p>Colla 2 </p>
+				<p>Colla 3 </p>
+				<br>
+				<p>UPF</p>
+				<br>
+				<p>Cançó 1</p>
+				<br>
+				<p>Cançó 2</p>
+				<br>
+				<p>Cançó 3</p>
+				<br>
+				<p>Cançó 4</p>
+				<br>
+			</div>
+		</div>
+	</div>
+	<div class="columnaGrande" style="overflow: hidden;">
+		<div class="columna">
+			<div class="textoPags">
+				<br>
+				<br>
+				<img src="" width="150x" height="150px"/>
+				<br>
+				<br>
+				<br>
+				<br>
+				<img src="" width="150px" height="150px"/>
+				<br>
+				<br>
+				<br>
+				<br>
+				<img src="" width="150px" height="150px"/>
+			</div>
+		</div>
+		<div class="columna">
+			<div class="textoPags">
+				<p>DIANA MORENA. Població, any. </p>
+				<p>Descripció</p>
+				<br>
+				<p>MERITZELL ORTIZ. Població, any.</p>
+				<p>Descripció</p>
+				<br>
+				<p>MARC REVENTÓS. Barcelona, 1992.</p>
+				<p>Descripció</p>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="fullScreen videoFinal" id="videoFinalId" style="display: none">
+	<!--video src="videos/final.mov" id="videoFinal" class="videoFinal" preload></video-->
+</div>
+<!--div class="footerespacio" style="width:100%"></div-->
+<!--footer-->
+<div class="footer" id="footer" style="display: none;">
+	<div class="footerCentrado">
+		<div class="footerIzq">
+			<span style="margin-right: 20px;margin-left: 20px; margin-top: 5px;" id="elProyecto" class="elProyecto"> EL PROJECTE </span>
+			<span id="losCreditos" class="losCreditos" style=" margin-top: 5px;"> CRÈDITS </span>
+		</div>
+		<div class="footerDer">
+			<a href="https://www.facebook.com/quanhisomtots/" class="iconSocial" target="_blank">
+				<span class="icon-facebook-official"></span>
+			</a>
+			<a href="https://www.instagram.com/" class="iconSocial" target="_blank">
+				<span class="icon-instagram"></span>
+			</a>
+		</div>
+		<div class="footerDerDer">
+			<a class="iconSocial elProyecto" id="iconVolume">
+				<span class="icon-volume-up" id="iconVolumeImage"></span>
+			</a>
+			<a class="iconSocial elProyecto"> <!--toggleFullScreen(document.getElementById(document.body))-->
+				<span class="glyphicon glyphicon-fullscreen" id="iconFullScreen"></span>
+			</a>
+		</div>
+	</div>
+</div>
+</body>
+<script src="js/main.js" type="text/javascript"></script>
+<script src="js/vendor/jquery-ui.js" type="text/javascript"></script>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</html>
+

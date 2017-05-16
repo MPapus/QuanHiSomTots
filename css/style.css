@@ -1,0 +1,415 @@
+html {
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust: 100%;
+}
+
+* {
+     box-sizing: border-box;
+ }
+
+.iconSocial, .iconSocial:visited, .iconSocial:hover{
+	color: white;
+	font-size: 26px;
+	border:none;
+	outline:none;
+	text-decoration:none;
+	-webkit-tap-highlight-color: white;
+	padding-right: 9px;
+}
+video {
+	object-fit: initial;
+	width: 100%;
+	height: 100%;
+}
+body {
+	margin: 0;
+	overflow: hidden;
+}
+
+.footerespacio {
+	width: 100%;
+	height: 3%;
+	top: 388%;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	background-color: #717171;
+	z-index: 10;
+}
+.intro {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 10;
+}
+.boleta {
+    border: 1px solid red;
+    width: 2%;
+    height: 4%;
+    display: none;
+}
+.castell {
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 9;
+}
+.aixeneta {
+    margin-left: 42%;
+    margin-top: 2%;
+}
+.aixecador {
+    margin-left: 42%;
+    margin-top: 1%;
+}
+.dosos1 {
+    margin-left: 37%;
+    margin-top: 1%;
+    float: left;
+}
+.dosos2 {
+    margin: 1%;
+    margin-left: 47%;
+}
+.tersos1 {
+    margin-left: 35%;
+    float: left;
+}
+.tersos2 {
+    float: left;
+    margin-top: 0.5%;
+    margin-left: 2.5%;
+}
+.tersos3 {
+    float: left;
+    margin-left: 5%;
+}
+.tersos4 {
+    margin-left: 41%;
+}
+.segons1 {
+    margin-left: 33%;
+    margin-top: 4%;
+}
+.segons2 {
+    float: left;
+    margin-left: 4%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.cabina1 {
+	width: 100%;
+	height: 97%;
+	/*background: green;*/
+
+	position: absolute;
+	top: 97%;
+	right: 0;
+	z-index: 10;
+}
+.cabina2 {
+	width: 100%;
+	height: 97%;
+	background: green;
+	position: absolute;
+	top: 194%;
+	right: 0;
+	z-index: 10;
+}
+.cabina3 {
+	width: 100%;
+	height: 97%;
+	background: blue;
+	position: absolute;
+	top: 291%;
+	right: 0;
+	z-index: 10;
+}
+.capaHub {
+	width: 100%;
+	height: 100%;
+	/*background: rgba(105,25,25,0.4);*/
+
+	position: absolute;
+	right: 0;
+	z-index: 20;
+}
+.footer {
+	width: 100%;
+	height: 3%;
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	z-index: 500;
+	color: white;
+	background-color: #878787;
+	/*background-image: url("../assets/footer.png");*/
+
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+
+
+
+*:fullscreen
+*:-ms-fullscreen,
+*:-webkit-full-screen,
+*:-moz-full-screen {
+	overflow: auto !important;
+}
+
+.fullScreen {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	right: 0;
+	z-index: 10;
+}
+.videoFS {
+    object-fit: initial;
+    width: 100%;
+    height: 100%;
+}
+.espacioTematica1Video {
+	width: 1270px;
+	left: 8%;
+	height: 720px;
+	top: 15%;
+	position: absolute;
+	z-index: 5;
+}
+
+.espacioTematica3Video {
+	width: 1270px;
+	left: 8%;
+	height: 720px;
+	top: 15%;
+	position: absolute;
+	z-index: 5;
+}
+
+.footerIzq {
+	position: absolute;
+	display: inline-flex;
+	left: 20px;
+}
+
+.footerDer {
+	position: absolute;
+	display: inline-flex;
+	left: 60%;
+	width: 13%;
+}
+.footerDerDer {
+	position: absolute;
+	display: inline-flex;
+	right: 20px;
+	/* width: 25%; */
+}
+.footer-distibuted {
+	height: auto;
+	width: 100%;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+	color: black;
+	margin: 0 auto;
+}
+@-webkit-keyframes blink {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@-moz-keyframes blink {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+@-o-keyframes blink {
+	0% {
+		opacity: 1;
+	}
+	50% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+.portada {
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	position: absolute;
+	top: 45%;
+	left: 50%;
+	width: 460px;
+	height: 460px;
+	z-index: 600;
+	background-image: url("../assets/logo.jpg");
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+.portadaFull {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 550;
+	/*background-image: url("../assets/tituloFull.png");*/
+
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+@-webkit-keyframes scaleAnimation {
+	0% {
+		-webkit-transform: scale(0.5);
+	}
+	10% {
+		-webkit-transform: scale(1);
+	}
+	20% {
+		-webkit-transform: scale(0.5);
+	}
+	30% {
+		-webkit-transform: scale(1);
+	}
+	40% {
+		-webkit-transform: scale(0.5);
+	}
+	50% {
+		-webkit-transform: scale(1);
+	}
+	60% {
+		-webkit-transform: scale(0.5);
+	}
+	70% {
+		-webkit-transform: scale(1);
+	}
+	80% {
+		-webkit-transform: scale(0.5);
+	}
+	100% {
+		-webkit-transform: scale(1);
+	}
+}
+.proyectoPag {
+	position: fixed;
+	width: 100%;
+	height: 97%;
+	top: 0;
+	right: 0;
+	z-index: 100;
+	background-image: url("../assets/texturaBlanca.png");
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+.creditosPag {
+	position: fixed;
+	width: 100%;
+	height: 97%;
+	top: 0;
+	right: 0;
+	z-index: 100;
+	background-image: url("../assets/texturaBlanca.png");
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+.elProyecto:hover {
+	cursor: pointer;
+}
+.losCreditos:hover {
+	cursor: pointer;
+}
+.textoPags {
+	height: 100%;
+	overflow: hidden;
+	position: absolute;
+	top: 7%;
+	text-align: center;
+}
+.textoPagsc {
+	width: 40%;
+	height: 100%;
+	overflow: hidden;
+	position: absolute;
+	left: 30%;
+	top: 10%;
+	text-align: center;
+}
+.spinner {
+	margin: 50px;
+	height: 28px;
+	width: 28px;
+	animation: rotate 20s linear;
+	border: 8px solid #fff;
+	border-right-color: transparent;
+	border-radius: 50%;
+}
+@keyframes rotate {
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+#loadCircle {
+	position: absolute;
+	bottom: 15%;
+	left: 55%;
+}
+.columna {
+	width: 50%;
+	position: relative;
+	display: inline-flex;
+}
+.columnaGrande {
+	width: 40%;
+	min-height: 100%;
+	left: 10%;
+	position: relative;
+	display: inline-flex;
+	overflow-x: auto;
+}
+.videoFinal {
+	z-index: 700;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 97%;
+	width: 100%;
+}
