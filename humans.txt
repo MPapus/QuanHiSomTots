@@ -1,0 +1,17 @@
+# humanstxt.org/
+# The humans responsible & technology colophon
+
+# TEAM
+
+    <Marc Reventós Papo> -- <Developer> -- <@PapsalukaCR>
+    <Meritxell Ortiz> -- <Producer> -- <twitter>
+    <Diana Morena> -- <Producer> -- <twitter>
+
+# THANKS
+
+    <UPF>
+
+# TECHNOLOGY COLOPHON
+
+    CSS3, HTML5
+    Apache Server Configs, jQuery, Modernizr, Normalize.css, Pase.css
