@@ -120,6 +120,9 @@ $(document).ready(function() {
                 mostrarCastellInici();
                 $('#anxeneta').click(function () {
                     mourePis1();
+                    setTimeout(function () {
+                        mourePis2();
+                    }, 5000);
                 })
                 /*
                 setTimeout(function () {
@@ -178,7 +181,6 @@ $(document).ready(function() {
     }
 
     $("#baixos4").click(function () {
-        amagarCastell();
         $('.castell').fadeOut(1500);
         $('.castell').hide();
         $('.baixos').hide();
@@ -287,13 +289,13 @@ function mostrarCastellInici() {
 }
 
 function mourePis1() {
-    moureBoletaJQ('.baixos4', null, 54, "pujar", 1);
+    moureBoletaJQ('.baixos4', null, null, 777, 723, "pujar", 1);
     setTimeout(function () {
-        moureBoletaJQ('.baixos1', 60, null, "dreta", 1);
+        moureBoletaJQ('.baixos1', 719, 779, null, null, "dreta", 1);
         setTimeout(function () {
-            moureBoletaJQ('.baixos3', 40, null, "esquerra", 1);
+            moureBoletaJQ('.baixos3', 1082, 1042, null, null, "esquerra", 1);
             setTimeout(function () {
-                moureBoletaJQ('.baixos2', null, 37, "baixar", 1);
+                moureBoletaJQ('.baixos2', null, null, 449, 486, "baixar", 1);
                 setTimeout(function () {
                     $('.pis1').fadeIn(1500);
                 }, 1000);
@@ -303,31 +305,34 @@ function mourePis1() {
 }
 
 function mourePis2() {
-    moureBoletaJQ('.segons4', null, 166, "pujar");
+    moureBoletaJQ('.segons1', 691, 779, null, null, "dreta", 1);
+    moureBoletaJQ('.segons3', 1115, 1042, null, null, "esquerra", 1);
     setTimeout(function () {
-        moureBoletaJQ('.segons1', 94, null, "dreta");
+        moureBoletaJQ('.segons4', null, null, 797, 631, "pujar", 1);
+        moureBoletaJQ('.segons1', null, null, 609, 515, "pujar", 1);
+        moureBoletaJQ('.segons2', null, null, 432, 397, "pujar", 1);
+        moureBoletaJQ('.segons3', null, null, 604, 525, "pujar", 1);
         setTimeout(function () {
-            moureBoletaJQ('.segons1', 88, null, "pujar");
-            setTimeout(function () {
-                moureBoletaJQ('.segons2', null, 37, "baixar");
-                setTimeout(function () {
-                    $('.pis2').fadeIn(1500);
-                }, 1000);
-            }, 1000);
+            $('.pis2').fadeIn(1500);
         }, 1000);
     }, 1000);
 }
 
-function moureBoletaJQ(divID, x, y, direccio, durada_seg) {
+function moureBoletaJQ(divID, xInicial, xFinal, yInicial, yFinal, direccio, durada_seg) {
     var elem = $(divID);
+    var debug = "";
     if (direccio === "pujar") {
-        elem.animate({marginTop: "-=" + y + "px"}, durada_seg*1000);
+        debug = "-=" + (yInicial - yFinal) + "px";
+        elem.animate({marginTop: debug}, durada_seg*1000);
     } else if (direccio === "dreta") {
-        elem.animate({marginLeft: "+=" + x + "px"}, durada_seg*1000);
+        debug = "+=" + (xFinal - xInicial) + "px";
+        elem.animate({marginLeft: debug}, durada_seg*1000);
     } else if (direccio === "esquerra") {
-        elem.animate({marginLeft: "-=" + x + "px"}, durada_seg*1000);
+        debug = "-=" + (xInicial - xFinal) + "px";
+        elem.animate({marginLeft: debug}, durada_seg*1000);
     } else if (direccio === "baixar") {
-        elem.animate({marginTop: "+=" + y + "px"}, durada_seg*1000);
+        debug = "+=" + (yFinal - yInicial) + "px";
+        elem.animate({marginTop: debug}, durada_seg*1000);
     }
 }
 
