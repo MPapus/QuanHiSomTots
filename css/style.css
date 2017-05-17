@@ -90,8 +90,8 @@ body {
     background-repeat: no-repeat;
 }
 .boletaE {
-    width: 2.6% !important;
-    height: 4.6% !important;
+    width: 50px !important;
+    height: 50px !important;
     background-image: url("../img/Bola-E.png");
     background-repeat: no-repeat;
 }
@@ -117,66 +117,67 @@ body {
     background-image: url("../img/pinya.png");
 }
 .anxeneta {
-    margin-left: 42%;
-    margin-top: 2%;
+    margin-top: 380px;
+    margin-left: 904px;
 }
 .aixecador {
-    margin-left: 42%;
-    margin-top: 1%;
+    margin-top: 878px;
+    margin-left: 904px;
 }
 .dosos1 {
-    margin-left: 37%;
-    margin-top: 1%;
-    float: left;
+    margin-top: 601px;
+    margin-left: 644px;
 }
 .dosos2 {
-    margin: 1%;
-    margin-left: 47%;
+    margin-top: 606px;
+    margin-left: 1155px;
 }
 .tersos1 {
-    margin-left: 35%;
-    float: left;
+    margin-top: 609px;
+    margin-left: 668px;
 }
 .tersos2 {
-    float: left;
-    margin-top: 0.5%;
-    margin-left: 2.5%;
+    margin-top: 414px;
+    margin-left: 914px;
 }
 .tersos3 {
-    float: left;
-    margin-left: 5%;
+    margin-top: 606px;
+    margin-left: 1141px;
 }
 .tersos4 {
-    margin-left: 41%;
+    margin-top: 824px;
+    margin-left: 892px;
 }
 .segons1 {
-    margin-left: 33%;
-    margin-top: 4%;
+    margin-top: 609px;
+    margin-left: 691px;
 }
 .segons2 {
-    float: left;
-    margin-left: 4%;
+    margin-top: 432px;
+    margin-left: 914px;
 }
 .segons3 {
-
+    margin-top: 604px;
+    margin-left: 1115px;
 }
 .segons4 {
-
+    margin-top: 797px;
+    margin-left: 892px;
 }
 .baixos1 {
     margin-top: 610px;
-    margin-left: 779px;
+    margin-left: 719px;
 }
 .baixos2 {
-    margin-top: 486px;
+    margin-top: 449px;
     margin-left: 914px;
 }
 .baixos3 {
     margin-top: 618px;
-    margin-left: 1042px;
+    margin-left: 1082px;
 }
 .baixos4 {
-    margin-top: 723px;
+    margin-top: 777px;
     margin-left: 892px;
 }
 

@@ -84,6 +84,9 @@ $(document).ready(function() {
     var proyecto = false;
     var creditos = false;
     var lastMouseY = -1;
+    var mostrarPis = $('.pis').hidden, mostrarBaixos = $('.baixos').hidden, mostrarSegons = false,
+        mostrarTersos = false, mostrarDosos = false, mostrarAixecador = false,
+        mostrarAnxeneta = false, mostrarCastell = false;
 
     $(".creditosPag").hide();
     $(".proyectoPag").hide();
@@ -113,17 +116,21 @@ $(document).ready(function() {
             currentVideo.pause();
             $(".intro").fadeOut(1500);
             $(".intro").hide();
-            $(".castell").show();
-            setTimeout(function () {
-                $('.baixos').toggle('slide', {direction: 'down'}, 500);
-                $('.segons').toggle('slide', {direction: 'down'}, 500);
-                $('.tersos').toggle('slide', {direction: 'down'}, 500);
-                $('.dosos').toggle('slide', {direction: 'down'}, 500);
-                $('.aixecador').toggle('slide', {direction: 'down'}, 500);
-                $('.anxeneta').toggle('slide', {direction: 'down'}, 500);
-                $('.pis').toggle('slide', {direction: 'down'}, 500);
-            }, 1000);
+            if(currentVideoID_JS = "videoIntro") {
+                mostrarCastellInici();
+                $('#anxeneta').click(function () {
+                    mourePis1();
+                })
+                /*
+                setTimeout(function () {
+                    moureBoleta4('baixos4', 777, 792, true);
+                }, 1000);
+                */
+                //animarPis('.pisDiv1','.pis1','.baixos1','.baixos2','.baixos3','.baixos4');
+            }
         });
+
+
 
         $('#iconFullScreen').click(function () {
             toggleFullScreen(document.body);
@@ -148,8 +155,8 @@ $(document).ready(function() {
             $(".intro").fadeOut(1500);
             $(".intro").hide();
             $(".castell").show();
+            mostrarCastell = true;
             setTimeout(function () {
-                $('.baixos').toggle('slide', {direction: 'down'}, 500);
             }, 1000);
         });
 
@@ -157,6 +164,7 @@ $(document).ready(function() {
 
 
         $(document).mousemove(function(e){
+            //mostrar footer
             if((e.clientY >= (window.screen.availHeight - 30))) {
                 $('.footer').show();
             }
@@ -165,18 +173,21 @@ $(document).ready(function() {
             }
             lastMouseY = e.clientY;
         });
+        //possible implementacio de part pinya
+        $(document).click();
     }
 
     $("#baixos4").click(function () {
+        amagarCastell();
         $('.castell').fadeOut(1500);
         $('.castell').hide();
-        $('.baixos').toggle();
-        $('.segons').toggle();
-        $('.tersos').toggle();
-        $('.dosos').toggle();
-        $('.aixecador').toggle();
-        $('.anxeneta').toggle();
-        $('.pis').toggle();
+        $('.baixos').hide();
+        $('.segons').hide();
+        $('.tersos').hide();
+        $('.dosos').hide();
+        $('.aixecador').hide();
+        $('.anxeneta').hide();
+        $('.pis').hide();
         currentVideoID_JS = "videoAlegriaMariona";
         currentVideoID_JQ = "#videoAlegriaMariona";
         currentVideo = document.getElementById(currentVideoID_JS);
@@ -243,6 +254,104 @@ function playVideo(id) {
 function muteVideo(id) {
     var video = document.getElementById(id);
     video.muted = !video.muted;
+}
+
+function animarPis(pisDiv, pis, bola1, bola2, bola3, bola4) {
+    setTimeout(function () {
+        $(pisDiv).show();
+        $(bola4).toggle('slide', {direction: 'down'}, 500);
+        setTimeout(function () {
+            $(bola1).toggle('slide', {direction: 'down'}, 500);
+            setTimeout(function () {
+                $(bola3).toggle('slide', {direction: 'down'}, 500);
+                setTimeout(function () {
+                    $(bola2).toggle('slide', {direction: 'down'}, 500);
+                    setTimeout(function () {
+                        $(pis).toggle('slide', {direction: 'left'}, 500);
+                    }, 500)
+                }, 1000);
+            }, 1000);
+        }, 1000);
+    }, 1000);
+}
+
+function mostrarCastellInici() {
+    $(".castell").show();
+    $('.pisDiv1').show();
+    $('.pisDiv2').show();
+    $('.pisDiv3').show();
+    $('.pisDiv4').show();
+    setTimeout(function () {
+        $('.boleta').fadeIn(1500);
+    }, 2000);
+}
+
+function mourePis1() {
+    moureBoletaJQ('.baixos4', null, 54, "pujar", 1);
+    setTimeout(function () {
+        moureBoletaJQ('.baixos1', 60, null, "dreta", 1);
+        setTimeout(function () {
+            moureBoletaJQ('.baixos3', 40, null, "esquerra", 1);
+            setTimeout(function () {
+                moureBoletaJQ('.baixos2', null, 37, "baixar", 1);
+                setTimeout(function () {
+                    $('.pis1').fadeIn(1500);
+                }, 1000);
+            }, 1000);
+        }, 1000);
+    }, 1000);
+}
+
+function mourePis2() {
+    moureBoletaJQ('.segons4', null, 166, "pujar");
+    setTimeout(function () {
+        moureBoletaJQ('.segons1', 94, null, "dreta");
+        setTimeout(function () {
+            moureBoletaJQ('.segons1', 88, null, "pujar");
+            setTimeout(function () {
+                moureBoletaJQ('.segons2', null, 37, "baixar");
+                setTimeout(function () {
+                    $('.pis2').fadeIn(1500);
+                }, 1000);
+            }, 1000);
+        }, 1000);
+    }, 1000);
+}
+
+function moureBoletaJQ(divID, x, y, direccio, durada_seg) {
+    var elem = $(divID);
+    if (direccio === "pujar") {
+        elem.animate({marginTop: "-=" + y + "px"}, durada_seg*1000);
+    } else if (direccio === "dreta") {
+        elem.animate({marginLeft: "+=" + x + "px"}, durada_seg*1000);
+    } else if (direccio === "esquerra") {
+        elem.animate({marginLeft: "-=" + x + "px"}, durada_seg*1000);
+    } else if (direccio === "baixar") {
+        elem.animate({marginTop: "+=" + y + "px"}, durada_seg*1000);
+    }
+}
+
+function moureBoleta4JS(divID, Start, Finish, pujar) {
+    var elem = $(divID);
+    var pos = Start;
+    var id = setInterval(frame, 10);
+    function frame() {
+        if (pos = Finish) {
+            clearInterval(id);
+        } else {
+            if (pujar)
+            {
+                pos--;
+                elem.offsetTop = pos + 'px';
+                elem.offsetLeft = pos + 'px';
+            }
+            else {
+                pos++;
+                elem.offsetTop = pos + 'px';
+                elem.offsetLeft = pos + 'px';
+            }
+        }
+    }
 }
 
 $.fn.extend({
