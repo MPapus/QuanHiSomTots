@@ -29,7 +29,13 @@ ehthumbs.db
 Thumbs.db
 
 # Docs #
+########
 *.doc
 *.docx
 *.md
 *.map
+*.xml
+
+# Folders #
+###########
+.idea/

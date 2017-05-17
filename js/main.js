@@ -116,6 +116,12 @@ $(document).ready(function() {
             $(".castell").show();
             setTimeout(function () {
                 $('.baixos').toggle('slide', {direction: 'down'}, 500);
+                $('.segons').toggle('slide', {direction: 'down'}, 500);
+                $('.tersos').toggle('slide', {direction: 'down'}, 500);
+                $('.dosos').toggle('slide', {direction: 'down'}, 500);
+                $('.aixecador').toggle('slide', {direction: 'down'}, 500);
+                $('.anxeneta').toggle('slide', {direction: 'down'}, 500);
+                $('.pis').toggle('slide', {direction: 'down'}, 500);
             }, 1000);
         });
 
@@ -163,6 +169,14 @@ $(document).ready(function() {
 
     $("#baixos4").click(function () {
         $('.castell').fadeOut(1500);
+        $('.castell').hide();
+        $('.baixos').toggle();
+        $('.segons').toggle();
+        $('.tersos').toggle();
+        $('.dosos').toggle();
+        $('.aixecador').toggle();
+        $('.anxeneta').toggle();
+        $('.pis').toggle();
         currentVideoID_JS = "videoAlegriaMariona";
         currentVideoID_JQ = "#videoAlegriaMariona";
         currentVideo = document.getElementById(currentVideoID_JS);
@@ -174,9 +188,17 @@ $(document).ready(function() {
             playVideo(currentVideoID_JS);
         }, 1000);
         videoBaixos4.on("ended", function () {
-            videoBaixos4().fadeOut(1500);
+            $('#divVideoAlegriaMariona').fadeOut(1500);
+            $('#divVideos').hide();
+            $('.castell').show();
             setTimeout(function () {
-                $('.castell').toggle("slide", {direction: 'right'}, 1000);
+                $('.baixos').toggle('slide', {direction: 'down'}, 500);
+                $('.segons').toggle('slide', {direction: 'down'}, 500);
+                $('.tersos').toggle('slide', {direction: 'down'}, 500);
+                $('.dosos').toggle('slide', {direction: 'down'}, 500);
+                $('.aixecador').toggle('slide', {direction: 'down'}, 500);
+                $('.anxeneta').toggle('slide', {direction: 'down'}, 500);
+                $('.pis').toggle('slide', {direction: 'down'}, 500);
             }, 1000)
         })
     });
@@ -203,18 +225,6 @@ $(document).ready(function() {
         } else {
             $(".creditosPag").fadeOut(1000);
             creditos = false;
-        }
-    });
-
-    $(document).keyup(function(e) {
-        if (e.which == 122) {
-            $('html, body').animate({
-                scrollTop: $(".cabina1").offset().top
-            }, 0, function() {
-                posicionActual = 1;
-            });
-
-            return false;
         }
     });
     //cerrar document ready

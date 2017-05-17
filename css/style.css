@@ -44,11 +44,67 @@ body {
     right: 0;
     z-index: 10;
 }
+.pis1{
+    margin-top: 500px;
+    margin-left: 792px;
+}
+.pis2{
+    margin-top: 410px;
+    margin-left: 792px;
+}
+.pis3{
+    margin-top: 320px;
+    margin-left: 792px;
+}
+.pis {
+    background-image: url("../img/pis.png");
+    background-repeat: no-repeat;
+    display: none;
+    width: 275px;
+    height: 273px;
+    float: left;
+    position: absolute;
+}
+.boletaA {
+    width: 73px !important;
+    height: 73px !important;
+    background-image: url("../img/Bola-A.png");
+    background-repeat: no-repeat;
+}
+.boletaB {
+    width: 42px !important;
+    height: 42px !important;
+    background-image: url("../img/Bola-B.png");
+    background-repeat: no-repeat;
+}
+.boletaC {
+    width: 58px !important;
+    height: 58px !important;
+    background-image: url("../img/Bola-C.png");
+    background-repeat: no-repeat;
+}
+.boletaD {
+    width: 32px !important;
+    height: 32px !important;
+    background-image: url("../img/Bola-D.png");
+    background-repeat: no-repeat;
+}
+.boletaE {
+    width: 2.6% !important;
+    height: 4.6% !important;
+    background-image: url("../img/Bola-E.png");
+    background-repeat: no-repeat;
+}
+
 .boleta {
     border: 1px solid red;
-    width: 2%;
-    height: 4%;
     display: none;
+    background-repeat: no-repeat;
+    position: absolute;
+    z-index: 600;
+}
+.boleta:hover {
+    cursor: pointer;
 }
 .castell {
     width: 100%;
@@ -58,8 +114,9 @@ body {
     top: 0;
     right: 0;
     z-index: 9;
+    background-image: url("../img/pinya.png");
 }
-.aixeneta {
+.anxeneta {
     margin-left: 42%;
     margin-top: 2%;
 }
@@ -99,6 +156,28 @@ body {
 .segons2 {
     float: left;
     margin-left: 4%;
+}
+.segons3 {
+
+}
+.segons4 {
+
+}
+.baixos1 {
+    margin-top: 610px;
+    margin-left: 779px;
+}
+.baixos2 {
+    margin-top: 486px;
+    margin-left: 914px;
+}
+.baixos3 {
+    margin-top: 618px;
+    margin-left: 1042px;
+}
+.baixos4 {
+    margin-top: 723px;
+    margin-left: 892px;
 }
 
 
