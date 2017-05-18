@@ -6,10 +6,26 @@ html {
 * {
      box-sizing: border-box;
  }
+img {
+    max-width: 100%;
+    height: auto;
+    width: auto\9; /* ie8 */
+}
+.parent {
+    height: 0;
+    padding-bottom: 56.25%; /* 16:9 */
+    position: relative;
+}
+
+.child {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+}
 
 .iconSocial, .iconSocial:visited, .iconSocial:hover{
 	color: white;
-	font-size: 26px;
+    font-size: 2.5vh;
 	border:none;
 	outline:none;
 	text-decoration:none;
@@ -24,6 +40,7 @@ video {
 body {
 	margin: 0;
 	overflow: hidden;
+    font-size: 2.5vh;
 }
 
 .footerespacio {
@@ -57,8 +74,8 @@ body {
     margin-left: 792px;
 }
 .pis {
-    background-image: url("../img/pis.png");
-    background-repeat: no-repeat;
+    background: url("../img/pis.png") no-repeat;
+    background-position: center center;
     display: none;
     width: 275px;
     height: 273px;
@@ -66,42 +83,38 @@ body {
     position: absolute;
 }
 .boletaA {
-    width: 73px !important;
-    height: 73px !important;
-    background-image: url("../img/Bola-A.png");
-    background-repeat: no-repeat;
+    width: 3.9vw !important;
+    height: 7vh !important;
+    background-image: url("../img/Bola-A.png") !important;
 }
 .boletaB {
-    width: 42px !important;
-    height: 42px !important;
-    background-image: url("../img/Bola-B.png");
-    background-repeat: no-repeat;
+    width: 2.1vw !important;
+    height: 3.8vh !important;
+    background-image: url("../img/Bola-B.png") !important;
 }
 .boletaC {
-    width: 58px !important;
-    height: 58px !important;
-    background-image: url("../img/Bola-C.png");
-    background-repeat: no-repeat;
+    width: 3.4vw !important;
+    height: 6vh !important;
+    background-image: url("../img/Bola-C.png") !important;
 }
 .boletaD {
-    width: 32px !important;
-    height: 32px !important;
-    background-image: url("../img/Bola-D.png");
-    background-repeat: no-repeat;
+    width: 1.7vw !important;
+    height: 3vh !important;
+    background-image: url("../img/Bola-D.png") !important;
 }
 .boletaE {
-    width: 50px !important;
-    height: 50px !important;
-    background-image: url("../img/Bola-E.png");
-    background-repeat: no-repeat;
+    width: 2.7vw !important;
+    height: 4.7vh !important;
+    background-image: url("../img/Bola-E.png") !important;
 }
 
 .boleta {
     border: 1px solid red;
     display: none;
-    background-repeat: no-repeat;
+    background: no-repeat center;
     position: absolute;
     z-index: 600;
+    background-size: cover;
 }
 .boleta:hover {
     cursor: pointer;
@@ -111,131 +124,111 @@ body {
     height: 100%;
     display: none;
     position: absolute;
+    background-repeat: no-repeat;
     top: 0;
     right: 0;
     z-index: 9;
+    background-size: 100%;
     background-image: url("../img/pinya.png");
+    background-position: center center;
 }
 .anxeneta {
-    margin-top: 380px;
-    margin-left: 904px;
+    top: 47vh;
+    left: 54vw;
 }
 .aixecador {
-    margin-top: 878px;
-    margin-left: 904px;
+    /* top: 87%; */
+    /* left: 47%; */
+    top: 95vh;
+    left: 47vw;
 }
 .dosos1 {
-    margin-top: 601px;
-    margin-left: 644px;
+    /* top: 61%; */
+    /* left: 33%; */
+    top: 61.2vh;
+    left: 32vw;
 }
 .dosos2 {
-    margin-top: 606px;
-    margin-left: 1155px;
+    /* top: 61%; */
+    /* left: 61%; */
+    top: 53vh;
+    left: 62vw;
 }
 .tersos1 {
-    margin-top: 609px;
-    margin-left: 668px;
+    /* top: 61%; */
+    /* left: 35%; */
+    top: 61vh;
+    left: 34vw;
 }
 .tersos2 {
-    margin-top: 414px;
-    margin-left: 914px;
+    /* margin-top: 414px; */
+    /* margin-left: 914px; */
+    top: 50vh;
+    left: 53vw;
 }
 .tersos3 {
-    margin-top: 606px;
-    margin-left: 1141px;
+    /* margin-top: 606px; */
+    /* margin-left: 1141px; */
+    top: 55vh;
+    left: 60vw;
 }
 .tersos4 {
-    margin-top: 824px;
-    margin-left: 892px;
+    /* margin-top: 824px; */
+    /* margin-left: 892px; */
+    top: 89vh;
+    left: 46.5vw;
 }
 .segons1 {
-    margin-top: 609px;
-    margin-left: 691px;
+    /* margin-top: 609px; */
+    /* margin-left: 691px; */
+    top: 61vh;
+    left: 36vw;
 }
 .segons2 {
-    margin-top: 432px;
-    margin-left: 914px;
+    /* margin-top: 432px; */
+    /* margin-left: 914px; */
+    top: 51vh;
+    left: 52vw;
 }
 .segons3 {
-    margin-top: 604px;
-    margin-left: 1115px;
+    /* margin-top: 604px; */
+    /* margin-left: 1115px; */
+    top: 58vh;
+    left: 58vw;
 }
 .segons4 {
-    margin-top: 797px;
-    margin-left: 892px;
+    /* margin-top: 797px; */
+    /* margin-left: 892px; */
+    top: 84vh;
+    left: 46.5vw;
 }
 .baixos1 {
-    margin-top: 610px;
-    margin-left: 719px;
+    /* margin-top: 610px; */
+    /* margin-left: 719px; */
+    top: 61vh;
+    left: 38vw;
 }
 .baixos2 {
-    margin-top: 449px;
-    margin-left: 914px;
+    /* margin-top: 449px; */
+    /* margin-left: 914px; */
+    top: 52vh;
+    left: 51vw;
 }
 .baixos3 {
-    margin-top: 618px;
-    margin-left: 1082px;
+    /* margin-top: 618px; */
+    /* margin-left: 1082px; */
+    top: 61vh;
+    left: 56vw;
 }
 .baixos4 {
-    margin-top: 777px;
-    margin-left: 892px;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.cabina1 {
-	width: 100%;
-	height: 97%;
-	/*background: green;*/
-
-	position: absolute;
-	top: 97%;
-	right: 0;
-	z-index: 10;
-}
-.cabina2 {
-	width: 100%;
-	height: 97%;
-	background: green;
-	position: absolute;
-	top: 194%;
-	right: 0;
-	z-index: 10;
-}
-.cabina3 {
-	width: 100%;
-	height: 97%;
-	background: blue;
-	position: absolute;
-	top: 291%;
-	right: 0;
-	z-index: 10;
-}
-.capaHub {
-	width: 100%;
-	height: 100%;
-	/*background: rgba(105,25,25,0.4);*/
-
-	position: absolute;
-	right: 0;
-	z-index: 20;
+    /* margin-top: 777px; */
+    /* margin-left: 892px; */
+    top: 78vh;
+    left: 46.5vw;
 }
 .footer {
 	width: 100%;
-	height: 3%;
+    height: 3vh;
 	position: fixed;
 	bottom: 0;
 	left: 0;
@@ -270,28 +263,10 @@ body {
     width: 100%;
     height: 100%;
 }
-.espacioTematica1Video {
-	width: 1270px;
-	left: 8%;
-	height: 720px;
-	top: 15%;
-	position: absolute;
-	z-index: 5;
-}
-
-.espacioTematica3Video {
-	width: 1270px;
-	left: 8%;
-	height: 720px;
-	top: 15%;
-	position: absolute;
-	z-index: 5;
-}
 
 .footerIzq {
-	position: absolute;
-	display: inline-flex;
-	left: 20px;
+    position: absolute;
+    display: inline-flex;
 }
 
 .footerDer {
@@ -450,15 +425,6 @@ body {
 	top: 10%;
 	text-align: center;
 }
-.spinner {
-	margin: 50px;
-	height: 28px;
-	width: 28px;
-	animation: rotate 20s linear;
-	border: 8px solid #fff;
-	border-right-color: transparent;
-	border-radius: 50%;
-}
 @keyframes rotate {
 	0% {
 		transform: rotate(0deg);
@@ -466,11 +432,6 @@ body {
 	100% {
 		transform: rotate(360deg);
 	}
-}
-#loadCircle {
-	position: absolute;
-	bottom: 15%;
-	left: 55%;
 }
 .columna {
 	width: 50%;

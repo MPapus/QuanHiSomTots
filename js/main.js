@@ -1,3 +1,6 @@
+var screenWidth = screen.availWidth;
+var screenHeight = screen.availHeight;
+
 $(document).ready(function() {
 
     var posicionActual = 0;
@@ -168,7 +171,7 @@ $(document).ready(function() {
 
         $(document).mousemove(function(e){
             //mostrar footer
-            if((e.clientY >= (window.screen.availHeight - 30))) {
+            if((e.clientY >= (window.innerHeight - (window.innerHeight*0.03)))) {
                 $('.footer').show();
             }
             else {
@@ -357,6 +360,20 @@ function moureBoleta4JS(divID, Start, Finish, pujar) {
             }
         }
     }
+}
+
+function doResize(event, ui) {
+
+    var scale, origin;
+
+    scale = Math.min(
+        ui.size.width / elWidth,
+        ui.size.height / elHeight
+    );
+
+    $el.css({
+        transform: "translate(-50%, -50%) " + "scale(" + scale + ")"
+    });
 }
 
 $.fn.extend({
