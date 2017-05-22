@@ -40,7 +40,6 @@ video {
 body {
 	margin: 0;
 	overflow: hidden;
-    font-size: 2.5vh;
 }
 
 .footerespacio {
@@ -77,33 +76,33 @@ body {
     background: url("../img/pis.png") no-repeat;
     background-position: center center;
     display: none;
-    width: 275px;
-    height: 273px;
-    float: left;
+    width: 26vh;
+    height: 26vh;
     position: absolute;
+    background-size: cover;
 }
 .boletaA {
-    width: 3.9vw !important;
+    width: 7vh !important;
     height: 7vh !important;
     background-image: url("../img/Bola-A.png") !important;
 }
 .boletaB {
-    width: 2.1vw !important;
+    width: 3.8vh !important;
     height: 3.8vh !important;
     background-image: url("../img/Bola-B.png") !important;
 }
 .boletaC {
-    width: 3.4vw !important;
+    width: 6vh !important;
     height: 6vh !important;
     background-image: url("../img/Bola-C.png") !important;
 }
 .boletaD {
-    width: 1.7vw !important;
+    width: 3vh !important;
     height: 3vh !important;
     background-image: url("../img/Bola-D.png") !important;
 }
 .boletaE {
-    width: 2.7vw !important;
+    width: 4.7vh !important;
     height: 4.7vh !important;
     background-image: url("../img/Bola-E.png") !important;
 }
@@ -236,7 +235,7 @@ body {
 	color: white;
 	background-color: #878787;
 	/*background-image: url("../assets/footer.png");*/
-
+    font-size: 0.8vw;
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 }

@@ -1,250 +1,134 @@
-var screenWidth = screen.availWidth;
-var screenHeight = screen.availHeight;
-
 $(document).ready(function() {
-
-    var posicionActual = 0;
     console.log("main.js empezado");
-    var emepezar = false;
-
     $('.btnEnter').click(function() {
-
-        if (emepezar == false) {
-            emepezar = true
-            $('.portada').hide();
-            $('.portadaFull').hide();
-
-            var el = document.documentElement,
-                rfs = // for newer Webkit and Firefox
-                    el.requestFullScreen ||
-                    el.webkitRequestFullScreen ||
-                    el.mozRequestFullScreen ||
-                    el.msRequestFullScreen;
-            if (typeof rfs != "undefined" && rfs) {
-                rfs.call(el);
-            } else if (typeof window.ActiveXObject != "undefined") {
-                // for Internet Explorer
-                var wscript = new ActiveXObject("WScript.Shell");
-                if (wscript != null) {
-                    wscript.SendKeys("{F11}");
-                }
-            }
-            //$('.footer').show();
-            init();
-
-            //location.href='index.html';
-        }
-
+        init();
     });
+});
 
-    $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function(e) {
+var btnSaltar = $(".btnSaltar");
+var posicionActual = 0;
+var emepezar = false;
+var videoID = "", currentVideoID_JS = "", currentVideoID_JQ = "";
+var controlScroll1 = 0;
+var talentoCabinaActive = false;
+var lastSoundPlayedTalento = 1;
+var proyecto = false;
+var creditos = false;
+var lastMouseY = -1;
+var currentVideoClass = null;
+var mostrarPis = $('.pis').hidden, mostrarBaixos = $('.baixos').hidden, mostrarSegons = false,
+    mostrarTersos = false, mostrarDosos = false, mostrarAixecador = false,
+    mostrarAnxeneta = false, mostrarCastell = false;
+var animarPis1 = false, animarPis2 = false, animarPis3 = false, animarPis4 = false, animarDosos = false, animarAnxeneta = false;
 
-        var state = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
-        var event = state ? 'FullscreenOn' : 'FullscreenOff';
+function init() {
+    if (emepezar === false) {
+        emepezar = true;
+        $('.portada').fadeOut(1500);
+        $('.portadaFull').fadeOut(1500);
 
-        if (event == 'FullscreenOff') {
-            console.log("qutal escape");
-            /*
-            $('html, body').animate({
-                scrollTop: $(".cabina1").offset().top
-            }, 0, function() {
-                posicionActual = 1;
-            });*/
+        // REQUEST FULL SCREEN
+        var el = document.documentElement,
+            rfs = // for newer Webkit and Firefox
+                el.requestFullScreen ||
+                el.webkitRequestFullScreen ||
+                el.mozRequestFullScreen ||
+                el.msRequestFullScreen;
+        if (typeof rfs !== "undefined" && rfs) {
+            rfs.call(el);
+        } else if (typeof window.ActiveXObject !== "undefined") {
+            // for Internet Explorer
+            var wscript = new ActiveXObject("WScript.Shell");
+            if (wscript !== null) {
+                wscript.SendKeys("{F11}");
+            }
         }
+        setTimeout(function () {
+            currentVideoID_JS = "videoIntro";
+            currentVideoID_JQ = "#videoIntro";
+            currentVideo = document.getElementById(currentVideoID_JS);
 
+            $('.intro').fadeIn(1500);
+            currentVideoClass = $(".videoIntro");
+
+            currentVideoClass.show();
+            //var video1 = document.getElementById("video1");
+            playVideo(currentVideoID_JS);
+
+            currentVideoClass.on("ended", function () {
+                if(!animarPis1) { animacioInicial(); }
+            });
+            initBtnSaltar();
+        }, 2000);
+        initOmplirBotonsBoletes();
+    }
+}
+
+function initBtnSaltar() {
+    //fem set de l'event click
+    btnSaltar.on("click", function () {
+        pauseVideo(currentVideoID_JS);
+        if (currentVideoID_JS === "videoIntro") {
+            if(!animarPis1) { animacioInicial(); }
+        }
     });
+    //l'animem perquè marxi i aparegui
+    $(function () {
+        var $element = $('.btnSaltar');
+        setInterval(function () {
+            $element.fadeIn(1000).fadeOut(1500).fadeIn(1500);
+        }, 500);
+    });
+    //el mostrem
+    btnSaltar.show();
+}
 
-    function toggleFullScreen(elem) {
-        // ## The below if statement seems to work better ## if ((document.fullScreenElement !== undefined && document.fullScreenElement === null) || (document.msFullscreenElement !== undefined && document.msFullscreenElement === null) || (document.mozFullScreen !== undefined && !document.mozFullScreen) || (document.webkitIsFullScreen !== undefined && !document.webkitIsFullScreen)) {
-        if ((document.fullScreenElement && document.fullScreenElement !== null) || (document.msfullscreenElement && document.msfullscreenElement !== null) || (!document.mozFullScreen && !document.webkitIsFullScreen)) {
-            if (elem.requestFullScreen) {
-                elem.requestFullScreen();
-            } else if (elem.mozRequestFullScreen) {
-                elem.mozRequestFullScreen();
-            } else if (elem.webkitRequestFullScreen) {
-                elem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-            } else if (elem.msRequestFullscreen) {
-                elem.msRequestFullscreen();
-            }
-        } else {
-            if (document.cancelFullScreen) {
-                document.cancelFullScreen();
-            } else if (document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-            } else if (document.webkitCancelFullScreen) {
-                document.webkitCancelFullScreen();
-            } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
-            }
-        }
-    }
-
-
-    var videoID = "", currentVideoID_JS = "", currentVideoID_JQ = "";
-    var controlScroll1 = 0;
-    var talentoCabinaActive = false;
-    var lastSoundPlayedTalento = 1;
-    var proyecto = false;
-    var creditos = false;
-    var lastMouseY = -1;
-    var mostrarPis = $('.pis').hidden, mostrarBaixos = $('.baixos').hidden, mostrarSegons = false,
-        mostrarTersos = false, mostrarDosos = false, mostrarAixecador = false,
-        mostrarAnxeneta = false, mostrarCastell = false;
-
-    $(".creditosPag").hide();
-    $(".proyectoPag").hide();
-
-    $(".videoIntro").hide();
-
-    $(".footer").hide();
-
-
-
-
-    function init() { //miramos si le ha dado a la portada
-
-        currentVideoID_JS = "videoIntro";
-        currentVideoID_JQ = "#videoIntro";
-        currentVideo = document.getElementById(currentVideoID_JS);
-
-        $('.intro').show();
-        videoCSSClass = $(".videoIntro");
-
-        videoCSSClass.show();
-        //var video1 = document.getElementById("video1");
-        currentVideo.play();
-        var btnSaltar = $(".btnSaltar");
-
-        btnSaltar.on("click", function () {
-            currentVideo.pause();
-            $(".intro").fadeOut(1500);
-            $(".intro").hide();
-            if(currentVideoID_JS = "videoIntro") {
-                mostrarCastellInici();
-                $('#anxeneta').click(function () {
-                    mourePis1();
-                    setTimeout(function () {
-                        mourePis2();
-                    }, 5000);
-                })
-                /*
-                setTimeout(function () {
-                    moureBoleta4('baixos4', 777, 792, true);
-                }, 1000);
-                */
-                //animarPis('.pisDiv1','.pis1','.baixos1','.baixos2','.baixos3','.baixos4');
-            }
-        });
-
-
-
-        $('#iconFullScreen').click(function () {
-            toggleFullScreen(document.body);
-        });
-
-        $('#iconVolume').click(function () {
-            currentVideo.muted = !currentVideo.muted;
-            if(currentVideo.muted)
-                document.getElementById("iconVolumeImage").className = "icon-volume-off";
-            else
-                document.getElementById("iconVolumeImage").className = "icon-volume-up";
-        });
-
-        $(function () {
-            var $element = $('.btnSaltar');
-            setInterval(function () {
-                $element.fadeIn(1000).fadeOut(1500).fadeIn(1500);
-            }, 500);
-        });
-
-        videoCSSClass.on("ended", function () {
-            $(".intro").fadeOut(1500);
-            $(".intro").hide();
-            $(".castell").show();
-            mostrarCastell = true;
-            setTimeout(function () {
-            }, 1000);
-        });
-
-        btnSaltar.show();
-
-
-        $(document).mousemove(function(e){
-            //mostrar footer
-            if((e.clientY >= (window.innerHeight - (window.innerHeight*0.03)))) {
-                $('.footer').show();
-            }
-            else {
-                $('.footer').hide();
-            }
-            lastMouseY = e.clientY;
-        });
-        //possible implementacio de part pinya
-        $(document).click();
-    }
-
-    $("#baixos4").click(function () {
+function omplirBotoBoleta(idBoletaHTML/*'#id'*/, idVideoJS/*'videoId'*/, idVideoJQ/*'#videoId'*/, videoClass/*'.class'*/, divVideo/*'#divID'*/, mourePis/*mourePis1*/) {
+    $(idBoletaHTML).click(function () {
         $('.castell').fadeOut(1500);
-        $('.castell').hide();
-        $('.baixos').hide();
-        $('.segons').hide();
-        $('.tersos').hide();
-        $('.dosos').hide();
-        $('.aixecador').hide();
-        $('.anxeneta').hide();
-        $('.pis').hide();
-        currentVideoID_JS = "videoAlegriaMariona";
-        currentVideoID_JQ = "#videoAlegriaMariona";
+        mostrarCastell = false;
+        currentVideoID_JS = idVideoJS;
+        currentVideoID_JQ = idVideoJQ;
         currentVideo = document.getElementById(currentVideoID_JS);
-        var videoBaixos4 = $('.videoAlegriaMariona');
+        currentVideoClass = $(videoClass);
         loadVideo(currentVideoID_JS);
         setTimeout(function () {
             $("#divVideos").show();
-            $('#divVideoAlegriaMariona').fadeIn(1500);
+            $(divVideo).fadeIn(1500);
             playVideo(currentVideoID_JS);
+            currentVideoClass.on("ended", function () {
+                $('#divVideos').fadeOut(1500);
+                $('.castell').fadeIn(1500);
+                mostrarCastell = true;
+                mourePis();
+            });
         }, 1000);
-        videoBaixos4.on("ended", function () {
-            $('#divVideoAlegriaMariona').fadeOut(1500);
-            $('#divVideos').hide();
-            $('.castell').show();
-            setTimeout(function () {
-                $('.baixos').toggle('slide', {direction: 'down'}, 500);
-                $('.segons').toggle('slide', {direction: 'down'}, 500);
-                $('.tersos').toggle('slide', {direction: 'down'}, 500);
-                $('.dosos').toggle('slide', {direction: 'down'}, 500);
-                $('.aixecador').toggle('slide', {direction: 'down'}, 500);
-                $('.anxeneta').toggle('slide', {direction: 'down'}, 500);
-                $('.pis').toggle('slide', {direction: 'down'}, 500);
-            }, 1000)
-        })
     });
+    /* VERSIO PREVIA
+     $("#baixos4").click(function () {
+     $('.castell').fadeOut(1500);
+     currentVideoID_JS = "videoAlegriaMariona";
+     currentVideoID_JQ = "#videoAlegriaMariona";
+     currentVideo = document.getElementById(currentVideoID_JS);
+     currentVideoClass = $('.videoAlegriaMariona');
+     loadVideo(currentVideoID_JS);
+     setTimeout(function () {
+     $("#divVideos").show();
+     $('#divVideoAlegriaMariona').fadeIn(1500);
+     playVideo(currentVideoID_JS);
+     currentVideoClass.on("ended", function () {
+     $('#divVideos').fadeOut(1500);
+     $('.castell').fadeIn(1500);
+     mourePis2();
+     });
+     }, 1000);
+     });
+     */
+}
 
-    //pagina aparte
-    $("#elProyecto").click(function() {
-
-        if (!proyecto) {
-            $(".creditosPag").fadeOut(500);
-            $(".proyectoPag").fadeIn(1000);
-            proyecto = true;
-        } else {
-            $(".proyectoPag").fadeOut(1000);
-            proyecto = false;
-        }
-    });
-    //pagina aparte
-    $("#losCreditos").click(function() {
-
-        if (!creditos) {
-            $(".proyectoPag").fadeOut(500);
-            $(".creditosPag").fadeIn(1000);
-            creditos = true;
-        } else {
-            $(".creditosPag").fadeOut(1000);
-            creditos = false;
-        }
-    });
-    //cerrar document ready
-});
+function initOmplirBotonsBoletes() {
+    omplirBotoBoleta("#baixos4", "videoAlegriaMariona", "#videoAlegriaMariona", ".videoAlegriaMariona", "#divVideoAlegriaMariona", mourePis2);
+}
 
 function loadVideo(id) {
     var video = document.getElementById(id);
@@ -256,32 +140,33 @@ function playVideo(id) {
     video.play();
 }
 
+function  pauseVideo(id) {
+    var video = document.getElementById(id);
+    video.pause();
+}
+
 function muteVideo(id) {
     var video = document.getElementById(id);
     video.muted = !video.muted;
 }
-
-function animarPis(pisDiv, pis, bola1, bola2, bola3, bola4) {
+function animacioInicial() {
+    console.log("animació inicial comença");
+    $(".intro").fadeOut(2000);
+    animarPis1 = true;
     setTimeout(function () {
-        $(pisDiv).show();
-        $(bola4).toggle('slide', {direction: 'down'}, 500);
+        $(".castell").fadeIn(1500);
+        mostrarCastell = true;
         setTimeout(function () {
-            $(bola1).toggle('slide', {direction: 'down'}, 500);
+            mostrarCastellInici();
             setTimeout(function () {
-                $(bola3).toggle('slide', {direction: 'down'}, 500);
-                setTimeout(function () {
-                    $(bola2).toggle('slide', {direction: 'down'}, 500);
-                    setTimeout(function () {
-                        $(pis).toggle('slide', {direction: 'left'}, 500);
-                    }, 500)
-                }, 1000);
-            }, 1000);
-        }, 1000);
-    }, 1000);
+                mourePis1();
+            }, 3000);
+        }, 2000);
+    }, 3000);
+    console.log("animació inicial acaba");
 }
 
 function mostrarCastellInici() {
-    $(".castell").show();
     $('.pisDiv1').show();
     $('.pisDiv2').show();
     $('.pisDiv3').show();
@@ -292,13 +177,13 @@ function mostrarCastellInici() {
 }
 
 function mourePis1() {
-    moureBoletaJQ('.baixos4', null, null, 777, 723, "pujar", 1);
+    moureBoletaJQ('.baixos4', 10, "pujar", 1);
     setTimeout(function () {
-        moureBoletaJQ('.baixos1', 719, 779, null, null, "dreta", 1);
+        moureBoletaJQ('.baixos1', 10, "dreta", 1);
         setTimeout(function () {
-            moureBoletaJQ('.baixos3', 1082, 1042, null, null, "esquerra", 1);
+            moureBoletaJQ('.baixos3', 10, "esquerra", 1);
             setTimeout(function () {
-                moureBoletaJQ('.baixos2', null, null, 449, 486, "baixar", 1);
+                moureBoletaJQ('.baixos2', 10, "baixar", 1);
                 setTimeout(function () {
                     $('.pis1').fadeIn(1500);
                 }, 1000);
@@ -308,33 +193,75 @@ function mourePis1() {
 }
 
 function mourePis2() {
-    moureBoletaJQ('.segons1', 691, 779, null, null, "dreta", 1);
-    moureBoletaJQ('.segons3', 1115, 1042, null, null, "esquerra", 1);
+    moureBoletaJQ('.segons1', 10, "dreta", 1);
+    moureBoletaJQ('.segons3', 10, "esquerra", 1);
     setTimeout(function () {
-        moureBoletaJQ('.segons4', null, null, 797, 631, "pujar", 1);
-        moureBoletaJQ('.segons1', null, null, 609, 515, "pujar", 1);
-        moureBoletaJQ('.segons2', null, null, 432, 397, "pujar", 1);
-        moureBoletaJQ('.segons3', null, null, 604, 525, "pujar", 1);
+        moureBoletaJQ('.segons4', 10, "pujar", 1);
+        moureBoletaJQ('.segons1', 10, "pujar", 1);
+        moureBoletaJQ('.segons2', 10, "pujar", 1);
+        moureBoletaJQ('.segons3', 10, "pujar", 1);
         setTimeout(function () {
             $('.pis2').fadeIn(1500);
         }, 1000);
     }, 1000);
 }
 
-function moureBoletaJQ(divID, xInicial, xFinal, yInicial, yFinal, direccio, durada_seg) {
+function mourePis3() {
+    moureBoletaJQ('.segons1', 10, "dreta", 1);
+    moureBoletaJQ('.segons3', 10, "esquerra", 1);
+    setTimeout(function () {
+        moureBoletaJQ('.segons4', 10, "pujar", 1);
+        moureBoletaJQ('.segons1', 10, "pujar", 1);
+        moureBoletaJQ('.segons2', 10, "pujar", 1);
+        moureBoletaJQ('.segons3', 10, "pujar", 1);
+        setTimeout(function () {
+            $('.pis2').fadeIn(1500);
+        }, 1000);
+    }, 1000);
+}
+
+function mourePis4() {
+    moureBoletaJQ('.segons1', 10, "dreta", 1);
+    moureBoletaJQ('.segons3', 10, "esquerra", 1);
+    setTimeout(function () {
+        moureBoletaJQ('.segons4', 10, "pujar", 1);
+        moureBoletaJQ('.segons1', 10, "pujar", 1);
+        moureBoletaJQ('.segons2', 10, "pujar", 1);
+        moureBoletaJQ('.segons3', 10, "pujar", 1);
+        setTimeout(function () {
+            $('.pis2').fadeIn(1500);
+        }, 1000);
+    }, 1000);
+}
+
+function mourePisAixecador() {
+    moureBoletaJQ('.aixecador', 10, "dreta", 1);
+    setTimeout(function () {
+        moureBoletaJQ('.aixecador', 10, "pujar", 1);
+    }, 1000);
+}
+
+function mourePisAnxeneta() {
+    moureBoletaJQ('.anxeneta', 10, "dreta", 1);
+    setTimeout(function () {
+        moureBoletaJQ('.anxeneta', 10, "pujar", 1);
+    }, 1000);
+}
+
+function moureBoletaJQ(divID, percentatge, direccio, durada_seg) {
     var elem = $(divID);
     var debug = "";
     if (direccio === "pujar") {
-        debug = "-=" + (yInicial - yFinal) + "px";
+        debug = "-=" + percentatge + "vh";
         elem.animate({marginTop: debug}, durada_seg*1000);
     } else if (direccio === "dreta") {
-        debug = "+=" + (xFinal - xInicial) + "px";
+        debug = "+=" + percentatge + "vh";
         elem.animate({marginLeft: debug}, durada_seg*1000);
     } else if (direccio === "esquerra") {
-        debug = "-=" + (xInicial - xFinal) + "px";
+        debug = "-=" + percentatge + "vw";
         elem.animate({marginLeft: debug}, durada_seg*1000);
     } else if (direccio === "baixar") {
-        debug = "+=" + (yFinal - yInicial) + "px";
+        debug = "+=" + percentatge + "vh";
         elem.animate({marginTop: debug}, durada_seg*1000);
     }
 }
@@ -362,20 +289,6 @@ function moureBoleta4JS(divID, Start, Finish, pujar) {
     }
 }
 
-function doResize(event, ui) {
-
-    var scale, origin;
-
-    scale = Math.min(
-        ui.size.width / elWidth,
-        ui.size.height / elHeight
-    );
-
-    $el.css({
-        transform: "translate(-50%, -50%) " + "scale(" + scale + ")"
-    });
-}
-
 $.fn.extend({
     animateCss: function (animationName) {
         var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
@@ -383,4 +296,106 @@ $.fn.extend({
             $(this).removeClass('animated ' + animationName);
         });
     }
+});
+
+$('.castell').click(function (e) {
+    if(e.target.className === "castell")
+    {
+        $.ajax({
+            url: 'tweetsTristesa.php',
+            success: function(response) {
+                var tweets = $.parseJSON(response);
+                var tweetsHTML = [];
+                for (var i=0; i<tweets.length; i++){
+                    var username = tweets[i].user.screen_name;
+                    var tweet = tweets[i].text;
+                    tweetsHTML.push('<span><b>'+status+'</b>: '+tweet+'</span>');
+                }
+                document.getElementById('tweets').innerHTML = tweetsHTML.join('<br/>');
+            }
+        });
+    }
+});
+
+$('#iconVolume').click(function () {
+    currentVideo.muted = !currentVideo.muted;
+    if(currentVideo.muted)
+        document.getElementById("iconVolumeImage").className = "icon-volume-off";
+    else
+        document.getElementById("iconVolumeImage").className = "icon-volume-up";
+});
+
+$(document).mousemove(function(e){
+    //mostrar footer
+    if((e.clientY >= (window.innerHeight - (window.innerHeight*0.03)))) {
+        $('.footer').show();
+    }
+    else {
+        $('.footer').hide();
+    }
+    lastMouseY = e.clientY;
+});
+
+
+//pagina aparte
+$("#elProyecto").click(function() {
+
+    if (!proyecto) {
+        $(".creditosPag").fadeOut(500);
+        $(".proyectoPag").fadeIn(1000);
+        proyecto = true;
+    } else {
+        $(".proyectoPag").fadeOut(1000);
+        proyecto = false;
+    }
+});
+//pagina aparte
+$("#losCreditos").click(function() {
+
+    if (!creditos) {
+        $(".proyectoPag").fadeOut(500);
+        $(".creditosPag").fadeIn(1000);
+        creditos = true;
+    } else {
+        $(".creditosPag").fadeOut(1000);
+        creditos = false;
+    }
+});
+
+$(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function(e) {
+
+    var state = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen;
+    var event = state ? 'FullscreenOn' : 'FullscreenOff';
+
+    if (event === 'FullscreenOff') { console.log("Exit FullScreen"); } else if (event === 'FullscreenOn') { console.log("Enter FullScreen"); }
+
+});
+
+function toggleFullScreen(elem) {
+    // ## The below if statement seems to work better ## if ((document.fullScreenElement !== undefined && document.fullScreenElement === null) || (document.msFullscreenElement !== undefined && document.msFullscreenElement === null) || (document.mozFullScreen !== undefined && !document.mozFullScreen) || (document.webkitIsFullScreen !== undefined && !document.webkitIsFullScreen)) {
+    if ((document.fullScreenElement && document.fullScreenElement !== null) || (document.msfullscreenElement && document.msfullscreenElement !== null) || (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+        if (elem.requestFullScreen) {
+            elem.requestFullScreen();
+        } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullScreen) {
+            elem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        }
+    } else {
+        if (document.cancelFullScreen) {
+            document.cancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+}
+
+$('#iconFullScreen').click(function () {
+    toggleFullScreen(document.documentElement);
 });
