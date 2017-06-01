@@ -6,47 +6,63 @@
 	<link rel="icon" href="favicon.ico">
 	<meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="js/vendor/pace.min.js"></script>
 	<link href="css/vendor/loader.css" rel="stylesheet">
+    <link href="css/vendor/hover-min.css" rel="stylesheet" media="all">
     <link rel="stylesheet" href="css/vendor/animate.css">
-	<script>
-        Pace.on('hide', function() {
-            $('.btnEnter').show();
-        });
-	</script>
+    <link href="assets/video-js/video-js.css" rel="stylesheet">
     <!-- Latest compiled and minified CSS -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="css/vendor/jquery-ui.css">
 	<!-- Optional theme -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 	<link href="css/vendor/styles.css" rel="stylesheet">
 	<link href="css/style.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
 </head>
 <body>
+<nav class="navbar navbar-inverse" id="footer" style="position: absolute; display: none; margin-bottom: 0 !important; width: 100%; z-index: 101">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">QuanHiSomTots</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Desplegable<span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Pagina 1</a></li>
+                    <li><a href="#">Pagina 2</a></li>
+                    <li><a href="#">Pagina 3</a></li>
+                </ul>
+            </li>
+            <li><a id="elProyecto" class="elProyecto" href="#">El Projecte</a></li>
+            <li><a id="losCreditos" class="losCreditos" href="#">Crèdits</a></li>
+        </ul>
+    </div>
+</nav>
 <div class="portadaFull">
 </div>
 <div class="portada">
-	<button type="button" class="btn btn-default btnEnter" style="position: absolute; font-size:30px; top: 60%; left: 38%; display: none;">
-		<span></span>Entrar
-	</button>
 	<div>
-		<p style="text-align: center">Un documental de Diana Morena, Meritxell Ortiz i Marc Reventós</p>
+        <div class="btnEnter hvr-pulse-grow" style="vertical-align:middle; display: none;"><span>Entrar </span></div>
+		<p style="position: absolute; text-align: center; top: 28vh; left: 1vw;">Un documental de Diana Morena, Meritxell Ortiz i Marc Reventós</p>
 	</div>
 </div>
-
-<!-- VIDEO screen-->
-<div class="intro" style="display: none">
-	<div class="videoFS fullScreen">
-		<video id="videoIntro" class="videoIntro" preload>
-			<source src="videos/popcornplug.webm"/>
-		</video>
-	</div>
-	<div>
-		<button type="button" class="btn btn-default btnSaltar" style="position: absolute; font-size:30px; top: 90%; left: 90%; z-index: 601; display: none;">
-			<span></span>Saltar
-		</button>
-	</div>
+<div class="intro container-fluid" id="intro" style="display: none;">
+    <div class="row">
+        <div class="col-md-3 capsaIntro hvr-pulse-grow" id="alegria" style="background-color: #0F9E5E">
+            <div class="content">Alegria</div>
+        </div>
+        <div class="col-md-3 capsaIntro hvr-pulse-grow" id="tristesa" style="background-color: #2aabd2">
+            <div class="content">Tristesa</div>
+        </div>
+        <div class="col-md-3 capsaIntro hvr-pulse-grow" id="rabia" style="background-color: #8a6d3b">
+            <div class="content">Ràbia</div>
+        </div>
+        <div class="col-md-3 capsaIntro hvr-pulse-grow" id="euforia" style="background-color: #D6532B">
+            <div class="content">Eufòria</div>
+        </div>
+    </div>
 </div>
 <div class="castell">
     <div class="anxeneta boleta boletaE" id="anxeneta"></div>
@@ -79,10 +95,16 @@
 </div>
 <div id="tweets"></div>
 <div id="divVideos" style="display: none">
-    <div class="videoFS fullScreen" id="divVideoAlegriaMariona" style="display: none">
-        <video class="videoAlegriaMariona" id="videoAlegriaMariona" preload="none">
-            <source src="videos/popcornplug.mp4"/>
-        </video>
+    <video id="videoIntro" controls data-setup='{ "preload": true }' class="video-js videoFS">
+        <source src="videos/popcornplug.webm" type="video/webm" />
+    </video>
+    <video class="videoFS video-js" id="videoAlegriaMariona" preload="none" controls data-setup="{}">
+        <source src="videos/Por.mp4" type="video/mp4" />
+    </video>
+    <div>
+        <button type="button" class="btn btn-default btnSaltar" style="position: absolute; font-size:30px; top: 90%; left: 90%; z-index: 601; display: none;">
+            <span></span>Saltar
+        </button>
     </div>
 </div>
 <div class="proyectoPag" style="display: none">
@@ -187,12 +209,12 @@
 	<!--video src="videos/final.mov" id="videoFinal" class="videoFinal" preload></video-->
 </div>
 <!--div class="footerespacio" style="width:100%"></div-->
-<!--footer-->
-<div class="footer" id="footer" style="display: none;">
+<!--footer
+<div class="footer" id="" style="display: none;">
 	<div class="footerCentrado">
 		<div class="footerIzq">
-			<span style="margin-right: 2vh; margin-left: 2vh; margin-top: 0.5vh;" id="elProyecto" class="elProyecto"> EL PROJECTE </span>
-			<span id="losCreditos" class="losCreditos" style=" margin-top: 0.5vh;"> CRÈDITS </span>
+			<span style="margin-right: 2vh; margin-left: 2vh; margin-top: 0.5vh;" id="" class="elProyecto"> EL PROJECTE </span>
+			<span id="" class="losCreditos" style=" margin-top: 0.5vh;"> CRÈDITS </span>
 		</div>
 		<div class="footerDer">
 			<a href="https://www.facebook.com/quanhisomtots/" class="iconSocial" target="_blank">
@@ -206,17 +228,26 @@
 			<a class="iconSocial elProyecto" id="iconVolume">
 				<span class="icon-volume-up" id="iconVolumeImage"></span>
 			</a>
-			<a class="iconSocial elProyecto"> <!--toggleFullScreen(document.getElementById(document.body))-->
-				<span class="glyphicon glyphicon-fullscreen" id="iconFullScreen"></span>
+			<a class="iconSocial elProyecto">
+				<span class="glyphicon glyphicon-info-sign" id="iconFullScreen"></span>
 			</a>
 		</div>
 	</div>
-</div>
-</body>
+</div>-->
+<script src="js/vendor/pace.min.js"></script>
+<script>
+    Pace.on('hide', function() {
+        $('.btnEnter').fadeIn(1500);
+    });
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="assets/video-js/video.js"></script>
+<script src="assets/video-js/lang/ca.js"></script>
 <script src="js/main.js" type="text/javascript"></script>
 <script src="js/vendor/jquery-ui.js" type="text/javascript"></script>
-
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</body>
 </html>
 

@@ -11,11 +11,11 @@ $settings = array(
 );
 
 /** URL for REST request, see: https://dev.twitter.com/docs/api/1.1/ **/
-//$url = 'https://api.twitter.com/1.1/search/tweets.json?q=%23quanhisomtots+%23tristesa';
+//$url = 'https://api.twitter.com/1.1/search/tweets.json';
 $url = 'https://api.twitter.com/1.1/search/tweets.json';
 $requestMethod = 'GET';
-$getField = '?q=%23quanhisomtots+filter%3Amedia';
+$getField = '?q=%23alegria+%23quanhisomtots';
 $twitter = new TwitterAPIExchange($settings);
 echo $twitter->setGetfield($getField)
              ->buildOauth($url, $requestMethod)
-             ->performRequest();
+             ->performRequest(true);

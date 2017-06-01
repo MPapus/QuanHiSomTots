@@ -2,9 +2,11 @@ html {
 	-webkit-text-size-adjust: 100%;
 	-ms-text-size-adjust: 100%;
 }
-
 * {
-     box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
  }
 img {
     max-width: 100%;
@@ -40,25 +42,31 @@ video {
 body {
 	margin: 0;
 	overflow: hidden;
-}
-
-.footerespacio {
-	width: 100%;
-	height: 3%;
-	top: 388%;
-	position: absolute;
-	bottom: 0;
-	right: 0;
-	background-color: #717171;
-	z-index: 10;
+    background-color: #303030 !important;
+    color: white;
 }
 .intro {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 10;
+    top: 32vh;
+    position: relative;
+    text-align: center;
+}
+.capsaIntro {
+    height: 36vh;
+    z-index: 100;
+}
+.capsaIntro:hover {
+    cursor: pointer;
+    z-index: 101;
+}
+.capsaIntro:after {
+    z-index: 100;
+}
+.content {
+    position: relative;
+    float: left;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .pis1{
     margin-top: 500px;
@@ -78,7 +86,7 @@ body {
     display: none;
     width: 26vh;
     height: 26vh;
-    position: absolute;
+    position: relative;
     background-size: cover;
 }
 .boletaA {
@@ -111,9 +119,12 @@ body {
     border: 1px solid red;
     display: none;
     background: no-repeat center;
-    position: absolute;
+    position: relative;
     z-index: 600;
     background-size: cover;
+}
+.boleta:hover {
+    transform: scale(1.5);
 }
 .boleta:hover {
     cursor: pointer;
@@ -122,7 +133,7 @@ body {
     width: 100%;
     height: 100%;
     display: none;
-    position: absolute;
+    position: relative;
     background-repeat: no-repeat;
     top: 0;
     right: 0;
@@ -228,10 +239,9 @@ body {
 .footer {
 	width: 100%;
     height: 3vh;
-	position: fixed;
-	bottom: 0;
-	left: 0;
-	z-index: 500;
+    top: 0;
+	position: absolute;
+	z-index: 551;
 	color: white;
 	background-color: #878787;
 	/*background-image: url("../assets/footer.png");*/
@@ -239,26 +249,20 @@ body {
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 }
-
-
-
-*:fullscreen
-*:-ms-fullscreen,
-*:-webkit-full-screen,
-*:-moz-full-screen {
-	overflow: auto !important;
+.btnEnter {
+    position: absolute;
+    font-size:30px;
+    z-index: 601;
+    display: none;
+    top: 50vh !important;
+    left: 10vw !important;
+    color: white;
+    text-align: center;
 }
-
-.fullScreen {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	right: 0;
-	z-index: 10;
+.btnEnter:hover {
+    cursor: pointer;
 }
 .videoFS {
-    object-fit: initial;
     width: 100%;
     height: 100%;
 }
@@ -272,7 +276,7 @@ body {
 	position: absolute;
 	display: inline-flex;
 	left: 60%;
-	width: 13%;
+    top: 0.4vh;
 }
 .footerDerDer {
 	position: absolute;
@@ -325,13 +329,13 @@ body {
 .portada {
 	-webkit-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
-	position: absolute;
-	top: 45%;
-	left: 50%;
-	width: 460px;
-	height: 460px;
+    position: absolute;
+    top: 50vh;
+    left: 50vw;
+    width: 48vh;
+    height: 48vh;
 	z-index: 600;
-	background-image: url("../assets/logo.jpg");
+	background-image: url("../img/logoT.png");
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 }
@@ -383,7 +387,8 @@ body {
 .proyectoPag {
 	position: fixed;
 	width: 100%;
-	height: 97%;
+	height: 100%;
+    color: #303030;
 	top: 0;
 	right: 0;
 	z-index: 100;
@@ -394,10 +399,11 @@ body {
 .creditosPag {
 	position: fixed;
 	width: 100%;
-	height: 97%;
+	height: 100%;
 	top: 0;
 	right: 0;
 	z-index: 100;
+    color: #303030;
 	background-image: url("../assets/texturaBlanca.png");
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
@@ -452,4 +458,97 @@ body {
 	left: 0;
 	height: 97%;
 	width: 100%;
+}
+
+
+
+/* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
+/*
+Player Skin Designer for Video.js
+http://videojs.com
+
+To customize the player skin edit
+the CSS below. Click "details"
+below to add comments or questions.
+This file uses some SCSS. Learn more
+at http://sass-lang.com/guide)
+
+This designer can be linked to at:
+https://codepen.io/heff/pen/EarCt/left/?editors=010
+*/
+.video-js {
+    /* The base font size controls the size of everything, not just text.
+       All dimensions use em-based sizes so that the scale along with the font size.
+       Try increasing it to 15px and see what happens. */
+    font-size: 10px;
+    /* The main font color changes the ICON COLORS as well as the text */
+    color: #fff;
+}
+
+/* The "Big Play Button" is the play button that shows before the video plays.
+   To center it set the align values to center and middle. The typical location
+   of the button is the center, but there is trend towards moving it to a corner
+   where it gets out of the way of valuable content in the poster image.*/
+.vjs-default-skin .vjs-big-play-button {
+    /* The font size is what makes the big play button...big.
+       All width/height values use ems, which are a multiple of the font size.
+       If the .video-js font-size is 10px, then 3em equals 30px.*/
+    font-size: 3em;
+    /* We're using SCSS vars here because the values are used in multiple places.
+       Now that font size is set, the following em values will be a multiple of the
+       new font size. If the font-size is 3em (30px), then setting any of
+       the following values to 3em would equal 30px. 3 * font-size. */
+    /* 1.5em = 45px default */
+    line-height: 1.5em;
+    height: 1.5em;
+    width: 3em;
+    /* 0.06666em = 2px default */
+    border: 0.06666em solid #fff;
+    /* 0.3em = 9px default */
+    border-radius: 0.3em;
+    /* Align top left. 0.5em = 15px default */
+    left: 0.5em;
+    top: 0.5em;
+}
+
+/* The default color of control backgrounds is mostly black but with a little
+   bit of blue so it can still be seen on all-black video frames, which are common. */
+.video-js .vjs-control-bar,
+.video-js .vjs-big-play-button,
+.video-js .vjs-menu-button .vjs-menu-content {
+    /* IE8 - has no alpha support */
+    background-color: #2B333F;
+    /* Opacity: 1.0 = 100%, 0.0 = 0% */
+    background-color: rgba(43, 51, 63, 0.7);
+}
+
+/* Slider - used for Volume bar and Progress bar */
+.video-js .vjs-slider {
+    background-color: #73859f;
+    background-color: rgba(115, 133, 159, 0.5);
+}
+
+/* The slider bar color is used for the progress bar and the volume bar
+   (the first two can be removed after a fix that's coming) */
+.video-js .vjs-volume-level,
+.video-js .vjs-play-progress,
+.video-js .vjs-slider-bar {
+    background: #fff;
+}
+
+/* The main progress bar also has a bar that shows how much has been loaded. */
+.video-js .vjs-load-progress {
+    /* For IE8 we'll lighten the color */
+    background: #bfc7d3;
+    /* Otherwise we'll rely on stacked opacities */
+    background: rgba(115, 133, 159, 0.5);
+}
+
+/* The load progress bar also has internal divs that represent
+   smaller disconnected loaded time ranges */
+.video-js .vjs-load-progress div {
+    /* For IE8 we'll lighten the color */
+    background: white;
+    /* Otherwise we'll rely on stacked opacities */
+    background: rgba(115, 133, 159, 0.75);
 }
