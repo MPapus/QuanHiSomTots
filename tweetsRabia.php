@@ -14,7 +14,7 @@ $settings = array(
 //$url = 'https://api.twitter.com/1.1/search/tweets.json';
 $url = 'https://api.twitter.com/1.1/search/tweets.json';
 $requestMethod = 'GET';
-$getField = '?q=%23QHSTPor';
+$getField = '?q=%23QHSTRabia';
 $twitter = new TwitterAPIExchange($settings);
 echo $twitter->setGetfield($getField)
              ->buildOauth($url, $requestMethod)

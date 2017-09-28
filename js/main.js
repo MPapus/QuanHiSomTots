@@ -1,32 +1,35 @@
 $(document).ready(function() {
+    window.vplayer = videojs(currentVideoID_JS);
+    window.vplayer.userActive(false);
+    //window.vplayer.removeChild('BigPlayButton');
     console.log("main.js empezado");
     btnEnter.click(function() {
-        init();
+        if ($(window).width() < 780) {
+            alert("La resolució del vostre dispositiu es massa baixa, problement un mòbil o tauleta. \r\n" +
+                "Si us plau, accediu a Quan Hi Som Tots des d'un ordinador.");
+        }
+        else {
+            init();
+        }
     });
 });
 
 var empezar = false;
-var emocioSeleccio = "";
+var currentVideoID_JS = "#videoIntro";
 var needStop = false;
 var btnEnter = $(".btnEnter");
 var btnSaltar = $(".btnSaltar");
 var divVideos = $("#divVideos");
+var divCurrentVideo = "#videoIntro";
 var divCastell = $(".castell");
-var divIntro = $(".intro");
-var posicionActual = 0;
-var videoID = "", currentVideoID_JS = "", currentVideoID_JQ = "";
-var controlScroll1 = 0;
-var talentoCabinaActive = false;
-var lastSoundPlayedTalento = 1;
 var proyecto = false;
 var creditos = false;
 var lastMouseY = -1;
-var currentVideoClass = null;
 var currentVideo = null;
-var mostrarPis = $('.pis').hidden, mostrarBaixos = $('.baixos').hidden, mostrarSegons = false,
-    mostrarTersos = false, mostrarDosos = false, mostrarAixecador = false, mostrarPortada = true,
-    mostrarAnxeneta = false, mostrarCastell = false;
-var animarPis1 = false, animarPis2 = false, animarPis3 = false, animarPis4 = false, animarDosos = false, animarAnxeneta = false;
+var anxeneta = null, aixecador = null, dosos1 = null, dosos2 = null, tercos1 = null, tercos2 = null, tercos3 = null, tercos4 = null,
+    segons1 = null, segons2 = null, segons3 = null, segons4 = null, baixos1 = null, baixos2 = null, baixos3 = null, baixos4 = null;
+var mostrarCastell = false, mostrarVideos = false;
+var colorAlegria = "#FFC14D", colorTristesa = "#3DABBF", colorRabia = "#FF5A4D", colorEuforia = "#9D43C7", lastColorPlayed = null, lastEmotionPlayed = null;
 
 function init() {
     if (empezar === false) {
@@ -34,49 +37,34 @@ function init() {
         $('.portada').fadeOut(1500);
         $('.portadaFull').fadeOut(1500);
         mostrarPortada = false;
-
         setTimeout(function () {
 
-            // REQUEST FULL SCREEN
-            var el = document.documentElement,
-                rfs = // for newer Webkit and Firefox
-                    el.requestFullScreen ||
-                    el.webkitRequestFullScreen ||
-                    el.mozRequestFullScreen ||
-                    el.msRequestFullScreen;
-            if (typeof rfs !== "undefined" && rfs) {
-                rfs.call(el);
-            } else if (typeof window.ActiveXObject !== "undefined") {
-                // for Internet Explorer
-                var wscript = new ActiveXObject("WScript.Shell");
-                if (wscript !== null) {
-                    wscript.SendKeys("{F11}");
-                }
-            }
+            requestFullScreen();
+
             setTimeout(function () {
-                currentVideoID_JS = "videoIntro";
-                currentVideoID_JQ = "#videoIntro";
+                currentVideo = currentVideoID_JS;
+                setTimeout( function () {
+                    window.vplayer.play();
+                    mostrarDivVideos();
+                    setTimeout(function () {
+                        btnSaltar.addClass("animate-flicker");
+                        btnSaltar.show();
+                    }, 1000);
+                }, 1500);
+                window.vplayer.userActive(true);
+                window.vplayer.isFullscreen(true);
 
-                currentVideo = videojs(currentVideoID_JS);
-                currentVideo.isFullscreen(true);
-                divVideos.fadeIn(1500);
-                currentVideoClass = $(".videoIntro");
-
-                currentVideoClass.show();
-                //var video1 = document.getElementById("video1");
-                playVideo(currentVideoID_JS);
-
-                currentVideo.on("ended", function () {
-                    currentVideoClass.fadeOut(1500);
-                    animacioSeleccio();
-                    this.dispose();
-                    //if(!animarPis1) { animacioInicial(); }
+                window.vplayer.one("ended", function () {
+                    btnSaltar.removeClass("animate-flicker");
+                    amagarDivVideos();
+                    mostrarDivCastell();
+                    animacioInicial();
+                    btnSaltar.hide();
                 });
                 initBtnSaltar();
-            }, 1000);
+            }, 500);
         }, 1000);
         initOmplirBotonsBoletes();
-        initCapsesSeleccio();
     }
 }
 
@@ -84,267 +72,97 @@ function initBtnSaltar() {
     //fem set de l'event click
     btnSaltar.on("click", function () {
         needStop = true;
-        pauseVideo(currentVideoID_JS);
-        if (currentVideoID_JS === "videoIntro") {
-            currentVideoClass.fadeOut(15000);
-            animacioSeleccio();
-            currentVideo.on("hide", function () {
-                this.dispose();
-            });
-            //if(!animarPis1) { animacioInicial(); }
+        window.vplayer.pause();
+        if (currentVideoID_JS === "#videoIntro") {
+            amagarDivVideos();
+            mostrarDivCastell();
+            animacioInicial();
         }
+        else {
+            amagarDivVideos();
+            mostrarDivCastell();
+            console.log("canvio color a: " + lastColorPlayed + "(" + lastEmotionPlayed + ")");
+            var gradient = "url(#gradient" + lastEmotionPlayed.toString().charAt(0).toUpperCase() + lastEmotionPlayed.substr(1) + ")";
+            $("#pinya").css("fill", gradient);
+            $("#pinya_linies").css("fill", gradient);
+        }
+        btnSaltar.removeClass("animate-flicker");
+        btnSaltar.hide();
     });
+
+    /*
     //l'animem perquè marxi i aparegui
     $(function () {
-        var $element = $('.btnSaltar');
-        setInterval(function () {
-            $element.fadeIn(1000).fadeOut(1500).fadeIn(1500);
+        var interval = setInterval(function () {
+            if (!needStop)
+                animarBoto(btnSaltar);
+            else {
+                clearInterval(interval);
+                btnSaltar.hide();
+            }
         }, 500);
     });
-    //el mostrem
-    btnSaltar.show();
-}
-
-function omplirBotoBoleta(idBoletaHTML/*'#id'*/, idVideoJS/*'videoId'*/, idVideoJQ/*'#videoId'*/, videoClass/*'.class'*/, divVideo/*'#divID'*/, mourePis/*mourePis1*/) {
-    $(idBoletaHTML).click(function () {
-        divCastell.fadeOut(1500);
-        mostrarCastell = false;
-        currentVideoID_JS = idVideoJS;
-        currentVideoID_JQ = idVideoJQ;
-        video = videojs(currentVideoID_JS);
-        currentVideoClass = $(videoClass);
-        loadVideo(currentVideoID_JS);
-        setTimeout(function () {
-            $("#divVideos").show();
-            $(divVideo).fadeIn(1500);
-            video.on("ended", function () {
-                divVideos.fadeOut(1500);
-                divCastell.fadeIn(1500);
-                mostrarCastell = true;
-                video.dispose();
-                mourePis();
-            });
-        }, 1000);
-    });
-    /* VERSIO PREVIA
-     $("#baixos4").click(function () {
-     $('.castell').fadeOut(1500);
-     currentVideoID_JS = "videoAlegriaMariona";
-     currentVideoID_JQ = "#videoAlegriaMariona";
-     currentVideo = document.getElementById(currentVideoID_JS);
-     currentVideoClass = $('.videoAlegriaMariona');
-     loadVideo(currentVideoID_JS);
-     setTimeout(function () {
-     $("#divVideos").show();
-     $('#divVideoAlegriaMariona').fadeIn(1500);
-     playVideo(currentVideoID_JS);
-     currentVideoClass.on("ended", function () {
-     $('#divVideos').fadeOut(1500);
-     $('.castell').fadeIn(1500);
-     mourePis2();
-     });
-     }, 1000);
-     });
-     */
+    //el mostrem*/
 }
 
 function initOmplirBotonsBoletes() {
-    omplirBotoBoleta("#baixos4", "videoAlegriaMariona", "#videoAlegriaMariona", ".videoAlegriaMariona", "#divVideoAlegriaMariona", mourePis2);
-}
 
-function loadVideo(id) {
-    var video = videojs(id);
-    video.load();
-}
+    //Creem les instàncies
+    anxeneta = new Boleta("#anxeneta", new Video("videoTristesaMariona", "tristesa", colorTristesa, "anxeneta"));
+    aixecador = new Boleta("#aixecador", new Video("videoAlegriaMariona", "alegria", colorAlegria, "aixecador"));
+    dosos1 = new Boleta("#dosos1", new Video("videoEuforiaMariona", "euforia", colorEuforia, "dosos1"));
+    dosos2 = new Boleta("#dosos2", new Video("videoRabiaMariona", "rabia", colorRabia, "dosos2"));
+    tercos1 = new Boleta("#tercos1", new Video("videoAlegriaMariona", "alegria", colorAlegria, "tercos1"));
+    tercos2 = new Boleta("#tercos2", new Video("videoTristesaMariona", "tristesa", colorTristesa, "tercos2"));
+    tercos3 = new Boleta("#tercos3", new Video("videoRabiaMariona", "rabia", colorRabia, "tercos3"));
+    tercos4 = new Boleta("#tercos4", new Video("videoEuforia", "euforia", colorEuforia, "tercos4"));
+    segons1 = new Boleta("#segons1", new Video("videoEuforia", "euforia", colorEuforia, "segons1"));
+    segons2 = new Boleta("#segons2", new Video("videoRabiaMariona", "rabia", colorRabia, "segons2"));
+    segons3 = new Boleta("#segons3", new Video("videoTristesaCarol", "tristesa", colorTristesa, "segons3"));
+    segons4 = new Boleta("#segons4", new Video("videoAlegriaMariona", "alegria", colorAlegria, "segons4"));
+    baixos1 = new Boleta("#baixos1", new Video("videoRabiaMariona", "rabia", colorRabia, "baixos1"));
+    baixos2 = new Boleta("#baixos2", new Video("videoEuforia", "euforia", colorEuforia, "baixos2"));
+    baixos3 = new Boleta("#baixos3", new Video("videoAlegriaMariona", "alegria", colorAlegria, "baixos3"));
+    baixos4 = new Boleta("#baixos4", new Video("videoTristesaCarol", "tristesa", colorTristesa, "baixos4"));
 
-function playVideo(id) {
-    var video = videojs(id);
-    video.play();
-    video.isFullscreen(true);
-}
-
-function pauseVideo(id) {
-    var video = videojs(id);
-    video.pause();
-}
-
-function muteVideo(id) {
-    var video = videojs(id);
-    video.muted = !video.muted;
-}
-
-function animacioSeleccio() {
-    console.log("animació seleccio comença");
-    divVideos.fadeOut(1500);
-    setTimeout(function () {
-        $(".intro").fadeIn(2000);
-        console.log("animació seleccio acaba");
-    }, 2000);
-}
-
-function initCapsesSeleccio() {
-    $('#alegria').on("click", function () {
-        emocioSeleccio = "alegria";
-        divIntro.fadeOut(1500);
-        setTimeout(function () {
-            currentVideoID_JS = "videoAlegriaMariona";
-            currentVideoID_JQ = "#videoAlegriaMariona";
-            currentVideo = videojs(currentVideoID_JS);
-            currentVideoClass = $(".videoAlegriaMariona");
-            loadVideo(currentVideoID_JS);
-            setTimeout(function () {
-                $("#divVideos").fadeIn(1500);
-                btnSaltar.hide();
-                playVideo(currentVideoID_JS);
-                currentVideo.on("ended", function () {
-                    divVideos.fadeOut(1500);
-                    divCastell.fadeIn(1500);
-                    mostrarCastell = true;
-                    animacioInicial();
-                });
-            }, 1000);
-        }, 2000)
-    })
+    //le iniciem amb els events necessaris
+    anxeneta.init();
+    aixecador.init();
+    dosos1.init();
+    dosos2.init();
+    tercos1.init();
+    tercos2.init();
+    tercos3.init();
+    tercos4.init();
+    segons1.init();
+    segons2.init();
+    segons3.init();
+    segons4.init();
+    baixos1.init();
+    baixos2.init();
+    baixos3.init();
+    baixos4.init();
 }
 
 function animacioInicial() {
     console.log("animació inicial comença");
-    $(".intro").fadeOut(2000);
-    animarPis1 = true;
+    mostrarCastellInici();
+}
+
+function mostrarCastellInici() {
+    $('.pinya').show();
+    $('.liniesPinya').fadeIn(500);
     setTimeout(function () {
         $(".castell").fadeIn(1500);
         mostrarCastell = true;
         setTimeout(function () {
-            mostrarCastellInici();
+            $('.boleta').fadeIn(1500);
             setTimeout(function () {
-                mourePis1();
-            }, 3000);
-        }, 2000);
+               $('.liniesCastell').fadeIn(2000);
+            }, 1600);
+            console.log("animació inicial acaba");
+        }, 1000);
     }, 3000);
-    console.log("animació inicial acaba");
-}
-
-function mostrarCastellInici() {
-    $('.pisDiv1').show();
-    $('.pisDiv2').show();
-    $('.pisDiv3').show();
-    $('.pisDiv4').show();
-    setTimeout(function () {
-        $('.boleta').fadeIn(1500);
-    }, 2000);
-}
-
-function mourePis1() {
-    moureBoletaJQ('.baixos4', 10, "pujar", 1);
-    setTimeout(function () {
-        moureBoletaJQ('.baixos1', 10, "dreta", 1);
-        setTimeout(function () {
-            moureBoletaJQ('.baixos3', 10, "esquerra", 1);
-            setTimeout(function () {
-                moureBoletaJQ('.baixos2', 10, "baixar", 1);
-                setTimeout(function () {
-                    $('.pis1').fadeIn(1500);
-                }, 1000);
-            }, 1000);
-        }, 1000);
-    }, 1000);
-}
-
-function mourePis2() {
-    moureBoletaJQ('.segons1', 10, "dreta", 1);
-    moureBoletaJQ('.segons3', 10, "esquerra", 1);
-    setTimeout(function () {
-        moureBoletaJQ('.segons4', 10, "pujar", 1);
-        moureBoletaJQ('.segons1', 10, "pujar", 1);
-        moureBoletaJQ('.segons2', 10, "pujar", 1);
-        moureBoletaJQ('.segons3', 10, "pujar", 1);
-        setTimeout(function () {
-            $('.pis2').fadeIn(1500);
-        }, 1000);
-    }, 1000);
-}
-
-function mourePis3() {
-    moureBoletaJQ('.segons1', 10, "dreta", 1);
-    moureBoletaJQ('.segons3', 10, "esquerra", 1);
-    setTimeout(function () {
-        moureBoletaJQ('.segons4', 10, "pujar", 1);
-        moureBoletaJQ('.segons1', 10, "pujar", 1);
-        moureBoletaJQ('.segons2', 10, "pujar", 1);
-        moureBoletaJQ('.segons3', 10, "pujar", 1);
-        setTimeout(function () {
-            $('.pis2').fadeIn(1500);
-        }, 1000);
-    }, 1000);
-}
-
-function mourePis4() {
-    moureBoletaJQ('.segons1', 10, "dreta", 1);
-    moureBoletaJQ('.segons3', 10, "esquerra", 1);
-    setTimeout(function () {
-        moureBoletaJQ('.segons4', 10, "pujar", 1);
-        moureBoletaJQ('.segons1', 10, "pujar", 1);
-        moureBoletaJQ('.segons2', 10, "pujar", 1);
-        moureBoletaJQ('.segons3', 10, "pujar", 1);
-        setTimeout(function () {
-            $('.pis2').fadeIn(1500);
-        }, 1000);
-    }, 1000);
-}
-
-function mourePisAixecador() {
-    moureBoletaJQ('.aixecador', 10, "dreta", 1);
-    setTimeout(function () {
-        moureBoletaJQ('.aixecador', 10, "pujar", 1);
-    }, 1000);
-}
-
-function mourePisAnxeneta() {
-    moureBoletaJQ('.anxeneta', 10, "dreta", 1);
-    setTimeout(function () {
-        moureBoletaJQ('.anxeneta', 10, "pujar", 1);
-    }, 1000);
-}
-
-function moureBoletaJQ(divID, percentatge, direccio, durada_seg) {
-    var elem = $(divID);
-    var debug = "";
-    if (direccio === "pujar") {
-        debug = "-=" + percentatge + "vh";
-        elem.animate({marginTop: debug}, durada_seg*1000);
-    } else if (direccio === "dreta") {
-        debug = "+=" + percentatge + "vh";
-        elem.animate({marginLeft: debug}, durada_seg*1000);
-    } else if (direccio === "esquerra") {
-        debug = "-=" + percentatge + "vw";
-        elem.animate({marginLeft: debug}, durada_seg*1000);
-    } else if (direccio === "baixar") {
-        debug = "+=" + percentatge + "vh";
-        elem.animate({marginTop: debug}, durada_seg*1000);
-    }
-}
-
-function moureBoleta4JS(divID, Start, Finish, pujar) {
-    var elem = $(divID);
-    var pos = Start;
-    var id = setInterval(frame, 10);
-    function frame() {
-        if (pos === Finish) {
-            clearInterval(id);
-        } else {
-            if (pujar)
-            {
-                pos--;
-                elem.offsetTop = pos + 'px';
-                elem.offsetLeft = pos + 'px';
-            }
-            else {
-                pos++;
-                elem.offsetTop = pos + 'px';
-                elem.offsetLeft = pos + 'px';
-            }
-        }
-    }
 }
 
 $.fn.extend({
@@ -373,14 +191,6 @@ divCastell.click(function (e) {
             }
         });
     }
-});
-
-$('#iconVolume').click(function () {
-    currentVideo.muted = !currentVideo.muted;
-    if(currentVideo.muted)
-        document.getElementById("iconVolumeImage").className = "icon-volume-off";
-    else
-        document.getElementById("iconVolumeImage").className = "icon-volume-up";
 });
 
 $(document).mousemove(function(e){

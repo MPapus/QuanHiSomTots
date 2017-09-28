@@ -1,0 +1,11 @@
+MOV -> MP4
+
+ffmpeg -i input -vcodec libx264 -pix_fmt yuv420p -profile:v baseline -level 3 output.mp4
+
+MOV -> WEBM
+
+ffmpeg -i input -c:v libvpx -crf 10 -b:v 1M -c:a libvorbis output.webm
+
+Thumbnail
+
+ffmpeg -i input -ss 00:00:21.435 -vframes 1 output.png

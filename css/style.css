@@ -11,29 +11,18 @@ html {
 img {
     max-width: 100%;
     height: auto;
-    width: auto\9; /* ie8 */
-}
-.parent {
-    height: 0;
-    padding-bottom: 56.25%; /* 16:9 */
-    position: relative;
+    width: auto;
 }
 
-.child {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+path {
+    pointer-events: all;
 }
 
-.iconSocial, .iconSocial:visited, .iconSocial:hover{
-	color: white;
-    font-size: 2.5vh;
-	border:none;
-	outline:none;
-	text-decoration:none;
-	-webkit-tap-highlight-color: white;
-	padding-right: 9px;
+path:hover {
+    stroke-width: 15px;
+    stroke: transparent;
 }
+
 video {
 	object-fit: initial;
 	width: 100%;
@@ -42,24 +31,7 @@ video {
 body {
 	margin: 0;
 	overflow: hidden;
-    background-color: #303030 !important;
-    color: white;
-}
-.intro {
-    top: 32vh;
-    position: relative;
-    text-align: center;
-}
-.capsaIntro {
-    height: 36vh;
-    z-index: 100;
-}
-.capsaIntro:hover {
-    cursor: pointer;
-    z-index: 101;
-}
-.capsaIntro:after {
-    z-index: 100;
+    background-color: #000000;
 }
 .content {
     position: relative;
@@ -68,187 +40,28 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
 }
-.pis1{
-    margin-top: 500px;
-    margin-left: 792px;
-}
-.pis2{
-    margin-top: 410px;
-    margin-left: 792px;
-}
-.pis3{
-    margin-top: 320px;
-    margin-left: 792px;
-}
-.pis {
-    background: url("../img/pis.png") no-repeat;
-    background-position: center center;
-    display: none;
-    width: 26vh;
-    height: 26vh;
-    position: relative;
-    background-size: cover;
-}
-.boletaA {
-    width: 7vh !important;
-    height: 7vh !important;
-    background-image: url("../img/Bola-A.png") !important;
-}
-.boletaB {
-    width: 3.8vh !important;
-    height: 3.8vh !important;
-    background-image: url("../img/Bola-B.png") !important;
-}
-.boletaC {
-    width: 6vh !important;
-    height: 6vh !important;
-    background-image: url("../img/Bola-C.png") !important;
-}
-.boletaD {
-    width: 3vh !important;
-    height: 3vh !important;
-    background-image: url("../img/Bola-D.png") !important;
-}
-.boletaE {
-    width: 4.7vh !important;
-    height: 4.7vh !important;
-    background-image: url("../img/Bola-E.png") !important;
-}
-
-.boleta {
-    border: 1px solid red;
-    display: none;
-    background: no-repeat center;
-    position: relative;
-    z-index: 600;
-    background-size: cover;
-}
-.boleta:hover {
-    transform: scale(1.5);
-}
-.boleta:hover {
-    cursor: pointer;
-}
 .castell {
     width: 100%;
     height: 100%;
     display: none;
-    position: relative;
+    position: absolute;
     background-repeat: no-repeat;
     top: 0;
     right: 0;
     z-index: 9;
     background-size: 100%;
-    background-image: url("../img/pinya.png");
     background-position: center center;
 }
-.anxeneta {
-    top: 47vh;
-    left: 54vw;
+
+.btnsaltar {
+    position: absolute;
+    font-size:30px;
+    top: 90%;
+    left: 90%;
+    z-index: 601;
+    display: none;
 }
-.aixecador {
-    /* top: 87%; */
-    /* left: 47%; */
-    top: 95vh;
-    left: 47vw;
-}
-.dosos1 {
-    /* top: 61%; */
-    /* left: 33%; */
-    top: 61.2vh;
-    left: 32vw;
-}
-.dosos2 {
-    /* top: 61%; */
-    /* left: 61%; */
-    top: 53vh;
-    left: 62vw;
-}
-.tersos1 {
-    /* top: 61%; */
-    /* left: 35%; */
-    top: 61vh;
-    left: 34vw;
-}
-.tersos2 {
-    /* margin-top: 414px; */
-    /* margin-left: 914px; */
-    top: 50vh;
-    left: 53vw;
-}
-.tersos3 {
-    /* margin-top: 606px; */
-    /* margin-left: 1141px; */
-    top: 55vh;
-    left: 60vw;
-}
-.tersos4 {
-    /* margin-top: 824px; */
-    /* margin-left: 892px; */
-    top: 89vh;
-    left: 46.5vw;
-}
-.segons1 {
-    /* margin-top: 609px; */
-    /* margin-left: 691px; */
-    top: 61vh;
-    left: 36vw;
-}
-.segons2 {
-    /* margin-top: 432px; */
-    /* margin-left: 914px; */
-    top: 51vh;
-    left: 52vw;
-}
-.segons3 {
-    /* margin-top: 604px; */
-    /* margin-left: 1115px; */
-    top: 58vh;
-    left: 58vw;
-}
-.segons4 {
-    /* margin-top: 797px; */
-    /* margin-left: 892px; */
-    top: 84vh;
-    left: 46.5vw;
-}
-.baixos1 {
-    /* margin-top: 610px; */
-    /* margin-left: 719px; */
-    top: 61vh;
-    left: 38vw;
-}
-.baixos2 {
-    /* margin-top: 449px; */
-    /* margin-left: 914px; */
-    top: 52vh;
-    left: 51vw;
-}
-.baixos3 {
-    /* margin-top: 618px; */
-    /* margin-left: 1082px; */
-    top: 61vh;
-    left: 56vw;
-}
-.baixos4 {
-    /* margin-top: 777px; */
-    /* margin-left: 892px; */
-    top: 78vh;
-    left: 46.5vw;
-}
-.footer {
-	width: 100%;
-    height: 3vh;
-    top: 0;
-	position: absolute;
-	z-index: 551;
-	color: white;
-	background-color: #878787;
-	/*background-image: url("../assets/footer.png");*/
-    font-size: 0.8vw;
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
-}
+
 .btnEnter {
     position: absolute;
     font-size:30px;
@@ -263,68 +76,10 @@ body {
     cursor: pointer;
 }
 .videoFS {
+    min-width: 100%;
+    min-height: 100%;
     width: 100%;
-    height: 100%;
-}
-
-.footerIzq {
-    position: absolute;
-    display: inline-flex;
-}
-
-.footerDer {
-	position: absolute;
-	display: inline-flex;
-	left: 60%;
-    top: 0.4vh;
-}
-.footerDerDer {
-	position: absolute;
-	display: inline-flex;
-	right: 20px;
-	/* width: 25%; */
-}
-.footer-distibuted {
-	height: auto;
-	width: 100%;
-	position: relative;
-	top: 50%;
-	transform: translateY(-50%);
-	color: black;
-	margin: 0 auto;
-}
-@-webkit-keyframes blink {
-	0% {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
-}
-@-moz-keyframes blink {
-	0% {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
-}
-@-o-keyframes blink {
-	0% {
-		opacity: 1;
-	}
-	50% {
-		opacity: 0;
-	}
-	100% {
-		opacity: 1;
-	}
+    height: auto;
 }
 .portada {
 	-webkit-transform: translate(-50%, -50%);
@@ -335,10 +90,12 @@ body {
     width: 48vh;
     height: 48vh;
 	z-index: 600;
-	background-image: url("../img/logoT.png");
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
 }
+
+.portada video {
+    z-index: 400;
+}
+
 .portadaFull {
 	width: 100%;
 	height: 100%;
@@ -347,42 +104,9 @@ body {
 	bottom: 0;
 	left: 0;
 	z-index: 550;
-	/*background-image: url("../assets/tituloFull.png");*/
 
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
-}
-@-webkit-keyframes scaleAnimation {
-	0% {
-		-webkit-transform: scale(0.5);
-	}
-	10% {
-		-webkit-transform: scale(1);
-	}
-	20% {
-		-webkit-transform: scale(0.5);
-	}
-	30% {
-		-webkit-transform: scale(1);
-	}
-	40% {
-		-webkit-transform: scale(0.5);
-	}
-	50% {
-		-webkit-transform: scale(1);
-	}
-	60% {
-		-webkit-transform: scale(0.5);
-	}
-	70% {
-		-webkit-transform: scale(1);
-	}
-	80% {
-		-webkit-transform: scale(0.5);
-	}
-	100% {
-		-webkit-transform: scale(1);
-	}
 }
 .proyectoPag {
 	position: fixed;
@@ -408,12 +132,6 @@ body {
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 }
-.elProyecto:hover {
-	cursor: pointer;
-}
-.losCreditos:hover {
-	cursor: pointer;
-}
 .textoPags {
 	height: 100%;
 	overflow: hidden;
@@ -430,14 +148,6 @@ body {
 	top: 10%;
 	text-align: center;
 }
-@keyframes rotate {
-	0% {
-		transform: rotate(0deg);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
-}
 .columna {
 	width: 50%;
 	position: relative;
@@ -451,104 +161,30 @@ body {
 	display: inline-flex;
 	overflow-x: auto;
 }
-.videoFinal {
-	z-index: 700;
-	position: fixed;
-	top: 0;
-	left: 0;
-	height: 97%;
-	width: 100%;
+
+@keyframes flickerAnimation {
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
 }
-
-
-
-/* NOTE: The styles were added inline because Prefixfree needs access to your styles and they must be inlined if they are on local disk! */
-/*
-Player Skin Designer for Video.js
-http://videojs.com
-
-To customize the player skin edit
-the CSS below. Click "details"
-below to add comments or questions.
-This file uses some SCSS. Learn more
-at http://sass-lang.com/guide)
-
-This designer can be linked to at:
-https://codepen.io/heff/pen/EarCt/left/?editors=010
-*/
-.video-js {
-    /* The base font size controls the size of everything, not just text.
-       All dimensions use em-based sizes so that the scale along with the font size.
-       Try increasing it to 15px and see what happens. */
-    font-size: 10px;
-    /* The main font color changes the ICON COLORS as well as the text */
-    color: #fff;
+@-o-keyframes flickerAnimation{
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
 }
-
-/* The "Big Play Button" is the play button that shows before the video plays.
-   To center it set the align values to center and middle. The typical location
-   of the button is the center, but there is trend towards moving it to a corner
-   where it gets out of the way of valuable content in the poster image.*/
-.vjs-default-skin .vjs-big-play-button {
-    /* The font size is what makes the big play button...big.
-       All width/height values use ems, which are a multiple of the font size.
-       If the .video-js font-size is 10px, then 3em equals 30px.*/
-    font-size: 3em;
-    /* We're using SCSS vars here because the values are used in multiple places.
-       Now that font size is set, the following em values will be a multiple of the
-       new font size. If the font-size is 3em (30px), then setting any of
-       the following values to 3em would equal 30px. 3 * font-size. */
-    /* 1.5em = 45px default */
-    line-height: 1.5em;
-    height: 1.5em;
-    width: 3em;
-    /* 0.06666em = 2px default */
-    border: 0.06666em solid #fff;
-    /* 0.3em = 9px default */
-    border-radius: 0.3em;
-    /* Align top left. 0.5em = 15px default */
-    left: 0.5em;
-    top: 0.5em;
+@-moz-keyframes flickerAnimation{
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
 }
-
-/* The default color of control backgrounds is mostly black but with a little
-   bit of blue so it can still be seen on all-black video frames, which are common. */
-.video-js .vjs-control-bar,
-.video-js .vjs-big-play-button,
-.video-js .vjs-menu-button .vjs-menu-content {
-    /* IE8 - has no alpha support */
-    background-color: #2B333F;
-    /* Opacity: 1.0 = 100%, 0.0 = 0% */
-    background-color: rgba(43, 51, 63, 0.7);
+@-webkit-keyframes flickerAnimation{
+    0%   { opacity:1; }
+    50%  { opacity:0; }
+    100% { opacity:1; }
 }
-
-/* Slider - used for Volume bar and Progress bar */
-.video-js .vjs-slider {
-    background-color: #73859f;
-    background-color: rgba(115, 133, 159, 0.5);
-}
-
-/* The slider bar color is used for the progress bar and the volume bar
-   (the first two can be removed after a fix that's coming) */
-.video-js .vjs-volume-level,
-.video-js .vjs-play-progress,
-.video-js .vjs-slider-bar {
-    background: #fff;
-}
-
-/* The main progress bar also has a bar that shows how much has been loaded. */
-.video-js .vjs-load-progress {
-    /* For IE8 we'll lighten the color */
-    background: #bfc7d3;
-    /* Otherwise we'll rely on stacked opacities */
-    background: rgba(115, 133, 159, 0.5);
-}
-
-/* The load progress bar also has internal divs that represent
-   smaller disconnected loaded time ranges */
-.video-js .vjs-load-progress div {
-    /* For IE8 we'll lighten the color */
-    background: white;
-    /* Otherwise we'll rely on stacked opacities */
-    background: rgba(115, 133, 159, 0.75);
+.animate-flicker {
+    -webkit-animation: flickerAnimation 4s infinite;
+    -moz-animation: flickerAnimation 4s infinite;
+    -o-animation: flickerAnimation 4s infinite;
+    animation: flickerAnimation 4s infinite;
 }
