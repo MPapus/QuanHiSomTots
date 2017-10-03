@@ -19,8 +19,32 @@ path {
 }
 
 path:hover {
-    stroke-width: 15px;
-    stroke: transparent;
+    stroke-width: 30px !important;
+    stroke: transparent !important;
+}
+
+.pinyaEstatic {
+    stroke-width: 0 !important;
+    fill: url(#gradientInicial) !important;
+}
+
+.troncEstatic {
+    stroke-width: 0;
+    fill: "#e3e3e3";
+}
+
+.troncAnimar {
+    transition: fill 2s ease;
+    fill: "#e3e3e3";
+    stroke: "#e3e3e3";
+    transition-delay: 5s;
+    stroke-width: 0.4;
+    stroke-alignment: inner;
+}
+
+.pinyaAnimar {
+    stroke-alignment: inner;
+    stroke-width: 0.4;
 }
 
 video {
@@ -55,7 +79,6 @@ body {
 
 .btnsaltar {
     position: absolute;
-    font-size:30px;
     top: 90%;
     left: 90%;
     z-index: 601;
