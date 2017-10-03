@@ -39,3 +39,6 @@ Thumbs.db
 # Folders #
 ###########
 .idea/
+*.ai
+*.svg
+assets/
