@@ -120,7 +120,7 @@
             <a class="navbar-brand" href="#">QuanHiSomTots</a>
         </div>
         <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <!--li id="home" class="active"><a href="#">Home</a></li>
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Desplegable<span
                 class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -129,12 +129,16 @@
                     <li><a href="#">Pagina 3</a></li>
                 </ul>
             </li>
-            <li><a id="elProyecto" class="elProyecto" href="#">El Projecte</a></li>
-            <li><a id="losCreditos" class="losCreditos" href="#">Crèdits</a></li>
+            <li><a href="#">Ajuda</a></li-->
+            <li><a id="losCreditos" href="#">Crèdits</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <button class="btn btn-outline-secondary navbar-btn glyphicon glyphicon-fullscreen"
                     style="margin-right: 20px;" value="Pantalla Completa" onclick="toggleFullScreen()"></button>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <button id="elProyecto"  class="btn btn-outline-secondary navbar-btn glyphicon glyphicon-question-sign"
+                    style="margin-right: 20px;"></button>
         </ul>
     </div>
 </nav>
@@ -144,7 +148,7 @@
         function showbtnEnter() {
             setTimeout(function () {
                 $('.btnEnter').fadeIn(1500);
-            }, 1000/*5000*/);
+            }, 5000);
         }
     </script>
     <video id="logo"
@@ -169,24 +173,26 @@
                 <stop offset="100%" style="stop-color:rgb(182,182,182);stop-opacity:1"/>
             </linearGradient>
             <linearGradient id="gradientRabia" x1="0%" y1="0%" x2="50%" y2="100%">
-                <stop offset="0%" style="stop-color:rgb(104,104,104);stop-opacity:1" />
-                <stop offset="100%" style="stop-color:rgb(255,90,77);stop-opacity:1" />
+                <stop offset="0%" style="stop-color:rgb(104,104,104);stop-opacity:1"/>
+                <stop offset="100%" style="stop-color:rgb(255,90,77);stop-opacity:1"/>
             </linearGradient>
             <linearGradient id="gradientAlegria" x1="0%" y1="0%" x2="50%" y2="100%">
-                <stop offset="0%" style="stop-color:rgb(104,104,104);stop-opacity:1" />
-                <stop offset="100%" style="stop-color:rgb(255,193,77);stop-opacity:1" />
+                <stop offset="0%" style="stop-color:rgb(104,104,104);stop-opacity:1"/>
+                <stop offset="100%" style="stop-color:rgb(255,193,77);stop-opacity:1"/>
             </linearGradient>
             <linearGradient id="gradientEuforia" x1="0%" y1="0%" x2="50%" y2="100%">
-                <stop offset="0%" style="stop-color:rgb(104,104,104);stop-opacity:1" />
-                <stop offset="100%" style="stop-color:rgb(157,67,199);stop-opacity:1" />
+                <stop offset="0%" style="stop-color:rgb(104,104,104);stop-opacity:1"/>
+                <stop offset="100%" style="stop-color:rgb(157,67,199);stop-opacity:1"/>
             </linearGradient>
             <linearGradient id="gradientTristesa" x1="0%" y1="0%" x2="50%" y2="100%">
-                <stop offset="0%" style="stop-color:rgb(104,104,104);stop-opacity:1" />
-                <stop offset="100%" style="stop-color:rgb(61,171,191);stop-opacity:1" />
+                <stop offset="0%" style="stop-color:rgb(104,104,104);stop-opacity:1"/>
+                <stop offset="100%" style="stop-color:rgb(61,171,191);stop-opacity:1"/>
             </linearGradient>
         </defs>
         <title>Recurso 2</title>
-        <g id="fons"><rect id="fons-2" data-name="fons" width="2072" height="1143"/></g>
+        <g id="fons">
+            <rect id="fons-2" data-name="fons" width="2072" height="1143"/>
+        </g>
         <g id="tronc" fill="#000" stroke="#000" stroke-width="0.4" stroke-alignment="inner">
             <g id="pom_linies" data-name="pom linies">
                 <path id="linAnx"
@@ -274,14 +280,14 @@
             </g>
         </g>
         <g id="pinya" fill="#000" stroke="#000" stroke-width="0.4" stroke-alignment="inner">
-                <path id="p11"
-                      d="M826,704.7l2.89-.46c.29-.1.58-.21.89-.34,3.17-1.38,7.75-6.58,8-10.82a5.75,5.75,0,0,0-.13-3.85l0-.08L833.94,688a5.12,5.12,0,0,0-5.87,1.95,12.67,12.67,0,0,0-4.74,3.19C819.26,697.65,820.76,704.44,826,704.7ZM832.8,695a17.62,17.62,0,0,1,1.83-3.06,3.44,3.44,0,0,1,.27,1.08c0,.12,0,.23,0,.35a11.15,11.15,0,0,1-1.61,2.7A2.55,2.55,0,0,1,832,697C832.3,696.32,832.56,695.65,832.8,695Zm-2.39,5.72.47-1a3.76,3.76,0,0,0,.92-.06A13.62,13.62,0,0,1,830.41,700.69Zm-.43-9.05c.53-.19,1.07-.37,1.62-.52a28.69,28.69,0,0,0-1.61,4.17l-.17.46A3.89,3.89,0,0,1,830,691.64Zm-5.32,4a8.4,8.4,0,0,1,2.11-2.27,6.14,6.14,0,0,0,.25,2.45,6.76,6.76,0,0,0,1.63,2.88c-.5,1.13-1,2.26-1.54,3.39q-2.55.08-3.73-3.86A9.39,9.39,0,0,1,824.66,695.61Z"/>
-                <path id="p12"
-                    d="M844.88,763.84a37,37,0,0,1-4-8c-2.48-3.34-8.2-4.42-12.06-4.08a13.12,13.12,0,0,0-3,.65l-2,.87a14.72,14.72,0,0,0-3.5,2.63c-.55-1.12-2.57-.42-2.34,1,.08.5.17,1,.26,1.51a20.08,20.08,0,0,0-2.94,15.25c1.43,6.15,5.37,10.74,10.3,12.26l3.16.53a14.26,14.26,0,0,0,8.52-2.68c4.21-2.86,6.75-7.63,8.2-12.37a10.22,10.22,0,0,0,.38-4.32,5.27,5.27,0,0,0,.67-1.73A1.37,1.37,0,0,0,844.88,763.84Zm-3.8-1.47a45.32,45.32,0,0,1,.77,5,10.66,10.66,0,0,1-1.81.8c-.81-4.31-3.65-8.46-7.55-9.53a7.84,7.84,0,0,0-4.6.28q-.23-.41-.43-.86a9.14,9.14,0,0,1,1-.45c3.9-1.56,7.64.13,10.62,2.6A12.87,12.87,0,0,1,841.09,762.37ZM830.63,762a6,6,0,0,1-1-.72,5.44,5.44,0,0,1,.58-.11c2.72-.73,4.74,2.63,5.83,4.4a10.78,10.78,0,0,1,1.33,3.34,26.14,26.14,0,0,1-8.64.21q-2-4.33-1.12-6.31a7.77,7.77,0,0,0,1.73,1.39A1.28,1.28,0,0,0,830.63,762Zm3-7.18a12.24,12.24,0,0,0-7,1q-.12-.41-.24-.83A13.07,13.07,0,0,1,833.61,754.8ZM827,771.14c2.4.9,6.66,1.14,10.6.43-.31,3.1-2.5,5.49-6.91,4.87a9.07,9.07,0,0,1-7.45-6.69l-.21-.83a11.13,11.13,0,0,1,0-4.93A6.78,6.78,0,0,0,827,771.14ZM825.77,760a6.74,6.74,0,0,0-2.29,2.56,8.92,8.92,0,0,1,2-3.08Zm-1.41-4.12c.09.37.19.73.29,1.1a12,12,0,0,0-3.39,3.89c-.12-.61-.23-1.22-.34-1.84A11.25,11.25,0,0,1,824.35,755.92ZM819,762.75c.25,1.25.5,2.51.78,3.78a11.76,11.76,0,0,0,1,4.22,128.23,128.23,0,0,0,3.71,12.32C817.23,779.18,816.42,769.78,819,762.75Zm23.55,9.52c-1.85,6.06-8.1,12.79-14.75,11.91-1-2.54-1.89-5.11-2.7-7.72,3.15,2.6,7.24,3.79,10.93,1.92,2.9-1.46,4.18-4.35,4.24-7.48a14.9,14.9,0,0,0,2.46-1,1.12,1.12,0,0,0,.33,0A13.9,13.9,0,0,1,842.56,772.27Z"/>
-                <path id="p13"
-                    d="M895.55,817.47a11.71,11.71,0,0,0-1.58-.71l-.16-.15c0-.25.08-.5.1-.76.13-1.3-1.45-1.55-2.19-.79a18.62,18.62,0,0,0-9.55-2.46,16.71,16.71,0,0,1,.75-3.74c.51-1.57-1.95-2.23-2.46-.68a19.55,19.55,0,0,0-.93,4.75,7.83,7.83,0,0,0-4.93,3.24,8.85,8.85,0,0,0-.78,7.76,1.33,1.33,0,0,0-1,2.2l2,2.19,2.11,3a9.77,9.77,0,0,0,3.88,6.64,8.83,8.83,0,0,0,5.73,1.76l3-.61.59-.23c5-.72,9.16-6.33,9.67-11.66C900.16,823.87,898.75,819.21,895.55,817.47Zm-3.25,3.88c.3.22.6.45.89.7s.28.27.42.4c.12,2.13-.81,4-3.49,3.42a10,10,0,0,1-1.08-.31A13.71,13.71,0,0,0,892.3,821.36Zm-5.8,2.91a9.77,9.77,0,0,1-2.78-3.28,14,14,0,0,1,3-1.54,8.37,8.37,0,0,1,3.39.67A11,11,0,0,1,886.5,824.26Zm-3.09-8.92a13.32,13.32,0,0,1,5.3.94,12.85,12.85,0,0,0-2.42.66,11,11,0,0,0-3.81.66,15.7,15.7,0,0,1-.32-2.18C882.6,815.38,883,815.35,883.42,815.34Zm-2.77,9.06a7.51,7.51,0,0,1,1.22-1.8,13.48,13.48,0,0,0,2.43,2.83c-1.26.48-3.16.93-4.07,0C880.36,825,880.5,824.71,880.65,824.4Zm-3.3-1.6a5.55,5.55,0,0,0-.35,1.92,12.58,12.58,0,0,1-1.14-4.46c-.13-2.49,1.65-3.74,3.72-4.35a16.17,16.17,0,0,0,.58,3A8.4,8.4,0,0,0,877.35,822.79Zm15.27,11.6a8.17,8.17,0,0,1-2.18,1.6,8.32,8.32,0,0,1-6.22-1.94,30.42,30.42,0,0,1-4.8-5.39c0-.23.06-.46.1-.69a8.5,8.5,0,0,0,4.87.09,11.87,11.87,0,0,0,2.34-.93,15.39,15.39,0,0,0,2.72,1.2c3.13,1,5.16-.42,6.09-2.68C896.34,828.66,895,831.95,892.62,834.39Z"/>
-                <path id="p14"
-                    d="M945.4,834.26c-4.44-.19-8.38.23-11.67,3.43s-4.13,8.84-4.29,13.2a25.59,25.59,0,0,0,.07,2.88l.36,2.81c1.17,6.83,4.73,14.29,11,16.53,6.61,2.38,12.22-2.26,15.85-7.4a28.44,28.44,0,0,0,3.75-7.51l.71-2.6a25.22,25.22,0,0,0,.57-4.22,1.35,1.35,0,0,0,.14-.48c.37-4,1.5-9.66-2.05-12.8C955.69,834.45,950.65,834.49,945.4,834.26Zm10.65,27.57c-2.15,4.22-5.93,8.78-10.91,9.41-7.14.9-11.09-8.45-12.46-13.88,0-.16-.08-.33-.12-.5a1.44,1.44,0,0,0-.39-2.11c-1.12-7.93,1.29-17.56,10.56-18,.45,0,.92,0,1.37,0a13.47,13.47,0,0,0-2.89,1.68,13.07,13.07,0,0,0-3.47,4.09,1.39,1.39,0,0,0-1,2,19.7,19.7,0,0,0,1.2,16.1c4,7,15,8.11,16.86-.8a10.73,10.73,0,0,0-.47-5.43c1.3.68,2.58,1.43,3.82,2.24A34.11,34.11,0,0,1,956.06,861.83Zm-17.57-12.55a17.72,17.72,0,0,1,.79-3.79l.09-.24a22.13,22.13,0,0,1,7.47,2.33,7.66,7.66,0,0,1,2.13,2A21.7,21.7,0,0,0,938.49,849.28Zm12.41,3.56c2.1,4.73,2.32,10.74-3.15,11-6.73.27-9.27-6-9.38-11.86A19.87,19.87,0,0,1,950.9,852.84Zm8,1.22a39.42,39.42,0,0,0-6-3.19,22.54,22.54,0,0,0-2.59-3.77c-2.34-2.72-6.17-3.64-9.7-4.23,4.54-7,15.26-5.85,18.1,2.83A16.31,16.31,0,0,1,958.88,854.06Z"/>
+            <path id="p11"
+                  d="M826,704.7l2.89-.46c.29-.1.58-.21.89-.34,3.17-1.38,7.75-6.58,8-10.82a5.75,5.75,0,0,0-.13-3.85l0-.08L833.94,688a5.12,5.12,0,0,0-5.87,1.95,12.67,12.67,0,0,0-4.74,3.19C819.26,697.65,820.76,704.44,826,704.7ZM832.8,695a17.62,17.62,0,0,1,1.83-3.06,3.44,3.44,0,0,1,.27,1.08c0,.12,0,.23,0,.35a11.15,11.15,0,0,1-1.61,2.7A2.55,2.55,0,0,1,832,697C832.3,696.32,832.56,695.65,832.8,695Zm-2.39,5.72.47-1a3.76,3.76,0,0,0,.92-.06A13.62,13.62,0,0,1,830.41,700.69Zm-.43-9.05c.53-.19,1.07-.37,1.62-.52a28.69,28.69,0,0,0-1.61,4.17l-.17.46A3.89,3.89,0,0,1,830,691.64Zm-5.32,4a8.4,8.4,0,0,1,2.11-2.27,6.14,6.14,0,0,0,.25,2.45,6.76,6.76,0,0,0,1.63,2.88c-.5,1.13-1,2.26-1.54,3.39q-2.55.08-3.73-3.86A9.39,9.39,0,0,1,824.66,695.61Z"/>
+            <path id="p12"
+                  d="M844.88,763.84a37,37,0,0,1-4-8c-2.48-3.34-8.2-4.42-12.06-4.08a13.12,13.12,0,0,0-3,.65l-2,.87a14.72,14.72,0,0,0-3.5,2.63c-.55-1.12-2.57-.42-2.34,1,.08.5.17,1,.26,1.51a20.08,20.08,0,0,0-2.94,15.25c1.43,6.15,5.37,10.74,10.3,12.26l3.16.53a14.26,14.26,0,0,0,8.52-2.68c4.21-2.86,6.75-7.63,8.2-12.37a10.22,10.22,0,0,0,.38-4.32,5.27,5.27,0,0,0,.67-1.73A1.37,1.37,0,0,0,844.88,763.84Zm-3.8-1.47a45.32,45.32,0,0,1,.77,5,10.66,10.66,0,0,1-1.81.8c-.81-4.31-3.65-8.46-7.55-9.53a7.84,7.84,0,0,0-4.6.28q-.23-.41-.43-.86a9.14,9.14,0,0,1,1-.45c3.9-1.56,7.64.13,10.62,2.6A12.87,12.87,0,0,1,841.09,762.37ZM830.63,762a6,6,0,0,1-1-.72,5.44,5.44,0,0,1,.58-.11c2.72-.73,4.74,2.63,5.83,4.4a10.78,10.78,0,0,1,1.33,3.34,26.14,26.14,0,0,1-8.64.21q-2-4.33-1.12-6.31a7.77,7.77,0,0,0,1.73,1.39A1.28,1.28,0,0,0,830.63,762Zm3-7.18a12.24,12.24,0,0,0-7,1q-.12-.41-.24-.83A13.07,13.07,0,0,1,833.61,754.8ZM827,771.14c2.4.9,6.66,1.14,10.6.43-.31,3.1-2.5,5.49-6.91,4.87a9.07,9.07,0,0,1-7.45-6.69l-.21-.83a11.13,11.13,0,0,1,0-4.93A6.78,6.78,0,0,0,827,771.14ZM825.77,760a6.74,6.74,0,0,0-2.29,2.56,8.92,8.92,0,0,1,2-3.08Zm-1.41-4.12c.09.37.19.73.29,1.1a12,12,0,0,0-3.39,3.89c-.12-.61-.23-1.22-.34-1.84A11.25,11.25,0,0,1,824.35,755.92ZM819,762.75c.25,1.25.5,2.51.78,3.78a11.76,11.76,0,0,0,1,4.22,128.23,128.23,0,0,0,3.71,12.32C817.23,779.18,816.42,769.78,819,762.75Zm23.55,9.52c-1.85,6.06-8.1,12.79-14.75,11.91-1-2.54-1.89-5.11-2.7-7.72,3.15,2.6,7.24,3.79,10.93,1.92,2.9-1.46,4.18-4.35,4.24-7.48a14.9,14.9,0,0,0,2.46-1,1.12,1.12,0,0,0,.33,0A13.9,13.9,0,0,1,842.56,772.27Z"/>
+            <path id="p13"
+                  d="M895.55,817.47a11.71,11.71,0,0,0-1.58-.71l-.16-.15c0-.25.08-.5.1-.76.13-1.3-1.45-1.55-2.19-.79a18.62,18.62,0,0,0-9.55-2.46,16.71,16.71,0,0,1,.75-3.74c.51-1.57-1.95-2.23-2.46-.68a19.55,19.55,0,0,0-.93,4.75,7.83,7.83,0,0,0-4.93,3.24,8.85,8.85,0,0,0-.78,7.76,1.33,1.33,0,0,0-1,2.2l2,2.19,2.11,3a9.77,9.77,0,0,0,3.88,6.64,8.83,8.83,0,0,0,5.73,1.76l3-.61.59-.23c5-.72,9.16-6.33,9.67-11.66C900.16,823.87,898.75,819.21,895.55,817.47Zm-3.25,3.88c.3.22.6.45.89.7s.28.27.42.4c.12,2.13-.81,4-3.49,3.42a10,10,0,0,1-1.08-.31A13.71,13.71,0,0,0,892.3,821.36Zm-5.8,2.91a9.77,9.77,0,0,1-2.78-3.28,14,14,0,0,1,3-1.54,8.37,8.37,0,0,1,3.39.67A11,11,0,0,1,886.5,824.26Zm-3.09-8.92a13.32,13.32,0,0,1,5.3.94,12.85,12.85,0,0,0-2.42.66,11,11,0,0,0-3.81.66,15.7,15.7,0,0,1-.32-2.18C882.6,815.38,883,815.35,883.42,815.34Zm-2.77,9.06a7.51,7.51,0,0,1,1.22-1.8,13.48,13.48,0,0,0,2.43,2.83c-1.26.48-3.16.93-4.07,0C880.36,825,880.5,824.71,880.65,824.4Zm-3.3-1.6a5.55,5.55,0,0,0-.35,1.92,12.58,12.58,0,0,1-1.14-4.46c-.13-2.49,1.65-3.74,3.72-4.35a16.17,16.17,0,0,0,.58,3A8.4,8.4,0,0,0,877.35,822.79Zm15.27,11.6a8.17,8.17,0,0,1-2.18,1.6,8.32,8.32,0,0,1-6.22-1.94,30.42,30.42,0,0,1-4.8-5.39c0-.23.06-.46.1-.69a8.5,8.5,0,0,0,4.87.09,11.87,11.87,0,0,0,2.34-.93,15.39,15.39,0,0,0,2.72,1.2c3.13,1,5.16-.42,6.09-2.68C896.34,828.66,895,831.95,892.62,834.39Z"/>
+            <path id="p14"
+                  d="M945.4,834.26c-4.44-.19-8.38.23-11.67,3.43s-4.13,8.84-4.29,13.2a25.59,25.59,0,0,0,.07,2.88l.36,2.81c1.17,6.83,4.73,14.29,11,16.53,6.61,2.38,12.22-2.26,15.85-7.4a28.44,28.44,0,0,0,3.75-7.51l.71-2.6a25.22,25.22,0,0,0,.57-4.22,1.35,1.35,0,0,0,.14-.48c.37-4,1.5-9.66-2.05-12.8C955.69,834.45,950.65,834.49,945.4,834.26Zm10.65,27.57c-2.15,4.22-5.93,8.78-10.91,9.41-7.14.9-11.09-8.45-12.46-13.88,0-.16-.08-.33-.12-.5a1.44,1.44,0,0,0-.39-2.11c-1.12-7.93,1.29-17.56,10.56-18,.45,0,.92,0,1.37,0a13.47,13.47,0,0,0-2.89,1.68,13.07,13.07,0,0,0-3.47,4.09,1.39,1.39,0,0,0-1,2,19.7,19.7,0,0,0,1.2,16.1c4,7,15,8.11,16.86-.8a10.73,10.73,0,0,0-.47-5.43c1.3.68,2.58,1.43,3.82,2.24A34.11,34.11,0,0,1,956.06,861.83Zm-17.57-12.55a17.72,17.72,0,0,1,.79-3.79l.09-.24a22.13,22.13,0,0,1,7.47,2.33,7.66,7.66,0,0,1,2.13,2A21.7,21.7,0,0,0,938.49,849.28Zm12.41,3.56c2.1,4.73,2.32,10.74-3.15,11-6.73.27-9.27-6-9.38-11.86A19.87,19.87,0,0,1,950.9,852.84Zm8,1.22a39.42,39.42,0,0,0-6-3.19,22.54,22.54,0,0,0-2.59-3.77c-2.34-2.72-6.17-3.64-9.7-4.23,4.54-7,15.26-5.85,18.1,2.83A16.31,16.31,0,0,1,958.88,854.06Z"/>
             <path
                 d="M1362.23,1001.37c-2.72,1.46-5.17,3.72-7.83,5.4-4.09,2.58-8.21,5.1-12.33,7.63-5.06,3.11-9.83,6.64-15.52,8.46a104.79,104.79,0,0,1-21.59,4.61,31.18,31.18,0,0,1-9-.21,7.88,7.88,0,0,0-1.22-5.5c-.65-1.13-2.87-3.64-4.45-2.49a4,4,0,0,0-1.23,1.43,1.21,1.21,0,0,0-.83-.75,10.23,10.23,0,0,0-2-.11,14,14,0,0,0,1.44-2.29c.58-1.18,1-2.74.18-3.93-2.51-3.72-7.26,1.32-8.81,3.35a11.18,11.18,0,0,0-2.53,7.49c-1,.56-1.94,1.06-2.71,1.47-11.85,6.39-25.47,9.54-38.62,11.87-25,4.44-50.75,5-76.1,4.31a1.28,1.28,0,0,0,0,2.55c24.89.64,49.93,0,74.55-4,13.66-2.22,27.51-5.53,40-11.73,1.19-.59,2.47-1.25,3.75-2a5.87,5.87,0,0,0,2,1.87,6.48,6.48,0,0,0,4.4,1c3.06,2.67,8.37,3.26,11.06-.07,4.75,1.36,10.48.4,15.08-.28a110.78,110.78,0,0,0,19.13-4.66c5.2-1.75,9.76-5.3,14.4-8.15q5.78-3.54,11.53-7.13c2.88-1.8,5.67-4.31,8.63-5.9C1365,1002.8,1363.68,1000.59,1362.23,1001.37Zm-69.71,21.68a4,4,0,0,1,.89,3.39,4.5,4.5,0,0,1-1.47-1.2C1291.24,1024.36,1290.71,1020.51,1292.52,1023.06Zm-5.55.34a3.2,3.2,0,0,1-2.46,3.37,5.78,5.78,0,0,1-.37-.54C1282.24,1023,1286.76,1021.17,1287,1023.4Zm-1.27-8.36a.44.44,0,0,1,0,.31c-.46,3-3.55,5.6-6.7,7.61C1279.62,1020.29,1283.12,1013.78,1285.7,1015Zm-6.12,10.55c.53-.33,1-.68,1.56-1a7.25,7.25,0,0,0,.55,2.35A3.66,3.66,0,0,1,1279.58,1025.59Zm7,2.84a7.48,7.48,0,0,0,2.4-3.75,8.29,8.29,0,0,0,2.78,3.69A5.94,5.94,0,0,1,1286.6,1028.43Z"/>
             <path
@@ -344,40 +350,57 @@
 
 
 <div id="divVideos" style="display: none">
-    <video id="videoIntro" controls
+    <video id="teaser" controls
            data-setup='{ "preload": "none", "controls": false, "language": "ca", "BigPlayButton": false }'
            class="video-js videoFS" onplay="setTimeout(function(){mostrarDivVideos()}, 1200)">
-        <source src="videos/teaser.webm" type="video/webm"/>
+        <source src="videos/teaser.webm" type="video/webm; codecs=vp9,vorbis"/>
+        <source src="videos/teaser.mp4" type="video/mp4"/>
     </video>
-    <video class="video-js videoFS" id="videoAlegriaMariona" preload="none" controls
-           data-setup='{ "preload": "none", "controls": false, "language": "ca", "BigPlayButton": false }'>
-        <source src="videos/popcornplug.webm" type="video/webm"/>
+    <video class="video-js videoFS" id="CAlegria" preload="none" controls
+           data-setup='{ "preload": "none", "controls": true, "language": "ca", "BigPlayButton": false }'>
+        <source src="videos/CAlegria.mp4" type="video/mp4"/>
+        <source src="videos/CAlegria.webm" type="video/webm; codecs=vp9,vorbis"/>
     </video>
-    <video class="video-js videoFS" id="videoTristesaMariona" preload="none" controls
-           data-setup='{ "preload": "none", "controls": false, "language": "ca", "BigPlayButton": false }'>
-        <source src="videos/popcornplug.webm" type="video/webm"/>
+    <video class="video-js videoFS" id="CTristesa" preload="none" controls
+           data-setup='{ "preload": "none", "controls": true, "language": "ca", "BigPlayButton": false }'>
+        <source src="videos/CTristesa.mp4" type="video/mp4"/>
+        <source src="videos/CTristesa.webm" type="video/webm; codecs=vp9,vorbis"/>
     </video>
-    <video class="video-js videoFS" id="videoEuforiaMariona" preload="none" controls
-           data-setup='{ "preload": "none", "controls": false, "language": "ca", "BigPlayButton": false }'>
-        <source src="videos/popcornplug.webm" type="video/webm"/>
+    <video class="video-js videoFS" id="CPor" preload="none" controls
+           data-setup='{ "preload": "none", "controls": true, "language": "ca", "BigPlayButton": false }'>
+        <source src="videos/CPor.mp4" type="video/mp4"/>
+        <source src="videos/CPor.webm" type="video/webm; codecs=vp9,vorbis"/>
     </video>
-    <video class="video-js videoFS" id="videoRabiaMariona" preload="none" controls
-           data-setup='{ "preload": "none", "controls": false, "language": "ca", "BigPlayButton": false }'>
-        <source src="videos/popcornplug.webm" type="video/webm"/>
+    <video class="video-js videoFS" id="CRabia" preload="none" controls
+           data-setup='{ "preload": "none", "controls": true, "language": "ca", "BigPlayButton": false }'>
+        <source src="videos/CRabia.mp4" type="video/mp4"/>
+        <source src="videos/CRabia.webm" type="video/webm; codecs=vp9,vorbis"/>
     </video>
-    <video class="video-js videoFS" id="videoAlegriaCarol" preload="none" controls
-           data-setup='{ "preload": "none", "controls": false, "language": "ca", "BigPlayButton": false }'>
-        <source src="videos/popcornplug.webm" type="video/webm"/>
+    <video class="video-js videoFS" id="MAlegria" preload="none" controls
+           data-setup='{ "preload": "none", "controls": true, "language": "ca", "BigPlayButton": false }'>
+        <source src="videos/MAlegria.mp4" type="video/mp4"/>
+        <source src="videos/MAlegria.webm" type="video/webm; codecs=vp9,vorbis"/>
     </video>
-    <video class="video-js videoFS" id="videoTristesaCarol" preload="none" controls
-           data-setup='{ "preload": "none", "controls": false, "language": "ca", "BigPlayButton": false }'>
-        <source src="videos/popcornplug.webm" type="video/webm"/>
+    <video class="video-js videoFS" id="MTristesa" preload="none" controls
+           data-setup='{ "preload": "none", "controls": true, "language": "ca", "BigPlayButton": false }'>
+        <source src="videos/MTristesa.mp4" type="video/mp4"/>
+        <source src="videos/MTristesa.webm" type="video/webm; codecs=vp9,vorbis"/>
+    </video>
+    <video class="video-js videoFS" id="MRabia" preload="none" controls
+           data-setup='{ "preload": "none", "controls": true, "language": "ca", "BigPlayButton": false }'>
+        <source src="videos/MRabia.mp4" type="video/mp4"/>
+        <source src="videos/MRabia.webm" type="video/webm; codecs=vp9,vorbis"/>
+    </video>
+    <video class="video-js videoFS" id="MPor" preload="none" controls
+           data-setup='{ "preload": "none", "controls": true, "language": "ca", "BigPlayButton": false }'>
+        <source src="videos/MPor.mp4" type="video/mp4"/>
+        <source src="videos/MPor.webm" type="video/webm; codecs=vp9,vorbis"/>
     </video>
 </div>
 
 <div>
-    <button type="button" class="btn btn-info btnSaltar btn-lg" style="display: none">
-        <span></span>Saltar
+    <button id="btnSaltar" type="button" class="btn btn-info btnSaltar btn-lg" style="display: none">
+        <span>Saltar</span>
     </button>
 </div>
 
@@ -385,8 +408,7 @@
 <div class="proyectoPag" style="display: none">
     <div class="textoPagsc">
         <h2>QUAN HI SOM TOTS</h2>
-        <p>Quan Hi Som Tots és un documental interactiu que es focalitza en les emocions relacionades amb el món dels
-            castells. </p>
+        <p>Benvingut a “Quan Hi Som Tots”, un documental sobre les emocions castelleres. Per descobrir que s’amaga darrere aquesta tradició, només has de navegar pel web. Veuràs que els nusos canvien de color. Aquests colors representen que els clips que pots triar versen sobre una d’aquestes quatre emocions: Groc per alegria, Lila per Por, Vermell per Ràbia i Blau per Tristesa. Després de la primera tria, s’inclourà la pinya. Aquesta està formada per continguts que hem arreplegat de les xarxes socials. Si vols participar, etiqueta’ns a les teves publicacions amb #QHST i l’emoció que representen (#QHSTAlegria, #QHSTTristesa, #QHSTPor, #QHSTRabia).</p>
     </div>
 </div>
 <div class="creditosPag" style="display: none">
@@ -487,7 +509,7 @@
 <script src="js/tweets.js" type="text/javascript"></script>
 <script src="js/vendor/jquery-ui.js" type="text/javascript"></script>
 <script src="js/vendor/jquery.easing.1.3.js" type="text/javascript"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js"></script>
+<script src="js/vendor/sha1.js"></script>
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
         integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"

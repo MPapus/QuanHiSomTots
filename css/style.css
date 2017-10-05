@@ -18,45 +18,17 @@ path {
     pointer-events: all;
 }
 
-path:hover {
+.pathHover {
     stroke-width: 30px !important;
     stroke: transparent !important;
 }
 
-.pinyaEstatic {
-    stroke-width: 0 !important;
-    fill: url(#gradientInicial) !important;
-}
-
-.troncEstatic {
-    stroke-width: 0;
-    fill: "#e3e3e3";
-}
-
-.troncAnimar {
-    transition: fill 2s ease;
-    fill: "#e3e3e3";
-    stroke: "#e3e3e3";
-    transition-delay: 5s;
-    stroke-width: 0.4;
-    stroke-alignment: inner;
-}
-
-.pinyaAnimar {
-    stroke-alignment: inner;
-    stroke-width: 0.4;
-}
-
-video {
-	object-fit: initial;
-	width: 100%;
-	height: 100%;
-}
 body {
 	margin: 0;
 	overflow: hidden;
     background-color: #000000;
 }
+
 .content {
     position: relative;
     float: left;
@@ -113,10 +85,6 @@ body {
     width: 48vh;
     height: 48vh;
 	z-index: 600;
-}
-
-.portada video {
-    z-index: 400;
 }
 
 .portadaFull {
@@ -184,7 +152,15 @@ body {
 	display: inline-flex;
 	overflow-x: auto;
 }
-
+/*
+######################################################
+######################################################
+##########                                ############
+##########     ANIMACIÓ BOTÓ SALTAR       ############
+##########                                ############
+######################################################
+######################################################
+*/
 @keyframes flickerAnimation {
     0%   { opacity:1; }
     50%  { opacity:0; }

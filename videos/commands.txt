@@ -9,3 +9,29 @@ ffmpeg -i input -c:v libvpx -crf 10 -b:v 1M -c:a libvorbis output.webm
 Thumbnail
 
 ffmpeg -i input -ss 00:00:21.435 -vframes 1 output.png
+
+MP4 -> OGG
+
+ffmpeg -i input.mp4 -acodec libvorbis -vcodec libtheora -f ogv output.ogv
+
+-----> MP4
+
+ffmpeg -i input.mov -vcodec libx264 -pix_fmt yuv420p -profile:v baseline -level 3 output.mp4
+
+(without audio stream)
+ffmpeg -an -i input.mov -vcodec libx264 -pix_fmt yuv420p -profile:v baseline -level 3 output.mp4
+
+-----> WEBM
+
+(1st)
+ffmpeg -i Teaser1080.mp4 -c:v libvpx-vp9 -pass 1 -b:v 1000K -threads 1 -speed 4 \
+  -tile-columns 0 -frame-parallel 0 -auto-alt-ref 1 -lag-in-frames 25 \
+  -g 9999 -aq-mode 0 -an -f webm NUL
+  
+(2nd)
+ffmpeg -i CAlegria1080.mp4 -c:v libvpx-vp9 -pass 2 -b:v 1000K -threads 1 -speed 0 \
+  -tile-columns 0 -frame-parallel 0 -auto-alt-ref 1 -lag-in-frames 25 \
+  -g 9999 -aq-mode 0 -c:a libopus -b:a 64k -f webm CAlegria.webm
+  
+(1 step only)
+ffmpeg -i input.mov -vcodec libvpx-vp9 -b:v 1M -acodec libvorbis output.webm
