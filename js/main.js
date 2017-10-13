@@ -54,11 +54,11 @@ function init() {
             toggleFullScreen();
 
             window.vplayer.play();
+
             setTimeout(function () {
                 btnSaltar.addClass("animate-flicker");
                 btnSaltar.show();
             }, 5000);
-            window.vplayer.userActive(true);
             window.vplayer.isFullscreen(true);
 
             window.vplayer.one("ended", function () {

@@ -30,14 +30,18 @@ function Boleta(idBoletaHTML, video) {
     this.init = function () {
         //si és instancia de Video llavors es una bola del tronc
         if (video instanceof Video) {
+
             var vid = this.getVideo();
+
             this.boleta.mouseenter(function () {
                 $(this).css("fill", EMOCIO.properties[vid.getVideoEmotion()].color).css("cursor", "pointer");
                 $(this).addClass("pathHover");
+                //$(this).tooltip({ content: '<img src="../img/miriam.png" />' });
             }).mouseleave(function () {
                 $(this).css("fill", "#e3e3e3").css("cursor", "none");
                 $(this).removeClass("pathHover");
             });
+
             this.boleta.on("click", function () {
                 if (!DictContainsValue(clickedButtons, vid.getVideoBoleta()))
                     clickedButtons[vid.getVideoBoleta()] = 1;
@@ -55,11 +59,6 @@ function Boleta(idBoletaHTML, video) {
                     mostrarDivVideos();
                     window.vplayer.play();
                     lastEmotionPlayed = vid.getVideoEmotion();
-                    setTimeout(function () {
-                        btnSaltar.addClass("animate-flicker");
-                        btnSaltar.show();
-                    }, 1000);
-                    window.vplayer.userActive(true);
                     window.vplayer.isFullscreen(true);
                 });
 
@@ -118,6 +117,7 @@ function Video(videoTag, videoEmotion, boleta) {
 
 
 function setUp() {
+
     amagarDivVideos();
     mostrarDivCastell();
 
@@ -131,7 +131,7 @@ function setUp() {
             removeAnimationAttr($("#baixos_linies"));
             createBotonsBoletesBaixos();
             $('.navbar').show();
-        }, 3900);
+        }, 4000);
     }, 4000);
 }
 
@@ -304,44 +304,46 @@ jQuery.extend(jQuery.easing,
 
 function checkForNewAnimations() {
 
-    btnSaltar.removeClass("animate-flicker");
-    btnSaltar.hide();
     amagarDivVideos();
     mostrarDivCastell();
-    if (fase >= FASE.Pinya)
-        canviarColorPinnya();
 
-    if (((clickedButtons[baixos1.boleta.attr("id")] >= 1) || (clickedButtons[baixos2.boleta.attr("id")] >= 1) /*|| (clickedButtons[baixos3.boleta.id] >= 1) || (clickedButtons[baixos4.boleta.id] >= 1)*/)
+    if (fase >= FASE.Pinya)
+        canviarColorPinya();
+
+    if (((clickedButtons["baixos1"] >= 1) || (clickedButtons["baixos2"] >= 1) /*|| (clickedButtons["baixos3"] >= 1) || (clickedButtons["baixos4"] >= 1)*/)
         && fase < FASE.Pinya) {
         fase = FASE.Pinya;
         animarPinya(4);
         setTimeout(function () {
             createBotonsBoletesPinya();
-        }, 5000);
+        }, 4000);
     }
+
     if (((clickedButtons["baixos1"] >= 1) && (clickedButtons["baixos2"] >= 1) /*|| (clickedButtons["baixos3"] >= 1) || (clickedButtons["baixos4"] >= 1)*/)
         && fase < FASE.Segons) {
         fase = FASE.Segons;
-        animarSegons(6);
+        animarSegons(4);
         setTimeout(function () {
             createBotonsBoletesSegons();
-        }, 5000);
+        }, 4000);
     }
+
     if ((/*(clickedButtons["segons1"] >= 1) || (clickedButtons["segons2"] || 1) ||*/ (clickedButtons["segons3"] >= 1) || (clickedButtons["segons4"] >= 1))
         && fase < FASE.Tercos) {
         fase = FASE.Tercos;
-        animarTercos(6);
+        animarTercos(4);
         setTimeout(function () {
             createBotonsBoletesTercos();
-        }, 5000);
+        }, 4000);
     }
+
     if (((clickedButtons["tercos1"] >= 1) || (clickedButtons["tercos2"] >= 1) /*|| (clickedButtons["tercos3"] >= 1) || (clickedButtons["tercos4"] >= 1)*/)
         && fase < FASE.Pom) {
         fase = FASE.Pom;
-        animarPom(6);
+        animarPom(4);
         setTimeout(function () {
             createBotonsBoletesPom();
-        }, 5000);
+        }, 4000);
     }
 }
 
@@ -418,7 +420,7 @@ function startSVGAnimation(parentElement, segons) {
     drawSVGPaths(parentElement, segons * 1000);
 }
 
-function canviarColorPinnya() {
+function canviarColorPinya() {
     console.log("canvio color a: " + EMOCIO.properties[lastEmotionPlayed].name + "(" + EMOCIO.properties[lastEmotionPlayed].color + ")");
     var gradient = "url(#gradient" + EMOCIO.properties[lastEmotionPlayed].name.toString().charAt(0).toUpperCase() + EMOCIO.properties[lastEmotionPlayed].name.substr(1) + ")";
     $("#pinya").css("fill", gradient).children().css("fill", gradient).attr("fill", gradient);
@@ -434,7 +436,7 @@ function animarPinya(segons) {
             //_pinyaLinies.css("fill", "url(#gradientInicial)");
             removeAnimationAttr(_pinya);
             removeAnimationAttr(_pinyaLinies);
-            canviarColorPinnya();
+            canviarColorPinya();
         }, (segons * 1000) + 100);
     }
 }
