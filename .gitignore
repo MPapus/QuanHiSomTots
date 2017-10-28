@@ -42,3 +42,12 @@ Thumbs.db
 *.ai
 *.svg
 assets/
+bower_components/
+css/vendor/tooltipster/
+fonts/
+js/vendor/
+node_modules/
+twitteroauth/
+videos/
+css/vendor/
+bower.json
