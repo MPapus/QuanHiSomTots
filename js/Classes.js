@@ -17,17 +17,15 @@ function Boleta(idBoletaHTML, video) {
     else {
     }
 
+    this.nodeName = null;
+
     this.boleta = $(idBoletaHTML);
 
     this.getVideo = function () {
         return this.video;
     };
 
-    this.getBoletaHTML = function () {
-        return this.boleta.attr("id");
-    };
-
-    this.init = function () {
+    this.init = function (nodeName) {
         //si és instancia de Video llavors es una bola del tronc
         if (video instanceof Video) {
 
@@ -36,34 +34,37 @@ function Boleta(idBoletaHTML, video) {
             this.boleta.mouseenter(function () {
                 $(this).css("fill", EMOCIO.properties[vid.getVideoEmotion()].color).css("cursor", "pointer");
                 $(this).addClass("pathHover");
-                //$(this).tooltip({ content: '<img src="../img/miriam.png" />' });
+                var firstLetter = vid.getVideoTag().toString()[0].toLowerCase();
+                var name = firstLetter === "c" ? "carol" : "miriam";
+                tooltip.show('<img src=\'img/' + name + '.png\' width=\'150\' height=\'auto\'/>', 150);
             }).mouseleave(function () {
-                $(this).css("fill", "#e3e3e3").css("cursor", "none");
+                $(this).css("fill", "#e3e3e3").css("cursor", "default");
                 $(this).removeClass("pathHover");
+                tooltip.hide();
             });
 
             this.boleta.on("click", function () {
-                if (!DictContainsValue(clickedButtons, vid.getVideoBoleta()))
-                    clickedButtons[vid.getVideoBoleta()] = 1;
+                currentTreeNodeName = nodeName;
+                if (!DictContainsValue(clickedButtons, this.id))
+                    clickedButtons[this.id] = 1;
                 else
-                    clickedButtons[vid.getVideoBoleta()] = clickedButtons[vid.getVideoBoleta()] + 1;
-                currentVideo = vid.getVideoTag();
-                divCurrentVideo = vid.getVideoDiv();
-                vid.changeSource();
-                amagarDivCastell();
-                mostrarDivVideos();
-                $(divCurrentVideo).show();
-                window.vplayer.play();
-                window.vplayer.on('loadedmetadata', function () {
-                    amagarDivCastell();
-                    mostrarDivVideos();
-                    window.vplayer.play();
-                    lastEmotionPlayed = vid.getVideoEmotion();
-                    window.vplayer.isFullscreen(true);
-                });
+                    clickedButtons[this.id] = clickedButtons[this.id] + 1;
 
-                window.vplayer.on("ended", function () {
+                currentVideo = vid.getVideoTag();
+                vid.changeSource();
+                window.vplayer.play();
+
+                setTimeout(function () {
+                    btnSaltar.addClass("animate-flicker");
+                    btnSaltar.show();
+                }, 5000);
+
+                lastEmotionPlayed = vid.getVideoEmotion();
+
+                window.vplayer.one("ended", function () {
                     checkForNewAnimations();
+
+                    lastEmotionPlayed = vid.getVideoEmotion();
                 });
             });
         }
@@ -82,29 +83,25 @@ function Boleta(idBoletaHTML, video) {
                 }
             });
         }
+    };
+
+    this.clean = function () {
+        this.boleta.unbind("mouseenter");
+        this.boleta.unbind("mouseleave");
+        this.boleta.off();
     }
 }
 
-function Video(videoTag, videoEmotion, boleta) {
+function Video(videoTag, videoEmotion) {
     this.videoTag = videoTag;
-    this.videoDiv = "#video" + boleta.toString().charAt(0).toUpperCase() + boleta.substr(1);
     this.emotion = videoEmotion;
-    this.boleta = boleta;
 
     this.getVideoEmotion = function () {
         return this.emotion;
     };
 
-    this.getVideoBoleta = function () {
-        return this.boleta;
-    };
-
     this.getVideoTag = function () {
         return this.videoTag;
-    };
-
-    this.getVideoDiv = function () {
-        return this.videoDiv;
     };
 
     this.changeSource = function () {
@@ -115,8 +112,11 @@ function Video(videoTag, videoEmotion, boleta) {
     };
 }
 
-
 function setUp() {
+
+    initTrees();
+
+    clickedButtons = {};
 
     amagarDivVideos();
     mostrarDivCastell();
@@ -125,14 +125,41 @@ function setUp() {
     btnSaltar.hide();
 
     setTimeout(function () {
-        animarBaixos(4);
-        setTimeout(function () {
-            removeAnimationAttr($("#baixos"));
-            removeAnimationAttr($("#baixos_linies"));
+        if (fase < FASE.Baixos) {
+            fase = FASE.Baixos;
+            animarBaixos();
+        }
+        else
             createBotonsBoletesBaixos();
-            $('.navbar').show();
-        }, 4000);
-    }, 4000);
+    }, 1000);
+}
+
+function initTrees() {
+
+    _DEBUT = new Tree('ACarol1', new Boleta("#baixos" + (a1[0] + 1).toString(), new Video("CAlegria", EMOCIO.Alegria)));
+    _DEBUT.add('MAlegria2', new Boleta("#segons" + (a2[0] + 1).toString(), new Video("MAlegria", EMOCIO.Alegria)), 'ACarol1', _DEBUT.traverseBF);
+    _DEBUT.add('CPor31', new Boleta("#tercos" + (a3[0] + 1).toString(), new Video("CPor", EMOCIO.Por)), 'MAlegria2', _DEBUT.traverseBF);
+    _DEBUT.add('CTristesa41', new Boleta("#pom" + (a4[0] + 1).toString(), new Video("CTristesa", EMOCIO.Tristesa)), 'CPor31', _DEBUT.traverseBF);
+    _DEBUT.add('CTristesa3', new Boleta("#tercos" + (a3[1] + 1).toString(), new Video("CTristesa", EMOCIO.Tristesa)), 'MAlegria2', _DEBUT.traverseBF);
+    _DEBUT.add('CPor4', new Boleta("#pom" + (a4[0] + 1).toString(), new Video("CPor", EMOCIO.Por)), 'CTristesa3', _DEBUT.traverseBF);
+    _DEBUT.add('CPor2', new Boleta("#segons" + (a2[1] + 1).toString(), new Video("CPor", EMOCIO.Por)), 'ACarol1', _DEBUT.traverseBF);
+    _DEBUT.add('MPor3', new Boleta("#tercos" + (a3[0] + 1).toString(), new Video("MPor", EMOCIO.Por)), 'CPor2', _DEBUT.traverseBF);
+    _DEBUT.add('CTristesa42', new Boleta("#pom" + (a4[0] + 1).toString(), new Video("CTristesa", EMOCIO.Tristesa)), 'MPor3', _DEBUT.traverseBF);
+    _DEBUT.add('MAlegria4', new Boleta("#pom" + (a4[1] + 1).toString(), new Video("MAlegria", EMOCIO.Alegria)), 'MPor3', _DEBUT.traverseBF);
+    _DEBUT.add('CRabia2', new Boleta("#segons" + (a2[2] + 1).toString(), new Video("CRabia", EMOCIO.Rabia)), 'ACarol1', _DEBUT.traverseBF);
+    _DEBUT.add('CPor32', new Boleta("#tercos" + (a3[0] + 1).toString(), new Video("CPor", EMOCIO.Por)), 'CRabia2', _DEBUT.traverseBF);
+    _DEBUT.add('CTristesa43', new Boleta("#pom" + (a4[0] + 1).toString(), new Video("CTristesa", EMOCIO.Tristesa)), 'CPor32', _DEBUT.traverseBF);
+
+
+    _SEGONA = new Tree('MTristesa1', new Boleta('#baixos' + (a1[1] + 1).toString(), new Video("MTristesa", EMOCIO.Tristesa)));
+    _SEGONA.add('MPor2', new Boleta('#segons' + (a2[3] + 1).toString(), new Video('MPor', EMOCIO.Por)), 'MTristesa1', _SEGONA.traverseBF);
+    _SEGONA.add('MRabia3', new Boleta('#tercos' + (a3[2] + 1).toString(), new Video('MRabia', EMOCIO.Rabia)), 'MPor2', _SEGONA.traverseBF);
+    _SEGONA.add('MAlegria4', new Boleta('#pom' + (a4[2] + 1).toString(), new Video('MAlegria', EMOCIO.Alegria)), 'MRabia3', _SEGONA.traverseBF);
+    _SEGONA.add('CRabia31', new Boleta('#tercos' + (a3[3] + 1).toString(), new Video('CRabia', EMOCIO.Rabia)), 'MPor2', _SEGONA.traverseBF);
+    _SEGONA.add('MRabia4', new Boleta('#pom' + (a4[3] + 1).toString(), new Video('MRabia', EMOCIO.Rabia)), 'CRabia31', _SEGONA.traverseBF);
+    _SEGONA.add('CTristesa2', new Boleta('#segons' + (a2[2] + 1).toString(), new Video('CTristesa', EMOCIO.Tristesa)), 'MTristesa1', _SEGONA.traverseBF);
+    _SEGONA.add('CRabia32', new Boleta('#tercos' + (a3[0] + 1).toString(), new Video('CRabia', EMOCIO.Rabia)), 'CTristesa2', _SEGONA.traverseBF);
+    _SEGONA.add('MPor4', new Boleta('#pom' + (a4[3] + 1).toString(), new Video('MPor', EMOCIO.Por)), 'CRabia32', _SEGONA.traverseBF);
 }
 
 /*
@@ -188,77 +215,114 @@ function amagarDivCastell() {
 ######################################################
 ######################################################
 */
+function initBtnHome() {
+    clickedButtons[btnHome.attr("id")] = 0;
+    btnHome.fadeIn(1500)
+        .on("click", function () {
+
+            btnHome.fadeOut(1500);
+
+            clickedButtons[btnHome.attr("id")] = clickedButtons[btnHome.attr("id")] + 1;
+
+            amagarCastellPintant();
+
+            arr = [];
+            parent = "";
+            $.each(_TREE._root.children[0].children[0].children, function () {
+                this.data.clean();
+                arr.push(this.name);
+                parent = this.parent.name;
+            });
+
+            $.each(arr, function () {
+                _TREE.remove(this.toString(), parent, _TREE.traverseBF);
+            });
+
+            arr = [];
+            parent = "";
+            $.each(_TREE._root.children[0].children, function () {
+                this.data.clean();
+                arr.push(this.name);
+                parent = this.parent.name;
+            });
+
+            $.each(arr, function () {
+                _TREE.remove(this.toString(), parent, _TREE.traverseBF);
+            });
+
+            arr = [];
+            parent = "";
+            $.each(_TREE._root.children, function () {
+                this.data.clean();
+                arr.push(this.name);
+                parent = this.parent.name;
+            });
+
+            $.each(arr, function () {
+                _TREE.remove(this.toString(), parent, _TREE.traverseBF);
+            });
+
+            _DEBUT._root.data.clean();
+            _SEGONA._root.data.clean();
+
+            setTimeout(function () {
+                fase = FASE.Pinya;
+                setUp();
+            }, 2000);
+        });
+
+
+}
+
 function initBtnSaltar() {
     //fem set de l'event click
     btnSaltar.on("click", function () {
         window.vplayer.pause();
         if (fase < FASE.Baixos) {
-            fase = FASE.Baixos;
             setUp();
             clickedButtons[btnSaltar.attr("id")] = 1;
         }
         else {
             clickedButtons[btnSaltar.attr("id")] = clickedButtons[btnSaltar.attr("id")] + 1;
-            checkForNewAnimations();
+            checkForNewAnimations(currentTreeNodeName);
         }
     });
 }
 
 function createBotonsBoletesBaixos() {
-    baixos1 = new Boleta("#baixos1", new Video("CRabia", EMOCIO.Rabia, "baixos1"));
-    baixos2 = new Boleta("#baixos2", new Video("MPor", EMOCIO.Por, "baixos2"));
-
-    baixos1.init();
-    baixos2.init();
-    /*
-    baixos3 = new Boleta("#baixos3", new Video("videoAlegriaMariona", EMOCIO.Alegria, "baixos3"));
-    baixos4 = new Boleta("#baixos4", new Video("videoTristesaCarol", EMOCIO.Tristesa, "baixos4"));
-
-    baixos3.init();
-    baixos4.init();
-    */
+    _DEBUT._root.data.init(_DEBUT._root.name);
+    _SEGONA._root.data.init(_SEGONA._root.name);
 }
 
 function createBotonsBoletesSegons() {
-    /*
-    segons1 = new Boleta("#segons1", new Video("CPor", EMOCIO.Por, "segons1"));
-    segons2 = new Boleta("#segons2", new Video("MTristesa", EMOCIO.Tristesa, "segons2"));
 
-    segons1.init();
-    segons2.init();
-    */
-    segons3 = new Boleta("#segons3", new Video("CPor", EMOCIO.Por, "segons3"));
-    segons4 = new Boleta("#segons4", new Video("MTristesa", EMOCIO.Tristesa, "segons4"));
-
-    segons3.init();
-    segons4.init();
+    if (currentTreeNodeName === "ACarol1") {
+        $.each(_DEBUT._root.children, function () {
+            this.data.init(this.name);
+        });
+        _TREE = _DEBUT;
+        _SEGONA._root.data.clean();
+    }
+    else {
+        $.each(_SEGONA._root.children, function () {
+            this.data.init(this.name);
+        });
+        _TREE = _SEGONA;
+        _DEBUT._root.data.clean();
+    }
 }
 
 function createBotonsBoletesTercos() {
-    tercos1 = new Boleta("#tercos1", new Video("CAlegria", EMOCIO.Alegria, "tercos1"));
-    tercos2 = new Boleta("#tercos2", new Video("MRabia", EMOCIO.Tristesa, "tercos2"));
-
-    tercos1.init();
-    tercos2.init();
-    /*
-    tercos3 = new Boleta("#tercos3", new Video("videoRabiaMariona", EMOCIO.Rabia, "tercos3"));
-    tercos4 = new Boleta("#tercos4", new Video("videoPorMariona", EMOCIO.Por, "tercos4"));
-
-    tercos3.init();
-    tercos4.init();
-    */
+    $.each(_TREE._root.children[0].children, function () {
+        this.data.init(this.name);
+    });
 }
 
 function createBotonsBoletesPom() {
-    anxeneta = new Boleta("#anxeneta", new Video("CTristesa", EMOCIO.Tristesa, "anxeneta"));
-    aixecador = new Boleta("#aixecador", new Video("MAlegria", EMOCIO.Alegria, "aixecador"));
-    //dosos1 = new Boleta("#dosos1", new Video("videoPorMariona", EMOCIO.Por, "dosos1"));
-    //dosos2 = new Boleta("#dosos2", new Video("videoRabiaMariona", EMOCIO.Rabia, "dosos2"));
 
-    anxeneta.init();
-    aixecador.init();
-    //dosos1.init();
-    //dosos2.init();
+    $.each(_TREE._root.children[0].children[0].children, function () {
+        this.data.init(this.name);
+    });
 }
 
 function createBotonsBoletesPinya() {
@@ -304,185 +368,486 @@ jQuery.extend(jQuery.easing,
 
 function checkForNewAnimations() {
 
+    var arr = [];
+    var parent = "";
+
     amagarDivVideos();
     mostrarDivCastell();
 
-    if (fase >= FASE.Pinya)
+    btnSaltar.removeClass("animate-flicker");
+    btnSaltar.hide();
+
+    if (fase >= FASE.Pinya) {
         canviarColorPinya();
-
-    if (((clickedButtons["baixos1"] >= 1) || (clickedButtons["baixos2"] >= 1) /*|| (clickedButtons["baixos3"] >= 1) || (clickedButtons["baixos4"] >= 1)*/)
-        && fase < FASE.Pinya) {
-        fase = FASE.Pinya;
-        animarPinya(4);
-        setTimeout(function () {
-            createBotonsBoletesPinya();
-        }, 4000);
+        actualitzarTweets();
     }
 
-    if (((clickedButtons["baixos1"] >= 1) && (clickedButtons["baixos2"] >= 1) /*|| (clickedButtons["baixos3"] >= 1) || (clickedButtons["baixos4"] >= 1)*/)
+    if (fase === FASE.Pom)
+        initBtnHome();
+
+    if (((clickedButtons["baixos1"] >= 1) || (clickedButtons["baixos2"] >= 1) || (clickedButtons["baixos3"] >= 1) || (clickedButtons["baixos4"] >= 1))
         && fase < FASE.Segons) {
-        fase = FASE.Segons;
-        animarSegons(4);
-        setTimeout(function () {
-            createBotonsBoletesSegons();
-        }, 4000);
+        if (fase < FASE.Pinya)
+            setTimeout(function () {
+                animarPinya();
+                initTweets();
+                fase = FASE.Segons;
+                setTimeout(function () {
+                    animarSegons();
+                }, 4000);
+            }, 1000);
+        else {
+            setTimeout(function () {
+                fase = FASE.Segons;
+                animarSegons();
+            }, 1000);
+        }
     }
 
-    if ((/*(clickedButtons["segons1"] >= 1) || (clickedButtons["segons2"] || 1) ||*/ (clickedButtons["segons3"] >= 1) || (clickedButtons["segons4"] >= 1))
+    if (((clickedButtons["segons1"] >= 1) || (clickedButtons["segons2"] >= 1) || (clickedButtons["segons3"] >= 1) || (clickedButtons["segons4"] >= 1))
         && fase < FASE.Tercos) {
-        fase = FASE.Tercos;
-        animarTercos(4);
-        setTimeout(function () {
-            createBotonsBoletesTercos();
-        }, 4000);
-    }
 
-    if (((clickedButtons["tercos1"] >= 1) || (clickedButtons["tercos2"] >= 1) /*|| (clickedButtons["tercos3"] >= 1) || (clickedButtons["tercos4"] >= 1)*/)
-        && fase < FASE.Pom) {
-        fase = FASE.Pom;
-        animarPom(4);
-        setTimeout(function () {
-            createBotonsBoletesPom();
-        }, 4000);
-    }
-}
-
-function removeAnimationAttr(_parentElement) {
-
-    var paths = $(_parentElement).find('path');
-
-    _parentElement.removeAttr("stroke").removeAttr("stroke-width").removeAttr("stroke-alignment").removeAttr("fill");
-
-    $.each(paths, function () {
-
-        if ((_parentElement.attr('id') === "pinya") || ((_parentElement.attr('id') === "pinya_linies"))) {
-            $(this).css({
-                'stroke-dashoffset': "",
-                'stroke-dasharray': "",
-                'stroke': ''
-            });
-        }
-        else {
-            $(this).css({
-                'stroke-dashoffset': "",
-                'stroke-dasharray': "",
-                'transition': "",
-                'fill': "#e3e3e3",
-                'stroke': "",
-                'transition-delay': ""
-            });
-        }
-    });
-}
-
-function drawSVGPaths(_parentElement, _timeMax) {
-
-    var paths = $(_parentElement).find('path');
-
-    //for each PATH..
-    $.each(paths, function () {
-
-        //get the total length
-        var totalLength = this.getTotalLength();
-
-        if ((_parentElement.attr('id') === "pinya") || ((_parentElement.attr('id') === "pinya_linies"))) {
-            //set PATHs to invisible
-            $(this).css({
-                'stroke-dashoffset': totalLength,
-                'stroke-dasharray': totalLength + ' ' + totalLength,
-                'stroke': 'url(#gradientInicial)'
-            });
-        }
-        else {
-            //set PATHs to invisible
-            $(this).css({
-                'stroke-dashoffset': totalLength,
-                'stroke-dasharray': totalLength + ' ' + totalLength,
-                'transition': "fill 2s ease",
-                'fill': "#e3e3e3",
-                'stroke': "#e3e3e3",
-                'transition-delay': "3s"
-            });
-        }
-
-        //animate
-        $(this).animate({
-            'stroke-dashoffset': 0
-        }, {
-            //duration: Math.floor(Math.random() * _timeMax) + _timeMin
-            duration: _timeMax,
-            easing: 'easeInOutQuad'
+        arr = [];
+        parent = "";
+        $.each(_TREE._root.children, function () {
+            if ((this.name !== currentTreeNodeName)) {
+                this.data.clean();
+                arr.push(this.name);
+                parent = this.parent.name;
+            }
         });
-    });
-}
 
-function startSVGAnimation(parentElement, segons) {
-    drawSVGPaths(parentElement, segons * 1000);
+        $.each(arr, function () {
+            _TREE.remove(this.toString(), parent, _TREE.traverseBF);
+        });
+
+        fase = FASE.Tercos;
+        setTimeout(function () {
+            amagarCD();
+            setTimeout(function () {
+                animarTercos();
+            }, 1200)
+        }, 1000);
+    }
+
+    if (((clickedButtons["tercos1"] >= 1) || (clickedButtons["tercos2"] >= 1) || (clickedButtons["tercos3"] >= 1) || (clickedButtons["tercos4"] >= 1))
+        && fase < FASE.Pom) {
+
+        arr = [];
+        parent = "";
+        $.each(_TREE._root.children[0].children, function () {
+            if ((this.name !== currentTreeNodeName)) {
+                this.data.clean();
+                arr.push(this.name);
+                parent = this.parent.name;
+            }
+        });
+
+        $.each(arr, function () {
+            _TREE.remove(this.toString(), parent, _TREE.traverseBF);
+        });
+
+        fase = FASE.Pom;
+        setTimeout(function () {
+            animarPom();
+        }, 1000);
+    }
 }
 
 function canviarColorPinya() {
     console.log("canvio color a: " + EMOCIO.properties[lastEmotionPlayed].name + "(" + EMOCIO.properties[lastEmotionPlayed].color + ")");
     var gradient = "url(#gradient" + EMOCIO.properties[lastEmotionPlayed].name.toString().charAt(0).toUpperCase() + EMOCIO.properties[lastEmotionPlayed].name.substr(1) + ")";
-    $("#pinya").css("fill", gradient).children().css("fill", gradient).attr("fill", gradient);
-    $("#pinya_linies").css("fill", gradient).children().css("fill", gradient).attr("fill", gradient);
+
+    var paths = $("#pinya").find("path");
+
+    paths.each(function (i, e) {
+        e.style.fill = EMOCIO.properties[lastEmotionPlayed].gradient;
+    });
 }
 
-function animarPinya(segons) {
-    if (fase === FASE.Pinya) {
-        startSVGAnimation(_pinya, segons);
-        startSVGAnimation(_pinyaLinies, segons);
+function animarPinya() {
+
+    var paths = $("#c1").find("path");
+    var pathscD = null;
+
+    paths.each(function (i, e) {
+        var delay = "0." + (i * 2).toString() + "s";
+        e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+        e.style.strokeLinecap = "round";
+        e.style.stroke = EMOCIO.properties[lastEmotionPlayed].gradient;
+        e.style.strokeWidth = 6;
+        if (i > 0) {
+            var anim = "dash 1s linear forwards " + delay.toString();
+            e.style.animation = anim;
+        }
+        else {
+            e.style.animation = "dash 1s linear forwards"
+        }
+    });
+
+    setTimeout(function () {
+
+        paths = $("#c2").find("path");
+        pathscD = $("#cD2").find("path");
+        paths = $.merge(pathscD, paths);
+
+        paths.each(function (i, e) {
+            var delay = "0." + (i * 2).toString() + "s";
+            e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+            e.style.strokeLinecap = "round";
+            e.style.stroke = EMOCIO.properties[lastEmotionPlayed].gradient;
+            e.style.strokeWidth = 6;
+            if (i > 0) {
+                var anim = "dash 1s linear forwards " + delay.toString();
+                e.style.animation = anim;
+            }
+            else {
+                e.style.animation = "dash 1s linear forwards"
+            }
+        });
+
         setTimeout(function () {
-            //_pinya.css("fill", "url(#gradientInicial)");
-            //_pinyaLinies.css("fill", "url(#gradientInicial)");
-            removeAnimationAttr(_pinya);
-            removeAnimationAttr(_pinyaLinies);
-            canviarColorPinya();
-        }, (segons * 1000) + 100);
-    }
+
+            paths = $("#c3").find("path");
+            pathscD = $("#cD3").find("path");
+            paths = $.merge(pathscD, paths);
+
+            paths.each(function (i, e) {
+                var delay = "0." + (i * 2).toString() + "s";
+                e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+                e.style.strokeLinecap = "round";
+                e.style.stroke = EMOCIO.properties[lastEmotionPlayed].gradient;
+                e.style.strokeWidth = 6;
+                if (i > 0) {
+                    var anim = "dash 1s linear forwards " + delay.toString();
+                    e.style.animation = anim;
+                }
+                else {
+                    e.style.animation = "dash 1s linear forwards"
+                }
+            });
+
+            setTimeout(function () {
+
+                paths = $("#c4").find("path");
+                pathscD = $("#cD4").find("path");
+                paths = $.merge(pathscD, paths);
+
+                paths.each(function (i, e) {
+                    var delay = "0." + (i * 2).toString() + "s";
+                    e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+                    e.style.strokeLinecap = "round";
+                    e.style.stroke = EMOCIO.properties[lastEmotionPlayed].gradient;
+                    e.style.strokeWidth = 6;
+                    if (i > 0) {
+                        var anim = "dash 1s linear forwards " + delay.toString();
+                        e.style.animation = anim;
+                    }
+                    else {
+                        e.style.animation = "dash 1s linear forwards"
+                    }
+                });
+
+                setTimeout(function () {
+                    var pinya = $("#pinya")
+                    paths = pinya.find("path");
+                    paths.each(function (i, e) {
+                        e.style.strokeDashoffset = e.strokeDasharray = "";
+                        e.style.fill = EMOCIO.properties[lastEmotionPlayed].gradient;
+                        e.style.stroke = EMOCIO.properties[lastEmotionPlayed].gradient;
+                        e.style.stroke = "";
+                        e.style.strokeLinecap = "";
+                        e.style.strokeWidth = "0";
+                        e.style.animation = "";
+                    });
+                    $("#cD").removeAttr("clip-path");
+                    pinya.removeAttr("clip-path");
+
+                }, 2000);
+            }, 900);
+        }, 900);
+    }, 900);
 }
 
-function animarBaixos(segons) {
-    if (fase === FASE.Baixos) {
-        startSVGAnimation(_baixos, segons);
-        startSVGAnimation(_baixosLinies, segons);
-        setTimeout(function () {
-            removeAnimationAttr(_baixos);
-            removeAnimationAttr(_baixosLinies);
-        }, segons * 1000);
-    }
+function animarBaixos() {
+    var paths = $("#baixos").find("path");
+
+    paths.each(function (i, e) {
+        e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+    });
+
+    $("#baixos1").toggleClass("baixos1");
+    $("#baixos2").toggleClass("baixos2");
+    $("#baixos3").toggleClass("baixos3");
+    $("#baixos4").toggleClass("baixos4");
+    $("#linBai1").toggleClass("linBai1");
+    $("#linBai2").toggleClass("linBai2");
+    $("#linBai3").toggleClass("linBai3");
+    $("#linBai4").toggleClass("linBai4");
+
+
+    setTimeout(function () {
+        createBotonsBoletesBaixos();
+        $("#baixos").removeAttr("clip-path")
+            .find("path").each(function (i, e) {
+            e.style.fill = COLOR.Standard;
+            e.style.strokeDasharray = e.style.strokeDashoffset = "";
+        });
+
+        $("#baixos1").toggleClass("baixos1");
+        $("#baixos2").toggleClass("baixos2");
+        $("#baixos3").toggleClass("baixos3");
+        $("#baixos4").toggleClass("baixos4");
+        $("#linBai1").toggleClass("linBai1");
+        $("#linBai2").toggleClass("linBai2");
+        $("#linBai3").toggleClass("linBai3");
+        $("#linBai4").toggleClass("linBai4");
+        $('.navbar').show();
+    }, 4500);
 }
 
-function animarSegons(segons) {
-    if (fase === FASE.Segons) {
-        startSVGAnimation(_segons, segons);
-        startSVGAnimation(_segonsLinies, segons);
-        setTimeout(function () {
-            removeAnimationAttr(_segons);
-            removeAnimationAttr(_segonsLinies);
-        }, segons * 1000);
-    }
+function animarSegons() {
+
+    var segons = $("#segons");
+
+    segons.attr("clip-path", "url(#clip-path-3)");
+
+    $.each(segons.find("path"), function (i, e) {
+        e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+        e.style.display = "";
+        e.style.fill = "none";
+    });
+
+    $.each(segons.find("path"), function (i, e) {
+        var delay = "0." + (i * 2).toString() + "s";
+        e.style.strokeLinecap = "round";
+        e.style.stroke = COLOR.Standard;
+        e.style.strokeWidth = 6;
+        if (i > 0) {
+            e.style.animation = "dash 1s linear forwards " + delay.toString();
+        }
+        else {
+            e.style.animation = "dash 1s linear forwards"
+        }
+    });
+
+    setTimeout(function () {
+        $.each(segons.removeAttr("clip-path").find("path"), function (i, e) {
+            e.style.strokeDasharray = e.style.strokeDashoffset = "";
+            e.style.strokeLinecap = "";
+            e.style.strokeWidth = 0;
+            e.style.animation = "";
+            e.style.fill = COLOR.Standard;
+        });
+        createBotonsBoletesSegons();
+    }, 2000);
 }
 
-function animarTercos(segons) {
-    if (fase === FASE.Tercos) {
-        startSVGAnimation(_tercos, segons);
-        startSVGAnimation(_tercosLinies, segons);
-        setTimeout(function () {
-            removeAnimationAttr(_tercos);
-            removeAnimationAttr(_tercosLinies);
-        }, segons * 1000);
-    }
+function animarTercos() {
+
+    var tercos = $("#tercos");
+
+    tercos.attr("clip-path", "url(#clip-path-2)");
+
+    $.each(tercos.find("path"), function (i, e) {
+        e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+        e.style.display = "";
+        e.style.fill = "none";
+    });
+
+    $.each(tercos.find("path"), function (i, e) {
+        var delay = "0." + (i * 2).toString() + "s";
+        e.style.strokeLinecap = "round";
+        e.style.stroke = COLOR.Standard;
+        e.style.strokeWidth = 6;
+        if (i > 0) {
+            e.style.animation = "dash 1s linear forwards " + delay.toString();
+        }
+        else {
+            e.style.animation = "dash 1s linear forwards"
+        }
+    });
+
+    setTimeout(function () {
+        $.each(tercos.removeAttr("clip-path").find("path"), function (i, e) {
+            e.style.strokeDasharray = e.style.strokeDashoffset = "";
+            e.style.strokeLinecap = "";
+            e.style.strokeWidth = 0;
+            e.style.animation = "";
+            e.style.fill = COLOR.Standard;
+        });
+        createBotonsBoletesTercos();
+    }, 2000);
 }
 
-function animarPom(segons) {
-    if (fase === FASE.Pom) {
-        startSVGAnimation(_pom, segons);
-        startSVGAnimation(_pomLinies, segons);
+function animarPom() {
+
+
+    var dosos = $("#dosos");
+    var aixecador = $("#aixecador");
+    var anxeneta = $("#anxeneta");
+
+    var pom = $("#pom");
+
+    pom.attr("clip-path", "url(#clip-path)");
+
+    $.each(pom.find("path"), function (i, e) {
+        e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+        e.style.display = "";
+        e.style.fill = "none";
+    });
+
+    $.each(dosos.find("path"), function (i, e) {
+        var delay = "0." + (i * 2).toString() + "s";
+        e.style.strokeLinecap = "round";
+        e.style.stroke = COLOR.Standard;
+        e.style.strokeWidth = 6;
+        if (i > 0) {
+            e.style.animation = "dash 2s linear forwards " + delay.toString();
+        }
+        else {
+            e.style.animation = "dash 2s linear forwards"
+        }
+    });
+
+    setTimeout(function () {
+        $.each(aixecador.find("path"), function (i, e) {
+            var delay = "0." + (i * 2).toString() + "s";
+            e.style.strokeLinecap = "round";
+            e.style.stroke = COLOR.Standard;
+            e.style.strokeWidth = 6;
+            if (i > 0) {
+                e.style.animation = "dash 2s linear forwards " + delay.toString();
+            }
+            else {
+                e.style.animation = "dash 2s linear forwards"
+            }
+        });
         setTimeout(function () {
-            removeAnimationAttr(_pom);
-            removeAnimationAttr(_pomLinies);
-        }, segons * 1000);
-    }
+            $.each(anxeneta.find("path"), function (i, e) {
+                var delay = "0." + (i * 2).toString() + "s";
+                e.style.strokeLinecap = "round";
+                e.style.stroke = COLOR.Standard;
+                e.style.strokeWidth = 6;
+                if (i > 0) {
+                    e.style.animation = "dash 2s linear forwards " + delay.toString();
+                }
+                else {
+                    e.style.animation = "dash 2s linear forwards"
+                }
+            });
+        }, 1000);
+    }, 1000);
+
+    setTimeout(function () {
+        $.each(pom.removeAttr("clip-path").find("path"), function (i, e) {
+            e.style.strokeDasharray = e.style.strokeDashoffset = "";
+            e.style.strokeLinecap = "";
+            e.style.strokeWidth = 0;
+            e.style.animation = "";
+            e.style.fill = COLOR.Standard;
+        });
+        createBotonsBoletesPom();
+    }, 3500);
+}
+
+function amagarCD() {
+    var paths = $("#cD")
+        .find("path");
+
+    paths.each(function (i, e) {
+        var delay = "0." + (i * 2).toString() + "s";
+        e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+        e.style.strokeLinecap = "round";
+        e.style.stroke = COLOR.Negre;
+        e.style.strokeWidth = 6;
+        if (i > 0) {
+            e.style.animation = "dash 1s linear forwards " + delay.toString();
+        }
+        else {
+            e.style.animation = "dash 1s linear forwards"
+        }
+    });
+
+    setTimeout(function () {
+        paths.each(function (i, e) {
+            e.style.strokeDasharray = e.style.strokeDashoffset = "";
+            e.style.strokeLinecap = "";
+            e.style.stroke = "none";
+            e.style.strokeWidth = "";
+            e.style.animation = "";
+            e.style.fill = "none";
+            e.style.display = "none";
+        });
+    }, 1000)
+}
+
+function amagarCastellPintant() {
+
+    //AMAGAR CASTELL
+    paths = $.merge($.merge($("#pom").find("path"), $("#tercos").find("path")), $("#segons").find("path"));
+
+    paths.each(function (i, e) {
+        var delay = "0." + (i * 2).toString() + "s";
+        e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+        e.style.strokeLinecap = "round";
+        e.style.stroke = COLOR.Negre;
+        e.style.strokeWidth = 8;
+        if (i > 0) {
+            e.style.animation = "dash 2s linear forwards " + delay.toString();
+        }
+        else {
+            e.style.animation = "dash 2s linear forwards"
+        }
+    });
+
+    setTimeout(function () {
+        paths.each(function (i, e) {
+            e.style.strokeDasharray = e.style.strokeDashoffset = "";
+            e.style.strokeLinecap = "";
+            e.style.stroke = "none";
+            e.style.strokeWidth = 0;
+            e.style.animation = "";
+            e.style.fill = "none";
+        });
+    }, 2000);
+
+
+    //MOSTRAR TROÇET DE PINYA
+    var cD = $("#cD");
+
+    cD.attr("clip-path", "url(#clip-path-6)");
+
+    $.each(cD.find("path"), function (i, e) {
+        e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+        e.style.display = "";
+        e.style.fill = "none";
+    });
+
+    setTimeout(function () {
+        $.each(cD.find("path"), function (i, e) {
+            var delay = "0." + (i * 2).toString() + "s";
+            e.style.strokeLinecap = "round";
+            e.style.stroke = EMOCIO.properties[lastEmotionPlayed].gradient;
+            e.style.strokeWidth = 6;
+            if (i > 0) {
+                e.style.animation = "dash 1s linear forwards " + delay.toString();
+            }
+            else {
+                e.style.animation = "dash 1s linear forwards"
+            }
+        });
+    }, 1000);
+
+    setTimeout(function () {
+        $.each(cD.removeAttr("clip-path").find("path"), function (i, e) {
+            e.style.strokeDasharray = e.style.strokeDashoffset = "";
+            e.style.strokeLinecap = "";
+            e.style.strokeWidth = 0;
+            e.style.animation = "";
+            e.style.fill = EMOCIO.properties[lastEmotionPlayed].gradient;
+        });
+    }, 2800);
 }
 
 /*
@@ -494,7 +859,6 @@ function animarPom(segons) {
 ######################################################
 ######################################################
 */
-
 var FASE = {
     Intro: 0,
     Baixos: 1,
@@ -509,7 +873,17 @@ var COLOR = {
     Alegria: "#FFC14D",
     Tristesa: "#3DABBF",
     Rabia: "#FF5A4D",
-    Por: "#9D43C7"
+    Por: "#9D43C7",
+    Standard: "#e3e3e3",
+    Negre: "#000"
+};
+
+var GRADIENT = {
+    Inicial: "url(#gradientIncial)",
+    Alegria: "url(#gradientAlegria)",
+    Rabia: "url(#gradientRabia)",
+    Tristesa: "url(#gradientTristesa)",
+    Por: "url(#gradientPor)"
 };
 
 var EMOCIO = {
@@ -518,10 +892,10 @@ var EMOCIO = {
     Rabia: 3,
     Por: 4,
     properties: {
-        1: {color: COLOR.Alegria, name: "alegria"},
-        2: {color: COLOR.Tristesa, name: "tristesa"},
-        3: {color: COLOR.Rabia, name: "rabia"},
-        4: {color: COLOR.Por, name: "euforia"}
+        1: {color: COLOR.Alegria, name: "alegria", gradient: GRADIENT.Alegria},
+        2: {color: COLOR.Tristesa, name: "tristesa", gradient: GRADIENT.Tristesa},
+        3: {color: COLOR.Rabia, name: "rabia", gradient: GRADIENT.Rabia},
+        4: {color: COLOR.Por, name: "por", gradient: GRADIENT.Por}
     }
 };
 
@@ -545,6 +919,7 @@ function toggleFullScreen() {
         }
     }
 }
+
 /*
 $(document).mousemove(function (e) {
     if (fase > FASE.Baixos) {
@@ -562,27 +937,27 @@ $(document).mousemove(function (e) {
 });
 */
 //pagina aparte
-$("#elProyecto").click(function () {
+$("#ajuda").click(function () {
 
-    if (!proyecto) {
-        $(".creditosPag").fadeOut(500);
-        $(".proyectoPag").fadeIn(1000);
-        proyecto = true;
+    if (!ajuda) {
+        $(".creditsPag").fadeOut(500);
+        $(".ajudaPag").fadeIn(1000);
+        ajuda = true;
     } else {
-        $(".proyectoPag").fadeOut(1000);
-        proyecto = false;
+        $(".ajudaPag").fadeOut(1000);
+        ajuda = false;
     }
 });
 //pagina aparte
-$("#losCreditos").click(function () {
+$("#credits").click(function () {
 
-    if (!creditos) {
-        $(".proyectoPag").fadeOut(500);
-        $(".creditosPag").fadeIn(1000);
-        creditos = true;
+    if (!credits) {
+        $(".ajudaPag").fadeOut(500);
+        $(".creditsPag").fadeIn(1000);
+        credits = true;
     } else {
-        $(".creditosPag").fadeOut(1000);
-        creditos = false;
+        $(".creditsPag").fadeOut(1000);
+        credits = false;
     }
 });
 
@@ -610,3 +985,104 @@ function DictContainsValue(_dict, _value) {
     }
     return false;
 }
+
+var tooltip = function () {
+    var id = 'tt';
+    var top = 3;
+    var left = 3;
+    var maxw = 150;
+    var speed = 10;
+    var timer = 20;
+    var endalpha = 95;
+    var alpha = 0;
+    var tt, t, c, b, h;
+    var ie = document.all ? true : false;
+    return {
+        show: function (v, w) {
+            if (tt == null) {
+                tt = document.createElement('div');
+                tt.setAttribute('id', id);
+                t = document.createElement('div');
+                t.setAttribute('id', id + 'top');
+                c = document.createElement('div');
+                c.setAttribute('id', id + 'cont');
+                b = document.createElement('div');
+                b.setAttribute('id', id + 'bot');
+                tt.appendChild(t);
+                tt.appendChild(c);
+                tt.appendChild(b);
+                document.body.appendChild(tt);
+                tt.style.opacity = 0;
+                tt.style.filter = 'alpha(opacity=0)';
+                document.onmousemove = this.pos;
+            }
+            tt.style.display = 'block';
+            c.innerHTML = v;
+            tt.style.width = w ? w + 'px' : 'auto';
+            if (!w && ie) {
+                t.style.display = 'none';
+                b.style.display = 'none';
+                tt.style.width = tt.offsetWidth;
+                t.style.display = 'block';
+                b.style.display = 'block';
+            }
+            if (tt.offsetWidth > maxw) {
+                tt.style.width = maxw + 'px'
+            }
+            h = parseInt(tt.offsetHeight) + top;
+            clearInterval(tt.timer);
+            tt.timer = setInterval(function () {
+                tooltip.fade(1)
+            }, timer);
+        },
+        pos: function (e) {
+            var u = ie ? event.clientY + document.documentElement.scrollTop : e.pageY;
+            var l = ie ? event.clientX + document.documentElement.scrollLeft : e.pageX;
+            tt.style.top = (u - h) + 'px';
+            tt.style.left = (l + left) + 'px';
+        },
+        fade: function (d) {
+            var a = alpha;
+            if ((a != endalpha && d == 1) || (a != 0 && d == -1)) {
+                var i = speed;
+                if (endalpha - a < speed && d == 1) {
+                    i = endalpha - a;
+                } else if (alpha < speed && d == -1) {
+                    i = a;
+                }
+                alpha = a + (i * d);
+                tt.style.opacity = alpha * .01;
+                tt.style.zIndex = 1000;
+                tt.style.filter = 'alpha(opacity=' + alpha + ')';
+            } else {
+                clearInterval(tt.timer);
+                if (d == -1) {
+                    tt.style.display = 'none'
+                }
+            }
+        },
+        hide: function () {
+            clearInterval(tt.timer);
+            tt.timer = setInterval(function () {
+                tooltip.fade(-1)
+            }, timer);
+        }
+    };
+}();
+
+(function($) {
+    $.fn.shuffle = function() {
+        // credits: http://bost.ocks.org/mike/shuffle/
+        var m = this.length, t, i;
+
+        while (m) {
+            i = Math.floor(Math.random() * m--);
+
+            t = this[m];
+            this[m] = this[i];
+            this[i] = t;
+        }
+
+        return this;
+    };
+}(jQuery));

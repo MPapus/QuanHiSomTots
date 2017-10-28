@@ -1,36 +1,24 @@
 var btnEnter = $(".btnEnter");
 var btnSaltar = $(".btnSaltar");
+var btnHome = $("#home");
 var divVideos = $("#divVideos");
-var divCurrentVideo = "#videoIntro";
 var divCastell = $(".castell");
-var _pinya = $("#pinya");
-var _pinyaLinies = $("#pinya_linies");
-var _baixos = $("#baixos");
-var _baixosLinies = $("#baixos_linies");
-var _segons = $("#segons");
-var _segonsLinies = $("#segons_linies");
-var _tercos = $("#tercos");
-var _tercosLinies = $("#tercos_linies");
-var _pom = $("#pom");
-var _pomLinies = $("#pom_linies");
-var proyecto = false;
-var creditos = false;
+var _TREE = null, _DEBUT = null, _SEGONA = null;
+var ajuda = false;
+var credits = false;
+var tweets = [];
 var lastMouseY = -1;
 var fase = null;
 var currentVideo = "#teaser";
+var currentTreeNodeName = null;
 var mostrarCastell = false, mostrarVideos = false;
 var lastEmotionPlayed = null;
-var clickedButtons = {};
-var anxeneta = null, aixecador = null, dosos1 = null, dosos2 = null,
-    tercos1 = null, tercos2 = null, tercos3 = null, tercos4 = null,
-    segons1 = null, segons2 = null, segons3 = null, segons4 = null,
-    baixos1 = null, baixos2 = null, baixos3 = null, baixos4 = null,
-    p11 = null, p12 = null, p13 = null, p14 = null, p15 = null, p16 = null, p17 = null, p18 = null, p19 = null;
+var clickedButtons = null;
+var p11 = null, p12 = null, p13 = null, p14 = null, p15 = null, p16 = null, p17 = null, p18 = null, p19 = null;
 
 $(document).ready(function () {
     window.vplayer = videojs(currentVideo);
     window.vplayer.userActive(false);
-    //window.vplayer.removeChild('BigPlayButton');
     console.log("main.js empezado");
     btnEnter.click(function () {
         if ($(window).width() < 780) {
@@ -38,8 +26,8 @@ $(document).ready(function () {
                 "Si us plau, accediu a Quan Hi Som Tots des d'un ordinador.");
         }
         else {
+            toggleFullScreen();
             init();
-            clickedButtons[btnEnter.attr("id")] = 1; //Inicialitzem el diccionari de botons apretats amb el botó per entrar
         }
     });
 });
@@ -51,8 +39,6 @@ function init() {
         $('.portadaFull').fadeOut(1500);
         setTimeout(function () {
 
-            toggleFullScreen();
-
             window.vplayer.play();
 
             setTimeout(function () {
@@ -63,7 +49,6 @@ function init() {
 
             window.vplayer.one("ended", function () {
                 if (fase < FASE.Baixos) {
-                    fase = FASE.Baixos;
                     setUp();
                 }
             });

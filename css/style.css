@@ -8,10 +8,15 @@ html {
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
  }
-img {
-    max-width: 100%;
-    height: auto;
-    width: auto;
+
+@font-face {
+    font-family: The Braggest;
+    src: url(../fonts/braggest/The_Braggest_Demo.woff);
+}
+
+.navbar-brand {
+    font-family: The Braggest, serif;
+    font-size: 2.5em;
 }
 
 path {
@@ -19,7 +24,7 @@ path {
 }
 
 .pathHover {
-    stroke-width: 30px !important;
+    stroke-width: 35px !important;
     stroke: transparent !important;
 }
 
@@ -41,12 +46,39 @@ body {
     height: 100%;
     display: none;
     position: absolute;
-    background-repeat: no-repeat;
+    background-color: #000;
     top: 0;
     right: 0;
     z-index: 9;
-    background-size: 100%;
-    background-position: center center;
+}
+
+#home {
+    font-size: 4em;
+    color: #e3e3e3;
+    display: none;
+    position: absolute;
+    top: 90%;
+    left: 90%;
+    z-index: 601;
+}
+
+#ajuda {
+    color: #e3e3e3;
+    margin-right: 0.4em;
+    font-size: 2.7em;
+    margin-top: 0.14em;
+}
+
+#fullscreen {
+    color: #e3e3e3;
+    margin-right: 0.3em;
+    font-size: 2.5em;
+    margin-top: 0.2em;
+}
+
+#home:hover, #ajuda:hover, #fullscreen:hover {
+    cursor: pointer;
+    color: #fff;
 }
 
 .btnsaltar {
@@ -99,19 +131,27 @@ body {
 	background-repeat: no-repeat;
 	background-size: 100% 100%;
 }
-.proyectoPag {
+.ajudaPag {
 	position: fixed;
 	width: 100%;
 	height: 100%;
-    color: #303030;
-	top: 0;
-	right: 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #303030;
+    color: #e3e3e3;
 	z-index: 100;
-	background-image: url("../assets/texturaBlanca.png");
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
 }
-.creditosPag {
+
+
+.ajudaPag.row {
+    margin-bottom: 20px;
+}
+[class*="col-"] {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.creditsPag {
 	position: fixed;
 	width: 100%;
 	height: 100%;
@@ -186,4 +226,428 @@ body {
     -moz-animation: flickerAnimation 4s infinite;
     -o-animation: flickerAnimation 4s infinite;
     animation: flickerAnimation 4s infinite;
+}
+/*
+######################################################
+######################################################
+##########                                ############
+##########        ANIMACIÓ CASTELL        ############
+##########     (per ordre d'aparença)     ############
+######################################################
+######################################################
+*/
+.baixos3 {
+    stroke-linecap:round;
+    stroke:#e3e3e3;
+    stroke-width:6;
+    animation: dash 5s linear forwards;
+}
+
+.linBai3 {
+    stroke-linecap:round;
+    stroke:#e3e3e3;
+    stroke-width:6;
+    animation: dash 1s linear forwards 0.6s;
+}
+
+.baixos4 {
+    stroke-linecap:round;
+    stroke:#e3e3e3;
+    stroke-width:6;
+    animation: dash 4s linear forwards 1s;
+}
+
+.linBai4 {
+    stroke-linecap:round;
+    stroke:#e3e3e3;
+    stroke-width:6;
+    animation: dash 1s linear forwards 1.8s;
+}
+
+.baixos1 {
+    stroke-linecap:round;
+    stroke:#e3e3e3;
+    stroke-width:6;
+    animation: dash 3s linear forwards 2.5s;
+}
+
+.linBai2 {
+    stroke-linecap:round;
+    stroke:#e3e3e3;
+    stroke-width:6;
+    animation: dash 1s linear forwards 3s;
+}
+
+.baixos2 {
+    stroke-linecap:round;
+    stroke:#e3e3e3;
+    stroke-width:6;
+    animation: dash 4s linear forwards 3.5s;
+}
+
+.linBai1 {
+    stroke-linecap:round;
+    stroke:#e3e3e3;
+    stroke-width:6;
+    animation: dash 1s linear forwards 4s;
+}
+
+@keyframes dash {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+/*
+######################################################
+######################################################
+##########                                ############
+##########           TOOLTIPS             ############
+##########                                ############
+######################################################
+######################################################
+*/
+
+#tt {
+    position:absolute;
+    display:block;
+}
+#tttop {
+    display:block;
+    overflow:hidden;
+}
+#ttcont {
+    display:block;
+}
+#ttbot {
+    display:block;
+    overflow:hidden;
+}
+
+
+.tooltipster-sidetip.tooltipster-alegria .tooltipster-box {
+    border: 5px solid #FFC14D;
+    border-radius: 5px;
+    background: #222;
+    box-shadow: 0px 0px 14px rgba(0,0,0,0.3);
+}
+
+.tooltipster-sidetip.tooltipster-alegria .tooltipster-content {
+    font-size: 14px;
+    font-style: italic;
+    line-height: 1em;
+    padding: 20px;
+    color: #e3e3e3;
+}
+
+.tooltipster-sidetip.tooltipster-alegria .tooltipster-arrow {
+    height: 9px;
+    margin-left: -9px;
+    width: 18px;
+}
+
+.tooltipster-sidetip.tooltipster-alegria.tooltipster-left .tooltipster-arrow,
+.tooltipster-sidetip.tooltipster-alegria.tooltipster-right .tooltipster-arrow {
+    height: 14px;
+    margin-left: 4px;
+    margin-top: -16px;
+    width: 5px;
+}
+
+.tooltipster-sidetip.tooltipster-alegria .tooltipster-arrow-background {
+    border: 9px solid transparent;
+}
+
+.tooltipster-sidetip.tooltipster-alegria.tooltipster-bottom .tooltipster-arrow-background {
+    border-bottom-color: #FFC14D;
+    top: 1px;
+}
+
+.tooltipster-sidetip.tooltipster-alegria.tooltipster-left .tooltipster-arrow-background {
+    border-left-color: #FFC14D;
+    left: -1px;
+}
+
+.tooltipster-sidetip.tooltipster-alegria.tooltipster-right .tooltipster-arrow-background {
+    border-right-color: #FFC14D;
+    left: 1px;
+}
+
+.tooltipster-sidetip.tooltipster-alegria.tooltipster-top .tooltipster-arrow-background {
+    border-top-color: #FFC14D;
+    top: -1px;
+}
+
+.tooltipster-sidetip.tooltipster-alegria .tooltipster-arrow-border {
+    border: 9px solid transparent;
+}
+
+.tooltipster-sidetip.tooltipster-alegria.tooltipster-bottom .tooltipster-arrow-border {
+    border-bottom-color: #FFC14D;
+}
+
+.tooltipster-sidetip.tooltipster-alegria.tooltipster-left .tooltipster-arrow-border {
+    border-left-color: #FFC14D;
+}
+
+.tooltipster-sidetip.tooltipster-alegria.tooltipster-right .tooltipster-arrow-border {
+    border-right-color: #FFC14D;
+}
+
+.tooltipster-sidetip.tooltipster-alegria.tooltipster-top .tooltipster-arrow-border {
+    border-top-color: #FFC14D;
+}
+
+.tooltipster-sidetip.tooltipster-alegria.tooltipster-bottom .tooltipster-arrow-uncropped {
+    top: -9px;
+}
+
+.tooltipster-sidetip.tooltipster-alegria.tooltipster-right .tooltipster-arrow-uncropped {
+    left: -9px;
+}
+
+
+.tooltipster-sidetip.tooltipster-rabia .tooltipster-box {
+    border: 5px solid #FF5A4D;
+    border-radius: 5px;
+    background: #222;
+    box-shadow: 0px 0px 14px rgba(0,0,0,0.3);
+}
+
+.tooltipster-sidetip.tooltipster-rabia .tooltipster-content {
+    font-size: 14px;
+    font-style: italic;
+    line-height: 1em;
+    padding: 20px;
+    color: #e3e3e3;
+}
+
+.tooltipster-sidetip.tooltipster-rabia .tooltipster-arrow {
+    height: 9px;
+    margin-left: -9px;
+    width: 18px;
+}
+
+.tooltipster-sidetip.tooltipster-rabia.tooltipster-left .tooltipster-arrow,
+.tooltipster-sidetip.tooltipster-rabia.tooltipster-right .tooltipster-arrow {
+    height: 14px;
+    margin-left: 4px;
+    margin-top: -16px;
+    width: 5px;
+}
+
+.tooltipster-sidetip.tooltipster-rabia .tooltipster-arrow-background {
+    border: 9px solid transparent;
+}
+
+.tooltipster-sidetip.tooltipster-rabia.tooltipster-bottom .tooltipster-arrow-background {
+    border-bottom-color: #FF5A4D;
+    top: 1px;
+}
+
+.tooltipster-sidetip.tooltipster-rabia.tooltipster-left .tooltipster-arrow-background {
+    border-left-color: #FF5A4D;
+    left: -1px;
+}
+
+.tooltipster-sidetip.tooltipster-rabia.tooltipster-right .tooltipster-arrow-background {
+    border-right-color: #FF5A4D;
+    left: 1px;
+}
+
+.tooltipster-sidetip.tooltipster-rabia.tooltipster-top .tooltipster-arrow-background {
+    border-top-color: #FF5A4D;
+    top: -1px;
+}
+
+.tooltipster-sidetip.tooltipster-rabia .tooltipster-arrow-border {
+    border: 9px solid transparent;
+}
+
+.tooltipster-sidetip.tooltipster-rabia.tooltipster-bottom .tooltipster-arrow-border {
+    border-bottom-color: #FF5A4D;
+}
+
+.tooltipster-sidetip.tooltipster-rabia.tooltipster-left .tooltipster-arrow-border {
+    border-left-color: #FF5A4D;
+}
+
+.tooltipster-sidetip.tooltipster-rabia.tooltipster-right .tooltipster-arrow-border {
+    border-right-color: #FF5A4D;
+}
+
+.tooltipster-sidetip.tooltipster-rabia.tooltipster-top .tooltipster-arrow-border {
+    border-top-color: #FF5A4D;
+}
+
+.tooltipster-sidetip.tooltipster-rabia.tooltipster-bottom .tooltipster-arrow-uncropped {
+    top: -9px;
+}
+
+.tooltipster-sidetip.tooltipster-rabia.tooltipster-right .tooltipster-arrow-uncropped {
+    left: -9px;
+}
+
+
+.tooltipster-sidetip.tooltipster-por .tooltipster-box {
+    border: 5px solid #9D43C7;
+    border-radius: 5px;
+    background: #222;
+    box-shadow: 0px 0px 14px rgba(0,0,0,0.3);
+}
+
+.tooltipster-sidetip.tooltipster-por .tooltipster-content {
+    font-size: 14px;
+    font-style: italic;
+    line-height: 1em;
+    padding: 20px;
+    color: #e3e3e3;
+}
+
+.tooltipster-sidetip.tooltipster-por .tooltipster-arrow {
+    height: 9px;
+    margin-left: -9px;
+    width: 18px;
+}
+
+.tooltipster-sidetip.tooltipster-por.tooltipster-left .tooltipster-arrow,
+.tooltipster-sidetip.tooltipster-por.tooltipster-right .tooltipster-arrow {
+    height: 14px;
+    margin-left: 4px;
+    margin-top: -16px;
+    width: 5px;
+}
+
+.tooltipster-sidetip.tooltipster-por .tooltipster-arrow-background {
+    border: 9px solid transparent;
+}
+
+.tooltipster-sidetip.tooltipster-por.tooltipster-bottom .tooltipster-arrow-background {
+    border-bottom-color: #9D43C7;
+    top: 1px;
+}
+
+.tooltipster-sidetip.tooltipster-por.tooltipster-left .tooltipster-arrow-background {
+    border-left-color: #9D43C7;
+    left: -1px;
+}
+
+.tooltipster-sidetip.tooltipster-por.tooltipster-right .tooltipster-arrow-background {
+    border-right-color: #9D43C7;
+    left: 1px;
+}
+
+.tooltipster-sidetip.tooltipster-por.tooltipster-top .tooltipster-arrow-background {
+    border-top-color: #9D43C7;
+    top: -1px;
+}
+
+.tooltipster-sidetip.tooltipster-por .tooltipster-arrow-border {
+    border: 9px solid transparent;
+}
+
+.tooltipster-sidetip.tooltipster-por.tooltipster-bottom .tooltipster-arrow-border {
+    border-bottom-color: #9D43C7;
+}
+
+.tooltipster-sidetip.tooltipster-por.tooltipster-left .tooltipster-arrow-border {
+    border-left-color: #9D43C7;
+}
+
+.tooltipster-sidetip.tooltipster-por.tooltipster-right .tooltipster-arrow-border {
+    border-right-color: #9D43C7;
+}
+
+.tooltipster-sidetip.tooltipster-por.tooltipster-top .tooltipster-arrow-border {
+    border-top-color: #9D43C7;
+}
+
+.tooltipster-sidetip.tooltipster-por.tooltipster-bottom .tooltipster-arrow-uncropped {
+    top: -9px;
+}
+
+.tooltipster-sidetip.tooltipster-por.tooltipster-right .tooltipster-arrow-uncropped {
+    left: -9px;
+}
+
+
+.tooltipster-sidetip.tooltipster-tristesa .tooltipster-box {
+    border: 5px solid #3DABBF;
+    border-radius: 5px;
+    background: #222;
+    box-shadow: 0px 0px 14px rgba(0,0,0,0.3);
+}
+
+.tooltipster-sidetip.tooltipster-tristesa .tooltipster-content {
+    font-size: 14px;
+    font-style: italic;
+    line-height: 1em;
+    padding: 20px;
+    color: #e3e3e3;
+}
+
+.tooltipster-sidetip.tooltipster-tristesa .tooltipster-arrow {
+    height: 9px;
+    margin-left: -9px;
+    width: 18px;
+}
+
+.tooltipster-sidetip.tooltipster-tristesa.tooltipster-left .tooltipster-arrow,
+.tooltipster-sidetip.tooltipster-tristesa.tooltipster-right .tooltipster-arrow {
+    height: 14px;
+    margin-left: 4px;
+    margin-top: -16px;
+    width: 5px;
+}
+
+.tooltipster-sidetip.tooltipster-tristesa .tooltipster-arrow-background {
+    border: 9px solid transparent;
+}
+
+.tooltipster-sidetip.tooltipster-tristesa.tooltipster-bottom .tooltipster-arrow-background {
+    border-bottom-color: #3DABBF;
+    top: 1px;
+}
+
+.tooltipster-sidetip.tooltipster-tristesa.tooltipster-left .tooltipster-arrow-background {
+    border-left-color: #3DABBF;
+    left: -1px;
+}
+
+.tooltipster-sidetip.tooltipster-tristesa.tooltipster-right .tooltipster-arrow-background {
+    border-right-color: #3DABBF;
+    left: 1px;
+}
+
+.tooltipster-sidetip.tooltipster-tristesa.tooltipster-top .tooltipster-arrow-background {
+    border-top-color: #3DABBF;
+    top: -1px;
+}
+
+.tooltipster-sidetip.tooltipster-tristesa .tooltipster-arrow-border {
+    border: 9px solid transparent;
+}
+
+.tooltipster-sidetip.tooltipster-tristesa.tooltipster-bottom .tooltipster-arrow-border {
+    border-bottom-color: #3DABBF;
+}
+
+.tooltipster-sidetip.tooltipster-tristesa.tooltipster-left .tooltipster-arrow-border {
+    border-left-color: #3DABBF;
+}
+
+.tooltipster-sidetip.tooltipster-tristesa.tooltipster-right .tooltipster-arrow-border {
+    border-right-color: #3DABBF;
+}
+
+.tooltipster-sidetip.tooltipster-tristesa.tooltipster-top .tooltipster-arrow-border {
+    border-top-color: #3DABBF;
+}
+
+.tooltipster-sidetip.tooltipster-tristesa.tooltipster-bottom .tooltipster-arrow-uncropped {
+    top: -9px;
+}
+
+.tooltipster-sidetip.tooltipster-tristesa.tooltipster-right .tooltipster-arrow-uncropped {
+    left: -9px;
 }
