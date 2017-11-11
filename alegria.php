@@ -13,10 +13,10 @@ define('ACCESS_TOKEN_SECRET', 'Xfki6Uq6OHtyfPJ3izPmanz0UzMhkq4i2sOBq5GpTWsnI');
 $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
 
 $query = array(
-  "q" => "#puigdemont",
-  "result_type" => "popular",
-  "count" => "36",
-  "include_rts" => "false"
+  "q" => "#castellers -filter:retweets",
+  "result_type" => "recent",
+  "count" => "200",
+  "tweet_mode" => "extended"
 );
 
 $statuses = $connection->get("search/tweets", $query);
