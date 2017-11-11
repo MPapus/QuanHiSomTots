@@ -36,7 +36,7 @@ function Boleta(idBoletaHTML, video) {
                 $(this).addClass("pathHover");
                 var firstLetter = vid.getVideoTag().toString()[0].toLowerCase();
                 var name = firstLetter === "c" ? "carol" : "miriam";
-                tooltip.show('<img src=\'img/' + name + '.png\' width=\'150\' height=\'auto\'/>', 150);
+                tooltip.show('<img src=\'img/' + name + '.png\' style=\'max-width:80%; height: auto\'/>', 150);
             }).mouseleave(function () {
                 $(this).css("fill", "#e3e3e3").css("cursor", "default");
                 $(this).removeClass("pathHover");
@@ -44,6 +44,10 @@ function Boleta(idBoletaHTML, video) {
             });
 
             this.boleta.on("click", function () {
+                var videos = $("#divVideos").find("video");
+                $.each(videos, function (i, e) {
+                    videojs(e.id).hide();
+                });
                 currentTreeNodeName = nodeName;
                 if (!DictContainsValue(clickedButtons, this.id))
                     clickedButtons[this.id] = 1;
@@ -51,20 +55,21 @@ function Boleta(idBoletaHTML, video) {
                     clickedButtons[this.id] = clickedButtons[this.id] + 1;
 
                 currentVideo = vid.getVideoTag();
-                vid.changeSource();
+                videojs(currentVideo).show();
+                window.vplayer = videojs(currentVideo);
                 window.vplayer.play();
+                /*
+                                setTimeout(function () {
+                                    btnSaltar.addClass("animate-flicker");
+                                    btnSaltar.show();
+                                }, 5000);
 
-                setTimeout(function () {
-                    btnSaltar.addClass("animate-flicker");
-                    btnSaltar.show();
-                }, 5000);
-
-                lastEmotionPlayed = vid.getVideoEmotion();
-
-                window.vplayer.one("ended", function () {
-                    checkForNewAnimations();
-
+                                lastEmotionPlayed = vid.getVideoEmotion();
+                */
+                window.vplayer.one("ended", function (event) {
                     lastEmotionPlayed = vid.getVideoEmotion();
+                    checkForNewAnimations();
+                    $(this).off(event);
                 });
             });
         }
@@ -106,8 +111,8 @@ function Video(videoTag, videoEmotion) {
 
     this.changeSource = function () {
         var debug = document.getElementById(currentVideo);
-        var videoSource = debug.children[0].currentSrc;
-        var videoType = "video/" + videoSource.split('.').pop();
+        var videoSource = debug.children[0].currentSrc.split('.')[0] + '.' + videoExtension;
+        var videoType = "video/" + videoExtension;
         window.vplayer.src({'src': videoSource, 'type': videoType});
     };
 }
@@ -127,7 +132,9 @@ function setUp() {
     setTimeout(function () {
         if (fase < FASE.Baixos) {
             fase = FASE.Baixos;
-            animarBaixos();
+            animarBaixos(function () {
+                createBotonsBoletesBaixos();
+            });
         }
         else
             createBotonsBoletesBaixos();
@@ -218,55 +225,63 @@ function amagarDivCastell() {
 function initBtnHome() {
     clickedButtons[btnHome.attr("id")] = 0;
     btnHome.fadeIn(1500)
-        .on("click", function () {
+        .one("click", function () {
 
             btnHome.fadeOut(1500);
 
             clickedButtons[btnHome.attr("id")] = clickedButtons[btnHome.attr("id")] + 1;
 
-            amagarCastellPintant();
+            amagarCastellPintant(function () {});
 
             arr = [];
             parent = "";
-            $.each(_TREE._root.children[0].children[0].children, function () {
-                this.data.clean();
-                arr.push(this.name);
-                parent = this.parent.name;
-            });
+            if (typeof _TREE._root.children[0].children[0].children !== 'undefined') {
+                $.each(_TREE._root.children[0].children[0].children, function () {
+                    this.data.clean();
+                    arr.push(this.name);
+                    parent = this.parent.name;
+                });
 
-            $.each(arr, function () {
-                _TREE.remove(this.toString(), parent, _TREE.traverseBF);
-            });
-
-            arr = [];
-            parent = "";
-            $.each(_TREE._root.children[0].children, function () {
-                this.data.clean();
-                arr.push(this.name);
-                parent = this.parent.name;
-            });
-
-            $.each(arr, function () {
-                _TREE.remove(this.toString(), parent, _TREE.traverseBF);
-            });
+                $.each(arr, function () {
+                    _TREE.remove(this.toString(), parent, _TREE.traverseBF);
+                });
+            }
 
             arr = [];
             parent = "";
-            $.each(_TREE._root.children, function () {
-                this.data.clean();
-                arr.push(this.name);
-                parent = this.parent.name;
-            });
+            if (typeof _TREE._root.children[0].children !== 'undefined') {
+                $.each(_TREE._root.children[0].children, function () {
+                    this.data.clean();
+                    arr.push(this.name);
+                    parent = this.parent.name;
+                });
 
-            $.each(arr, function () {
-                _TREE.remove(this.toString(), parent, _TREE.traverseBF);
-            });
+                $.each(arr, function () {
+                    _TREE.remove(this.toString(), parent, _TREE.traverseBF);
+                });
+            }
+
+            arr = [];
+            parent = "";
+            if (typeof _TREE._root.children !== 'undefined') {
+                $.each(_TREE._root.children, function () {
+                    this.data.clean();
+                    arr.push(this.name);
+                    parent = this.parent.name;
+                });
+
+                $.each(arr, function () {
+                    _TREE.remove(this.toString(), parent, _TREE.traverseBF);
+                });
+            }
 
             _DEBUT._root.data.clean();
             _SEGONA._root.data.clean();
 
+            resetTooltips();
+
             setTimeout(function () {
-                fase = FASE.Pinya;
+                fase = FASE.Baixos;
                 setUp();
             }, 2000);
         });
@@ -325,28 +340,6 @@ function createBotonsBoletesPom() {
     });
 }
 
-function createBotonsBoletesPinya() {
-    p11 = new Boleta("#p11", null);
-    p12 = new Boleta("#p12", null);
-    p13 = new Boleta("#p13", null);
-    p14 = new Boleta("#p14", null);
-    p15 = new Boleta("#p15", null);
-    p16 = new Boleta("#p16", null);
-    p17 = new Boleta("#p17", null);
-    p18 = new Boleta("#p18", null);
-    p19 = new Boleta("#p19", null);
-
-    p11.init();
-    p12.init();
-    p13.init();
-    p14.init();
-    p15.init();
-    p16.init();
-    p17.init();
-    p18.init();
-    p19.init();
-}
-
 /*
 ######################################################
 ######################################################
@@ -382,24 +375,24 @@ function checkForNewAnimations() {
         actualitzarTweets();
     }
 
-    if (fase === FASE.Pom)
-        initBtnHome();
-
     if (((clickedButtons["baixos1"] >= 1) || (clickedButtons["baixos2"] >= 1) || (clickedButtons["baixos3"] >= 1) || (clickedButtons["baixos4"] >= 1))
         && fase < FASE.Segons) {
         if (fase < FASE.Pinya)
             setTimeout(function () {
-                animarPinya();
-                initTweets();
-                fase = FASE.Segons;
-                setTimeout(function () {
-                    animarSegons();
-                }, 4000);
+                animarPinya(function () {
+                    initTweets();
+                    fase = FASE.Segons;
+                    animarSegons(function () {
+                        createBotonsBoletesSegons();
+                    });
+                });
             }, 1000);
         else {
             setTimeout(function () {
                 fase = FASE.Segons;
-                animarSegons();
+                animarSegons(function () {
+                    createBotonsBoletesSegons();
+                });
             }, 1000);
         }
     }
@@ -423,10 +416,11 @@ function checkForNewAnimations() {
 
         fase = FASE.Tercos;
         setTimeout(function () {
-            amagarCD();
-            setTimeout(function () {
-                animarTercos();
-            }, 1200)
+            amagarCD(function () {
+                animarTercos(function () {
+                    createBotonsBoletesTercos();
+                });
+            });
         }, 1000);
     }
 
@@ -449,39 +443,135 @@ function checkForNewAnimations() {
 
         fase = FASE.Pom;
         setTimeout(function () {
-            animarPom();
+            animarPom(function () {
+                createBotonsBoletesPom();
+            });
         }, 1000);
     }
+
+    if (((clickedButtons["pom1"] >= 1) || (clickedButtons["pom2"] >= 1) || (clickedButtons["pom3"] >= 1) || (clickedButtons["pom4"] >= 1))
+        && fase === FASE.Pom)
+        fase = FASE.Climax;
+
+    if (fase === FASE.Climax)
+        initBtnHome();
 }
 
 function canviarColorPinya() {
     console.log("canvio color a: " + EMOCIO.properties[lastEmotionPlayed].name + "(" + EMOCIO.properties[lastEmotionPlayed].color + ")");
-    var gradient = "url(#gradient" + EMOCIO.properties[lastEmotionPlayed].name.toString().charAt(0).toUpperCase() + EMOCIO.properties[lastEmotionPlayed].name.substr(1) + ")";
 
-    var paths = $("#pinya").find("path");
+    var pinya = $("#pinya");
 
-    paths.each(function (i, e) {
-        e.style.fill = EMOCIO.properties[lastEmotionPlayed].gradient;
-    });
+    pinya.find("path")
+        .each(function (i, e) {
+            e.style.fill = EMOCIO.properties[lastEmotionPlayed].gradient;
+            e.style.stroke = "";
+        });
 }
 
-function animarPinya() {
+function animate(path, color, duration) {
+    path.style.srokeLinecap = "round";
+    path.style.stroke = color;
+    path.style.strokeWidth = 6;
+    var length = path.getTotalLength();
+    // Clear any previous transition
+    path.style.transition = path.style.WebkitTransition = "none";
+    // Set up the starting positions
+    path.style.strokeDasharray = length + " " + length;
+    path.style.strokeDashoffset = length;
+// Trigger a layout so styles are calculated & the browser
+// picks up the starting position before animating
+    path.getBoundingClientRect();
+    // Define our transition
+    path.style.transition = path.style.WebkitTransition =
+        "stroke-dashoffset " + duration + "s linear";
+    // Go!
+    path.style.strokeDashoffset = "0";
+}
+
+function animarPinya(callback) {
+
+    var pinya = $("#pinya");
+    var cD = $("#cD");
+
+    pinya.css("-webkit-clip-path", "url(#clip-path-5)").attr("clip-path", "url(#clip-path-5)");
+    cD.css("-webkit-clip-path", "url(#clip-path-6)").attr("clip-path", "url(#clip-path-6)");
+
+    var c1 = $("#c1").find("path");
+
+    var c2 = $.merge($.merge($("#c2").find("path"), $("#cD2").find("path")), $("#cDB2").find("path"));
+
+    var c3 = $.merge($.merge($("#c3").find("path"), $("#cD3").find("path")), $("#cDB3").find("path"));
+
+    var c4 = $.merge($("#cD4").find("path"), $("#c4").find("path"));
+
+    $.each(c1, function (i, path) {
+        animate(path, EMOCIO.properties[lastEmotionPlayed].gradient, 1);
+    });
+
+    setTimeout(function () {
+        $.each(c2, function (i, path) {
+            animate(path, EMOCIO.properties[lastEmotionPlayed].gradient, 1);
+        });
+        setTimeout(function () {
+            $.each(c3, function (i, path) {
+                animate(path, EMOCIO.properties[lastEmotionPlayed].gradient, 1);
+            });
+            setTimeout(function () {
+                $.each(c4, function (i, path) {
+                    animate(path, EMOCIO.properties[lastEmotionPlayed].gradient, 1);
+                });
+                setTimeout(function () {
+                    cD.removeAttr("clip-path").css("-webkit-clip-path", '');
+                    pinya.removeAttr("clip-path").css("-webkit-clip-path", '');
+
+                    pinya.find("path").each(function (i, path) {
+                        path.style.strokeDashoffset = path.style.strokeDasharray = "";
+                        path.style.fill = EMOCIO.properties[lastEmotionPlayed].gradient;
+                        path.style.stroke = EMOCIO.properties[lastEmotionPlayed].gradient;
+                        path.style.stroke = "";
+                        path.style.strokeLinecap = "";
+                        path.style.strokeWidth = "0";
+                        path.style.transition = "";
+                        path.style.webkitTransition = "";
+                    });
+                    callback();
+                }, 600);
+            }, 400);
+        }, 400);
+    }, 400);
+    /*
+    var pinya = $("#pinya");
+    var cD = $("#cD");
+
+    var str = 'url(#clip-path-5)';
+    pinya.css('-webkit-clip-path', str).css('clip-path', str);
+    str = 'url(#clip-path-6)';
+    cD.css('-webkit-clip-path', str).css('clip-path', str);
+
+    $.each(pinya.find("path"), function (i, e) {
+        e.style.strokeDasharray = e.style.strokeDashoffset = $(e).get(0).getTotalLength();
+        e.style.display = "";
+        e.style.fill = "none";
+    });
 
     var paths = $("#c1").find("path");
     var pathscD = null;
+    var pathscDB = null;
+    var delay = null;
 
     paths.each(function (i, e) {
-        var delay = "0." + (i * 2).toString() + "s";
-        e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+        delay = "0." + (i * 2).toString() + "s";
         e.style.strokeLinecap = "round";
         e.style.stroke = EMOCIO.properties[lastEmotionPlayed].gradient;
-        e.style.strokeWidth = 6;
+        e.style.strokeWidth = 10;
         if (i > 0) {
-            var anim = "dash 1s linear forwards " + delay.toString();
-            e.style.animation = anim;
+            e.style.webkitAnimation = "dash 1s linear forwards " + delay.toString();
+            e.style.animation = "dash 1s linear forwards " + delay.toString();
         }
         else {
-            e.style.animation = "dash 1s linear forwards"
+            e.style.webkitAnimation = "dash 1s linear forwards";
+            e.style.animation = "dash 1s linear forwards";
         }
     });
 
@@ -489,20 +579,21 @@ function animarPinya() {
 
         paths = $("#c2").find("path");
         pathscD = $("#cD2").find("path");
-        paths = $.merge(pathscD, paths);
+        pathscDB = $("#cDB2").find("path");
+        paths = $.merge($.merge(paths, pathscD), pathscDB);
 
         paths.each(function (i, e) {
-            var delay = "0." + (i * 2).toString() + "s";
-            e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+            delay = "0." + (i * 2).toString() + "s";
             e.style.strokeLinecap = "round";
             e.style.stroke = EMOCIO.properties[lastEmotionPlayed].gradient;
             e.style.strokeWidth = 6;
             if (i > 0) {
-                var anim = "dash 1s linear forwards " + delay.toString();
-                e.style.animation = anim;
+                e.style.webkitAnimation = "dash 2s linear forwards " + delay.toString();
+                e.style.animation = "dash 2s linear forwards " + delay.toString();
             }
             else {
-                e.style.animation = "dash 1s linear forwards"
+                e.style.webkitAnimation = "dash 2s linear forwards";
+                e.style.animation = "dash 2s linear forwards";
             }
         });
 
@@ -510,20 +601,21 @@ function animarPinya() {
 
             paths = $("#c3").find("path");
             pathscD = $("#cD3").find("path");
-            paths = $.merge(pathscD, paths);
+            pathscDB = $("#cDB3").find("path");
+            paths = $.merge($.merge(paths, pathscD), pathscDB);
 
             paths.each(function (i, e) {
-                var delay = "0." + (i * 2).toString() + "s";
-                e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+                delay = "0." + (i * 2).toString() + "s";
                 e.style.strokeLinecap = "round";
                 e.style.stroke = EMOCIO.properties[lastEmotionPlayed].gradient;
                 e.style.strokeWidth = 6;
                 if (i > 0) {
-                    var anim = "dash 1s linear forwards " + delay.toString();
-                    e.style.animation = anim;
+                    e.style.webkitAnimation = "dash 2s linear forwards " + delay.toString();
+                    e.style.animation = "dash 2s linear forwards " + delay.toString();
                 }
                 else {
-                    e.style.animation = "dash 1s linear forwards"
+                    e.style.webkitAnimation = "dash 2s linear forwards";
+                    e.style.animation = "dash 2s linear forwards";
                 }
             });
 
@@ -535,65 +627,60 @@ function animarPinya() {
 
                 paths.each(function (i, e) {
                     var delay = "0." + (i * 2).toString() + "s";
-                    e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
                     e.style.strokeLinecap = "round";
                     e.style.stroke = EMOCIO.properties[lastEmotionPlayed].gradient;
                     e.style.strokeWidth = 6;
                     if (i > 0) {
-                        var anim = "dash 1s linear forwards " + delay.toString();
-                        e.style.animation = anim;
+                        var anim = "dash 2s linear forwards " + delay.toString();
+                        e.style.webkitAnimation = "dash 2s linear forwards " + delay.toString();
+                        e.style.animation = "dash 2s linear forwards " + delay.toString();
                     }
                     else {
-                        e.style.animation = "dash 1s linear forwards"
+                        e.style.webkitAnimation = "dash 2s linear forwards";
+                        e.style.animation = "dash 2s linear forwards";
                     }
                 });
 
                 setTimeout(function () {
-                    var pinya = $("#pinya")
-                    paths = pinya.find("path");
-                    paths.each(function (i, e) {
+                    $.each(pinya.find("path"), function (i, e) {
                         e.style.strokeDashoffset = e.strokeDasharray = "";
                         e.style.fill = EMOCIO.properties[lastEmotionPlayed].gradient;
                         e.style.stroke = EMOCIO.properties[lastEmotionPlayed].gradient;
                         e.style.stroke = "";
                         e.style.strokeLinecap = "";
                         e.style.strokeWidth = "0";
+                        e.style.webkitAnimation = "";
                         e.style.animation = "";
                     });
-                    $("#cD").removeAttr("clip-path");
-                    pinya.removeAttr("clip-path");
-
-                }, 2000);
+                    cD.removeAttr("clip-path").css("-webkit-clip-path", '');
+                    pinya.removeAttr("clip-path").css("-webkit-clip-path", '');
+                }, 1400);
             }, 900);
         }, 900);
     }, 900);
+    */
 }
 
-function animarBaixos() {
-    var paths = $("#baixos").find("path");
+function animarBaixos(callback) {
+    var baixos = $("#baixos");
 
-    paths.each(function (i, e) {
-        e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+    baixos.find("path").each(function (i, path) {
+        animate(path, COLOR.Standard, 4);
     });
 
-    $("#baixos1").toggleClass("baixos1");
-    $("#baixos2").toggleClass("baixos2");
-    $("#baixos3").toggleClass("baixos3");
-    $("#baixos4").toggleClass("baixos4");
-    $("#linBai1").toggleClass("linBai1");
-    $("#linBai2").toggleClass("linBai2");
-    $("#linBai3").toggleClass("linBai3");
-    $("#linBai4").toggleClass("linBai4");
-
-
     setTimeout(function () {
-        createBotonsBoletesBaixos();
-        $("#baixos").removeAttr("clip-path")
-            .find("path").each(function (i, e) {
-            e.style.fill = COLOR.Standard;
-            e.style.strokeDasharray = e.style.strokeDashoffset = "";
-        });
+        baixos.removeAttr("clip-path");
 
+        baixos.find("path").each(function (i, path) {
+            path.style.srokeLinecap = "round";
+            path.style.stroke = "";
+            path.style.strokeWidth = "";
+            path.style.fill = COLOR.Standard;
+        });
+        $('.navbar').fadeIn(1500);
+        callback();
+    }, 1800);
+    /*
         $("#baixos1").toggleClass("baixos1");
         $("#baixos2").toggleClass("baixos2");
         $("#baixos3").toggleClass("baixos3");
@@ -602,18 +689,60 @@ function animarBaixos() {
         $("#linBai2").toggleClass("linBai2");
         $("#linBai3").toggleClass("linBai3");
         $("#linBai4").toggleClass("linBai4");
-        $('.navbar').show();
-    }, 4500);
+
+
+        setTimeout(function () {
+            createBotonsBoletesBaixos();
+            $("#baixos").removeAttr("clip-path")
+                .find("path").each(function (i, e) {
+                e.style.fill = COLOR.Standard;
+                e.style.strokeDasharray = e.style.strokeDashoffset = "";
+            });
+
+            $("#baixos1").toggleClass("baixos1");
+            $("#baixos2").toggleClass("baixos2");
+            $("#baixos3").toggleClass("baixos3");
+            $("#baixos4").toggleClass("baixos4");
+            $("#linBai1").toggleClass("linBai1");
+            $("#linBai2").toggleClass("linBai2");
+            $("#linBai3").toggleClass("linBai3");
+            $("#linBai4").toggleClass("linBai4");
+            $('.navbar').fadeIn(1500);
+        }, 4500);
+        */
 }
 
-function animarSegons() {
+function animarSegons(callback) {
+    var segons = $("#segons");
 
+    segons.css("-webkit-clip-path", "url(#clip-path-3)").attr("clip-path", "url(#clip-path-3)");
+
+    segons.find("path").each(function (i, path) {
+        animate(path, COLOR.Standard, 4);
+    });
+
+    setTimeout(function () {
+        segons.removeAttr("clip-path").css("-webkit-clip-path", "");
+
+        segons.find("path").each(function (i, path) {
+            path.style.strokeDashoffset = path.style.strokeDasharray = "";
+            path.style.fill = COLOR.Standard;
+            path.style.stroke = COLOR.Standard;
+            path.style.stroke = "";
+            path.style.strokeLinecap = "";
+            path.style.strokeWidth = "0";
+            path.style.transition = "";
+            path.style.webkitTransition = "";
+        });
+        callback();
+    }, 2500);
+/*
     var segons = $("#segons");
 
     segons.attr("clip-path", "url(#clip-path-3)");
 
     $.each(segons.find("path"), function (i, e) {
-        e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+        e.style.strokeDasharray = e.style.strokeDashoffset = $(e).get(0).getTotalLength();
         e.style.display = "";
         e.style.fill = "none";
     });
@@ -624,10 +753,12 @@ function animarSegons() {
         e.style.stroke = COLOR.Standard;
         e.style.strokeWidth = 6;
         if (i > 0) {
+            e.style.webkitAnimation = "dash 1s linear forwards " + delay.toString();
             e.style.animation = "dash 1s linear forwards " + delay.toString();
         }
         else {
-            e.style.animation = "dash 1s linear forwards"
+            e.style.webkitAnimation = "dash 1s linear forwards";
+            e.style.animation = "dash 1s linear forwards";
         }
     });
 
@@ -636,21 +767,46 @@ function animarSegons() {
             e.style.strokeDasharray = e.style.strokeDashoffset = "";
             e.style.strokeLinecap = "";
             e.style.strokeWidth = 0;
+            e.style.webkitAnimation = "";
             e.style.animation = "";
             e.style.fill = COLOR.Standard;
         });
-        createBotonsBoletesSegons();
+        callback();
     }, 2000);
+    */
 }
 
-function animarTercos() {
-
+function animarTercos(callback) {
     var tercos = $("#tercos");
 
-    tercos.attr("clip-path", "url(#clip-path-2)");
+    tercos.css("-webkit-clip-path", "url(#clip-path-2)").attr("clip-path", "url(#clip-path-2)");
+
+    tercos.find("path").each(function (i, path) {
+        animate(path, COLOR.Standard, 3);
+    });
+
+    setTimeout(function () {
+        tercos.removeAttr("clip-path").css("-webkit-clip-path", "");
+
+        tercos.find("path").each(function (i, path) {
+            path.style.strokeDashoffset = path.style.strokeDasharray = "";
+            path.style.fill = COLOR.Standard;
+            path.style.stroke = COLOR.Standard;
+            path.style.stroke = "";
+            path.style.strokeLinecap = "";
+            path.style.strokeWidth = "0";
+            path.style.transition = "";
+            path.style.webkitTransition = "";
+        });
+        callback();
+    }, 2500);
+/*
+    var tercos = $("#tercos");
+
+    tercos.css('-webkit-clip-path', 'url(#clip-path-2)').attr("clip-path", "url(#clip-path-2)");
 
     $.each(tercos.find("path"), function (i, e) {
-        e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+        e.style.strokeDasharray = e.style.strokeDashoffset = $(e).get(0).getTotalLength();
         e.style.display = "";
         e.style.fill = "none";
     });
@@ -661,26 +817,30 @@ function animarTercos() {
         e.style.stroke = COLOR.Standard;
         e.style.strokeWidth = 6;
         if (i > 0) {
+            e.style.webkitAnimation = "dash 1s linear forwards " + delay.toString();
             e.style.animation = "dash 1s linear forwards " + delay.toString();
         }
         else {
-            e.style.animation = "dash 1s linear forwards"
+            e.style.webkitAnimation = "dash 1s linear forwards";
+            e.style.animation = "dash 1s linear forwards";
         }
     });
 
     setTimeout(function () {
-        $.each(tercos.removeAttr("clip-path").find("path"), function (i, e) {
+        $.each(tercos.css('-webkit-clip-path', '').removeAttr("clip-path").find("path"), function (i, e) {
             e.style.strokeDasharray = e.style.strokeDashoffset = "";
             e.style.strokeLinecap = "";
             e.style.strokeWidth = 0;
+            e.style.webkitAnimation = "";
             e.style.animation = "";
             e.style.fill = COLOR.Standard;
         });
-        createBotonsBoletesTercos();
+        callback();
     }, 2000);
+    */
 }
 
-function animarPom() {
+function animarPom(callback) {
 
 
     var dosos = $("#dosos");
@@ -689,83 +849,79 @@ function animarPom() {
 
     var pom = $("#pom");
 
-    pom.attr("clip-path", "url(#clip-path)");
+    pom.css('-webkit-clip-path', 'url(#clip-path)').attr("clip-path", "url(#clip-path)");
 
-    $.each(pom.find("path"), function (i, e) {
-        e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
-        e.style.display = "";
-        e.style.fill = "none";
-    });
-
-    $.each(dosos.find("path"), function (i, e) {
-        var delay = "0." + (i * 2).toString() + "s";
-        e.style.strokeLinecap = "round";
-        e.style.stroke = COLOR.Standard;
-        e.style.strokeWidth = 6;
-        if (i > 0) {
-            e.style.animation = "dash 2s linear forwards " + delay.toString();
-        }
-        else {
-            e.style.animation = "dash 2s linear forwards"
-        }
+    $.each(dosos.find("path"), function (i, path) {
+        animate(path, COLOR.Standard, 3);
     });
 
     setTimeout(function () {
-        $.each(aixecador.find("path"), function (i, e) {
-            var delay = "0." + (i * 2).toString() + "s";
-            e.style.strokeLinecap = "round";
-            e.style.stroke = COLOR.Standard;
-            e.style.strokeWidth = 6;
-            if (i > 0) {
-                e.style.animation = "dash 2s linear forwards " + delay.toString();
-            }
-            else {
-                e.style.animation = "dash 2s linear forwards"
-            }
+        $.each(aixecador.find("path"), function (i, path) {
+            animate(path, COLOR.Standard, 3);
         });
         setTimeout(function () {
-            $.each(anxeneta.find("path"), function (i, e) {
-                var delay = "0." + (i * 2).toString() + "s";
-                e.style.strokeLinecap = "round";
-                e.style.stroke = COLOR.Standard;
-                e.style.strokeWidth = 6;
-                if (i > 0) {
-                    e.style.animation = "dash 2s linear forwards " + delay.toString();
-                }
-                else {
-                    e.style.animation = "dash 2s linear forwards"
-                }
+            $.each(anxeneta.find("path"), function (i, path) {
+                animate(path, COLOR.Standard, 3);
             });
         }, 1000);
     }, 1000);
 
     setTimeout(function () {
-        $.each(pom.removeAttr("clip-path").find("path"), function (i, e) {
-            e.style.strokeDasharray = e.style.strokeDashoffset = "";
-            e.style.strokeLinecap = "";
-            e.style.strokeWidth = 0;
-            e.style.animation = "";
-            e.style.fill = COLOR.Standard;
+        pom.removeAttr("clip-path").css("-webkit-clip-path", "");
+
+        pom.find("path").each(function (i, path) {
+            path.style.strokeDashoffset = path.style.strokeDasharray = "";
+            path.style.fill = COLOR.Standard;
+            path.style.stroke = COLOR.Standard;
+            path.style.stroke = "";
+            path.style.strokeLinecap = "";
+            path.style.strokeWidth = "0";
+            path.style.transition = "";
+            path.style.webkitTransition = "";
         });
-        createBotonsBoletesPom();
+        callback();
     }, 3500);
 }
 
-function amagarCD() {
+function amagarCD(callback) {
+/*
+    var cd = $("#cD");
+
+    cd.css("-webkit-clip-path", "url(#clip-path-6)").attr("clip-path", "url(#clip-path-6)");
+
+    cd.find("path").each(function (i, path) {
+        animate(path, COLOR.Negre, 3);
+    });
+
+    setTimeout(function () {
+        cd.removeAttr("clip-path").css("-webkit-clip-path", "");
+
+        cd.find("path").each(function (i, path) {
+            path.style.srokeLinecap = "round";
+            path.style.stroke = "";
+            path.style.strokeWidth = "";
+            path.style.fill = COLOR.Negre;
+        });
+        callback();
+    }, 2500);
+
+*/
     var paths = $("#cD")
         .find("path");
 
     paths.each(function (i, e) {
         var delay = "0." + (i * 2).toString() + "s";
-        e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+        e.style.strokeDasharray = e.style.strokeDashoffset = $(e).get(0).getTotalLength();
         e.style.strokeLinecap = "round";
         e.style.stroke = COLOR.Negre;
         e.style.strokeWidth = 6;
         if (i > 0) {
+            e.style.webkitAnimation = "dash 1s linear forwards " + delay.toString();
             e.style.animation = "dash 1s linear forwards " + delay.toString();
         }
         else {
-            e.style.animation = "dash 1s linear forwards"
+            e.style.webkitAnimation = "dash 1s linear forwards";
+            e.style.animation = "dash 1s linear forwards";
         }
     });
 
@@ -775,29 +931,34 @@ function amagarCD() {
             e.style.strokeLinecap = "";
             e.style.stroke = "none";
             e.style.strokeWidth = "";
+            e.style.webkitAnimation = "";
             e.style.animation = "";
             e.style.fill = "none";
             e.style.display = "none";
         });
-    }, 1000)
+        callback();
+    }, 1200)
+
 }
 
-function amagarCastellPintant() {
+function amagarCastellPintant(callback) {
 
     //AMAGAR CASTELL
-    paths = $.merge($.merge($("#pom").find("path"), $("#tercos").find("path")), $("#segons").find("path"));
+    paths = $.merge($("#pts").find("path"), $("#pinya").find("path"));
 
     paths.each(function (i, e) {
         var delay = "0." + (i * 2).toString() + "s";
-        e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
+        e.style.strokeDasharray = e.style.strokeDashoffset = $(e).get(0).getTotalLength();
         e.style.strokeLinecap = "round";
         e.style.stroke = COLOR.Negre;
         e.style.strokeWidth = 8;
         if (i > 0) {
-            e.style.animation = "dash 2s linear forwards " + delay.toString();
+            e.style.webkitAnimation = "dash 1s linear forwards " + delay.toString();
+            e.style.animation = "dash 1s linear forwards " + delay.toString();
         }
         else {
-            e.style.animation = "dash 2s linear forwards"
+            e.style.webkitAnimation = "dash 1s linear forwards";
+            e.style.animation = "dash 1s linear forwards";
         }
     });
 
@@ -807,47 +968,50 @@ function amagarCastellPintant() {
             e.style.strokeLinecap = "";
             e.style.stroke = "none";
             e.style.strokeWidth = 0;
+            e.style.webkitAnimation = "";
             e.style.animation = "";
             e.style.fill = "none";
         });
-    }, 2000);
+        callback();
+    }, 1500);
 
+    /*
+        //MOSTRAR TROÇET DE PINYA
+        var cD = $("#cD");
 
-    //MOSTRAR TROÇET DE PINYA
-    var cD = $("#cD");
+        cD.attr("clip-path", "url(#clip-path-6)");
 
-    cD.attr("clip-path", "url(#clip-path-6)");
-
-    $.each(cD.find("path"), function (i, e) {
-        e.style.strokeDasharray = e.style.strokeDashoffset = e.getTotalLength();
-        e.style.display = "";
-        e.style.fill = "none";
-    });
-
-    setTimeout(function () {
         $.each(cD.find("path"), function (i, e) {
-            var delay = "0." + (i * 2).toString() + "s";
-            e.style.strokeLinecap = "round";
-            e.style.stroke = EMOCIO.properties[lastEmotionPlayed].gradient;
-            e.style.strokeWidth = 6;
-            if (i > 0) {
-                e.style.animation = "dash 1s linear forwards " + delay.toString();
-            }
-            else {
-                e.style.animation = "dash 1s linear forwards"
-            }
+            e.style.strokeDasharray = e.style.strokeDashoffset = $(e).get(0).getTotalLength();
+            e.style.display = "";
+            e.style.fill = "none";
         });
-    }, 1000);
 
-    setTimeout(function () {
-        $.each(cD.removeAttr("clip-path").find("path"), function (i, e) {
-            e.style.strokeDasharray = e.style.strokeDashoffset = "";
-            e.style.strokeLinecap = "";
-            e.style.strokeWidth = 0;
-            e.style.animation = "";
-            e.style.fill = EMOCIO.properties[lastEmotionPlayed].gradient;
-        });
-    }, 2800);
+        setTimeout(function () {
+            $.each(cD.find("path"), function (i, e) {
+                var delay = "0." + (i * 2).toString() + "s";
+                e.style.strokeLinecap = "round";
+                e.style.stroke = EMOCIO.properties[lastEmotionPlayed].gradient;
+                e.style.strokeWidth = 6;
+                if (i > 0) {
+                    e.style.animation = "dash 1s linear forwards " + delay.toString();
+                }
+                else {
+                    e.style.animation = "dash 1s linear forwards"
+                }
+            });
+        }, 1000);
+
+        setTimeout(function () {
+            $.each(cD.removeAttr("clip-path").find("path"), function (i, e) {
+                e.style.strokeDasharray = e.style.strokeDashoffset = "";
+                e.style.strokeLinecap = "";
+                e.style.strokeWidth = 0;
+                e.style.animation = "";
+                e.style.fill = EMOCIO.properties[lastEmotionPlayed].gradient;
+            });
+        }, 2800);
+        */
 }
 
 /*
@@ -900,22 +1064,26 @@ var EMOCIO = {
 };
 
 function toggleFullScreen() {
-    if ((document.fullScreenElement && document.fullScreenElement !== null) ||
-        (!document.mozFullScreen && !document.webkitIsFullScreen)) {
-        if (document.documentElement.requestFullScreen) {
-            document.documentElement.requestFullScreen();
+    if (!document.fullscreenElement &&    // alternative standard method
+        !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement ) {  // current working methods
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        } else if (document.documentElement.msRequestFullscreen) {
+            document.documentElement.msRequestFullscreen();
         } else if (document.documentElement.mozRequestFullScreen) {
             document.documentElement.mozRequestFullScreen();
-        } else if (document.documentElement.webkitRequestFullScreen) {
-            document.documentElement.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+        } else if (document.documentElement.webkitRequestFullscreen) {
+            document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
         }
     } else {
-        if (document.cancelFullScreen) {
-            document.cancelFullScreen();
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
         } else if (document.mozCancelFullScreen) {
             document.mozCancelFullScreen();
-        } else if (document.webkitCancelFullScreen) {
-            document.webkitCancelFullScreen();
+        } else if (document.webkitExitFullscreen) {
+            document.webkitExitFullscreen();
         }
     }
 }
@@ -939,26 +1107,29 @@ $(document).mousemove(function (e) {
 //pagina aparte
 $("#ajuda").click(function () {
 
-    if (!ajuda) {
+    if (ajuda) {
+        $(".ajudaPag").fadeOut(1000);
+        ajuda = false;
+    } else {
         $(".creditsPag").fadeOut(500);
         $(".ajudaPag").fadeIn(1000);
         ajuda = true;
-    } else {
-        $(".ajudaPag").fadeOut(1000);
-        ajuda = false;
+        credits = false;
     }
 });
 //pagina aparte
 $("#credits").click(function () {
 
-    if (!credits) {
+    if (credits) {
+        $(".creditsPag").fadeOut(1000);
+        credits = false;
+    } else {
         $(".ajudaPag").fadeOut(500);
         $(".creditsPag").fadeIn(1000);
         credits = true;
-    } else {
-        $(".creditsPag").fadeOut(1000);
-        credits = false;
+        ajuda = false;
     }
+    $(this.parentElement).toggleClass("active");
 });
 
 $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', function (e) {
@@ -968,8 +1139,10 @@ $(document).bind('webkitfullscreenchange mozfullscreenchange fullscreenchange', 
 
     if (event === 'FullscreenOff') {
         console.log("Exit FullScreen");
+        $("#fullscreen").toggleClass("mdi-fullscreen").toggleClass("mdi-fullscreen-exit");
     } else if (event === 'FullscreenOn') {
         console.log("Enter FullScreen");
+        $("#fullscreen").toggleClass("mdi-fullscreen").toggleClass("mdi-fullscreen-exit");
     }
 
 });
@@ -1070,8 +1243,8 @@ var tooltip = function () {
     };
 }();
 
-(function($) {
-    $.fn.shuffle = function() {
+(function ($) {
+    $.fn.shuffle = function () {
         // credits: http://bost.ocks.org/mike/shuffle/
         var m = this.length, t, i;
 

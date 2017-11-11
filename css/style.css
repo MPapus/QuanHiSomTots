@@ -1,22 +1,30 @@
 html {
-	-webkit-text-size-adjust: 100%;
-	-ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -ms-text-size-adjust: 100%;
 }
+
+div a img
+{
+    display: none;
+}
+
 * {
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
     -webkit-user-select: none; /* Chrome/Safari */
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
- }
+}
 
 @font-face {
     font-family: The Braggest;
     src: url(../fonts/braggest/The_Braggest_Demo.woff);
 }
 
-.navbar-brand {
-    font-family: The Braggest, serif;
-    font-size: 2.5em;
+.nav-link {
+    font-family: The Braggest;
+    font-size: xx-large;
+    padding: 0;
 }
 
 path {
@@ -29,8 +37,8 @@ path {
 }
 
 body {
-	margin: 0;
-	overflow: hidden;
+    margin: 0;
+    overflow: hidden;
     background-color: #000000;
 }
 
@@ -39,6 +47,8 @@ body {
     float: left;
     top: 50%;
     left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
 .castell {
@@ -64,16 +74,16 @@ body {
 
 #ajuda {
     color: #e3e3e3;
-    margin-right: 0.4em;
-    font-size: 2.7em;
-    margin-top: 0.14em;
+    /* margin-right: 0.4em; */
+    font-size: 2.5em;
+    /* margin-top: 0.14em; */
 }
 
 #fullscreen {
     color: #e3e3e3;
-    margin-right: 0.3em;
-    font-size: 2.5em;
-    margin-top: 0.2em;
+    /* margin-right: 0.3em; */
+    font-size: 3em;
+    /* margin-top: 0.2em; */
 }
 
 #home:hover, #ajuda:hover, #fullscreen:hover {
@@ -109,40 +119,39 @@ body {
     height: auto;
 }
 .portada {
-	-webkit-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
     position: absolute;
     top: 50vh;
     left: 50vw;
     width: 48vh;
     height: 48vh;
-	z-index: 600;
+    z-index: 600;
 }
 
 .portadaFull {
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 0;
-	z-index: 550;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 550;
 
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
 }
 .ajudaPag {
-	position: fixed;
-	width: 100%;
-	height: 100%;
+    position: fixed;
+    width: 100%;
+    height: 100%;
     padding-left: 15px;
     padding-right: 15px;
     background-color: #303030;
     color: #e3e3e3;
-	z-index: 100;
+    z-index: 100;
 }
-
-
 .ajudaPag.row {
     margin-bottom: 20px;
 }
@@ -152,45 +161,31 @@ body {
 }
 
 .creditsPag {
-	position: fixed;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	right: 0;
-	z-index: 100;
-    color: #303030;
-	background-image: url("../assets/texturaBlanca.png");
-	background-repeat: no-repeat;
-	background-size: 100% 100%;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    background-color: #303030;
 }
-.textoPags {
-	height: 100%;
-	overflow: hidden;
-	position: absolute;
-	top: 7%;
-	text-align: center;
+#noSupport {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #303030;
+    color: #e3e3e3;
+    z-index: 200;
 }
-.textoPagsc {
-	width: 40%;
-	height: 100%;
-	overflow: hidden;
-	position: absolute;
-	left: 30%;
-	top: 10%;
-	text-align: center;
-}
-.columna {
-	width: 50%;
-	position: relative;
-	display: inline-flex;
-}
-.columnaGrande {
-	width: 40%;
-	min-height: 100%;
-	left: 10%;
-	position: relative;
-	display: inline-flex;
-	overflow-x: auto;
+#enConstruccio {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #303030;
+    color: #e3e3e3;
+    z-index: 200;
 }
 /*
 ######################################################
@@ -206,16 +201,6 @@ body {
     50%  { opacity:0; }
     100% { opacity:1; }
 }
-@-o-keyframes flickerAnimation{
-    0%   { opacity:1; }
-    50%  { opacity:0; }
-    100% { opacity:1; }
-}
-@-moz-keyframes flickerAnimation{
-    0%   { opacity:1; }
-    50%  { opacity:0; }
-    100% { opacity:1; }
-}
 @-webkit-keyframes flickerAnimation{
     0%   { opacity:1; }
     50%  { opacity:0; }
@@ -223,8 +208,6 @@ body {
 }
 .animate-flicker {
     -webkit-animation: flickerAnimation 4s infinite;
-    -moz-animation: flickerAnimation 4s infinite;
-    -o-animation: flickerAnimation 4s infinite;
     animation: flickerAnimation 4s infinite;
 }
 /*
@@ -240,6 +223,7 @@ body {
     stroke-linecap:round;
     stroke:#e3e3e3;
     stroke-width:6;
+    -webkit-animation: dash 5s linear forwards;
     animation: dash 5s linear forwards;
 }
 
@@ -247,6 +231,7 @@ body {
     stroke-linecap:round;
     stroke:#e3e3e3;
     stroke-width:6;
+    -webkit-animation: dash 1s linear forwards 0.6s;
     animation: dash 1s linear forwards 0.6s;
 }
 
@@ -254,6 +239,7 @@ body {
     stroke-linecap:round;
     stroke:#e3e3e3;
     stroke-width:6;
+    -webkit-animation: dash 4s linear forwards 1s;
     animation: dash 4s linear forwards 1s;
 }
 
@@ -261,6 +247,7 @@ body {
     stroke-linecap:round;
     stroke:#e3e3e3;
     stroke-width:6;
+    -webkit-animation: dash 1s linear forwards 1.8s;
     animation: dash 1s linear forwards 1.8s;
 }
 
@@ -268,6 +255,7 @@ body {
     stroke-linecap:round;
     stroke:#e3e3e3;
     stroke-width:6;
+    -webkit-animation: dash 3s linear forwards 2.5s;
     animation: dash 3s linear forwards 2.5s;
 }
 
@@ -275,6 +263,7 @@ body {
     stroke-linecap:round;
     stroke:#e3e3e3;
     stroke-width:6;
+    -webkit-animation: dash 1s linear forwards 3s;
     animation: dash 1s linear forwards 3s;
 }
 
@@ -282,6 +271,7 @@ body {
     stroke-linecap:round;
     stroke:#e3e3e3;
     stroke-width:6;
+    -webkit-animation: dash 4s linear forwards 3.5s;
     animation: dash 4s linear forwards 3.5s;
 }
 
@@ -289,6 +279,7 @@ body {
     stroke-linecap:round;
     stroke:#e3e3e3;
     stroke-width:6;
+    -webkit-animation: dash 1s linear forwards 4s;
     animation: dash 1s linear forwards 4s;
 }
 
@@ -298,6 +289,11 @@ body {
     }
 }
 
+@-webkit-keyframes dash {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
 /*
 ######################################################
 ######################################################
@@ -329,13 +325,14 @@ body {
     border: 5px solid #FFC14D;
     border-radius: 5px;
     background: #222;
-    box-shadow: 0px 0px 14px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0 0 14px rgba(0,0,0,0.3);
+    box-shadow: 0 0 14px rgba(0,0,0,0.3);
 }
 
 .tooltipster-sidetip.tooltipster-alegria .tooltipster-content {
     font-size: 14px;
     font-style: italic;
-    line-height: 1em;
+    line-height: 1.29em;
     padding: 20px;
     color: #e3e3e3;
 }
@@ -411,13 +408,14 @@ body {
     border: 5px solid #FF5A4D;
     border-radius: 5px;
     background: #222;
-    box-shadow: 0px 0px 14px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0 0 14px rgba(0,0,0,0.3);
+    box-shadow: 0 0 14px rgba(0,0,0,0.3);
 }
 
 .tooltipster-sidetip.tooltipster-rabia .tooltipster-content {
     font-size: 14px;
     font-style: italic;
-    line-height: 1em;
+    line-height: 1.29em;
     padding: 20px;
     color: #e3e3e3;
 }
@@ -493,13 +491,14 @@ body {
     border: 5px solid #9D43C7;
     border-radius: 5px;
     background: #222;
-    box-shadow: 0px 0px 14px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0 0 14px rgba(0,0,0,0.3);
+    box-shadow: 0 0 14px rgba(0,0,0,0.3);
 }
 
 .tooltipster-sidetip.tooltipster-por .tooltipster-content {
     font-size: 14px;
     font-style: italic;
-    line-height: 1em;
+    line-height: 1.29em;
     padding: 20px;
     color: #e3e3e3;
 }
@@ -575,13 +574,14 @@ body {
     border: 5px solid #3DABBF;
     border-radius: 5px;
     background: #222;
-    box-shadow: 0px 0px 14px rgba(0,0,0,0.3);
+    -webkit-box-shadow: 0 0 14px rgba(0,0,0,0.3);
+    box-shadow: 0 0 14px rgba(0,0,0,0.3);
 }
 
 .tooltipster-sidetip.tooltipster-tristesa .tooltipster-content {
     font-size: 14px;
     font-style: italic;
-    line-height: 1em;
+    line-height: 1.29em;
     padding: 20px;
     color: #e3e3e3;
 }
@@ -650,4 +650,24 @@ body {
 
 .tooltipster-sidetip.tooltipster-tristesa.tooltipster-right .tooltipster-arrow-uncropped {
     left: -9px;
+}
+
+.tooltipster-sidetip a:link {
+    text-decoration: none;
+    color: #e3e3e3;
+}
+
+.tooltipster-sidetip a:visited {
+    text-decoration: none;
+    color: #e3e3e3;
+}
+
+.tooltipster-sidetip a:hover {
+    text-decoration: none;
+    color: #e3e3e3;
+}
+
+.tooltipster-sidetip a:active {
+    text-decoration: none;
+    color: #e3e3e3;
 }
