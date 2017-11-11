@@ -51,3 +51,5 @@ twitteroauth/
 videos/
 css/vendor/
 bower.json
+package-lock.json
+js/modernizr-custom.js
