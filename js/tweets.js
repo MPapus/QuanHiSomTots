@@ -1,21 +1,22 @@
-var boletes = $.merge($.merge($.merge($.merge($("#cDB").find("path"), $("#cB4").find("path")), $("#cB3").find("path")), $("#cB2").find("path")), $("#cB1"));
+var boletesPinya = $.merge($.merge($.merge($("#cDB").find("path"), $("#cB4").find("path")), $("#cB3").find("path")), $("#cB2").find("path"));
+
+var boletesTronc = $.merge($.merge($("#cB4").find("path"), $("#cB3").find("path")), $("#cB2").find("path"));
 
 var usedTweets = {};
 
 $(document).ready(function () {
 
-    $.each(boletes, function (i, e) {
+    $.each(boletesPinya, function (i, e) {
         $(e).tooltipster({
             delay: 100,
             maxWidth: 500,
             speed: 300,
             interactive: true,
-
             content: '',
             contentAsHTML: true,
-
             animation: 'grow',
-            trigger: 'custom'
+            trigger: 'custom',
+            contentCloning: false
         });
     });
 
@@ -32,57 +33,21 @@ function initTweets() {
 
             var tweets = null;
 
-            var text, img, user, hashtag, ttContent;
+            var text, user, hashtag, ttContent, img;
 
-            var tweet = 0;
+            tweets = JSON.parse(data);
 
-            tweets = JSON.parse(data).statuses;
-
-            $(boletes).each(function (i, e) {
-                if (typeof  tweets[tweet] === 'undefined')
+            $(boletesPinya).shuffle().each(function (i, e) {
+                var cTweet = tweets.statuses[i];
+                if (typeof cTweet === 'undefined')
                     return false;
-                var currentTweet = tweets[tweet];
-                tweet = tweet + 1;
 
-                if (DictContainsValue(usedTweets, currentTweet.id_str))
-                    return;
+                var content = buildContent(cTweet);
 
-                usedTweets[currentTweet.id_str] = usedTweets[currentTweet.id_str] + 1;
-
-                if (tweet.retweet_count > 0) {
-                    currentTweet = tweet.retweeted_status;
+                if (content !== false) {
+                    $(e).tooltipster('content', content);
+                    themesAndEvents(e);
                 }
-
-                text = currentTweet.text;
-
-                user = "@" + currentTweet.user.screen_name + ": ";
-
-                if ((typeof currentTweet.entities.media !== "undefined") && (currentTweet.entities.media !== null)) {
-
-                    var media = currentTweet.entities.media;
-
-                    img = '<img width="300px" height="auto" class="image-responsive center-block" style="display: block !important; margin-bottom: 20px;" src=\'' + media[0].media_url_https + '\'/>';
-                }
-
-                ttContent = '<div class="row"><div class="col-md-10 col-md-offset-1 text-center">' + img + '</div></div><p><i>' + user + '</i>' + text + '</p>';
-
-                var theme = 'tooltipster-' + EMOCIO.properties[lastEmotionPlayed].name.toString();
-                $(e).tooltipster('content', $(ttContent));
-                $(e).tooltipster('option', 'theme', theme);
-                $(e).tooltipster('option', 'trigger', 'click');
-
-                $(e).mouseenter(function () {
-                    if (lastEmotionPlayed !== null) {
-                        $(this).css("fill", EMOCIO.properties[lastEmotionPlayed].color).css("cursor", "pointer");
-                        $(this).addClass("pathHover");
-                    }
-                }).mouseleave(function () {
-                    if (lastEmotionPlayed !== null) {
-                        var gradient = "url(#gradient" + EMOCIO.properties[lastEmotionPlayed].name.toString().charAt(0).toUpperCase() + EMOCIO.properties[lastEmotionPlayed].name.substr(1) + ")";
-                        $(this).css("fill", gradient).css("cursor", "none");
-                        $(this).removeClass("pathHover");
-                    }
-                });
             });
         },
         error: function (res) {
@@ -97,26 +62,7 @@ function actualitzarTweets() {
 
     var path = EMOCIO.properties[lastEmotionPlayed].name + ".php";
 
-    usedTweets = {};
-
-    $.each(boletes, function (i, e) {
-        $(e).tooltipster('destroy');
-    });
-
-    $.each(boletes, function (i, e) {
-        $(e).tooltipster({
-            delay: 100,
-            maxWidth: 500,
-            speed: 300,
-            interactive: true,
-
-            content: '',
-            contentAsHTML: true,
-
-            animation: 'grow',
-            trigger: 'custom'
-        });
-    });
+    resetTooltips();
 
     $.ajax({
         type: 'GET',
@@ -125,49 +71,111 @@ function actualitzarTweets() {
 
             var tweets = null;
 
-            var text, img, user, hashtag, ttContent;
+            var text, img, user, hashtag, ttContent, url;
 
-            var tweet = 0;
+            tweets = JSON.parse(data);
 
-            tweets = JSON.parse(data).statuses;
+            var boletes = boletesPinya;
 
-            $(boletes).each(function (i, e) {
-                if (typeof  tweets[tweet] === 'undefined')
+            if (fase >= FASE.Tercos)
+                boletes = boletesTronc;
+
+            $(boletes).shuffle().each(function (i, e) {
+                var currentTweet = tweets.statuses[i];
+                if (typeof  currentTweet === 'undefined')
                     return false;
-                var currentTweet = tweets[tweet];
-                tweet = tweet + 1;
 
-                if (DictContainsValue(usedTweets, currentTweet.id_str))
-                    return;
+                var content = buildContent(currentTweet);
 
-                usedTweets[currentTweet.id_str] = usedTweets[currentTweet.id_str] + 1;
-
-                if (tweet.retweet_count > 0) {
-                    currentTweet = tweet.retweeted_status;
+                if (content !== false) {
+                    $(e).tooltipster('content', content);
+                    themesAndEvents(e);
                 }
-
-                text = currentTweet.text;
-
-                user = "@" + currentTweet.user.screen_name + ": ";
-
-                if ((typeof currentTweet.entities.media !== "undefined") && (currentTweet.entities.media !== null)) {
-
-                    var media = currentTweet.entities.media;
-
-                    img = '<img width="300px" height="auto" class="image-responsive center-block" style="display: block !important; margin-bottom: 20px;" src=\'' + media[0].media_url_https + '\'/>';
-                }
-
-                ttContent = '<div class="row"><div class="col-md-10 col-md-offset-1 text-center">' + img + '</div></div><p><i>' + user + '</i>' + text + '</p>';
-
-                var theme = 'tooltipster-' + EMOCIO.properties[lastEmotionPlayed].name.toString();
-
-                $(e).tooltipster('content', $(ttContent));
-                $(e).tooltipster('option', 'theme', theme);
-                $(e).tooltipster('option', 'trigger', 'click');
             });
         },
         error: function (res) {
             alert("Error finding tweets");
         }
+    });
+}
+
+function buildContent(info) {
+
+    var tweet = info;
+
+    if (DictContainsValue(usedTweets, tweet.id_str) || typeof tweet === 'undefined') {
+        usedTweets[tweet.id_str] = usedTweets[tweet.id_str] + 1;
+        return false;
+    }
+
+    usedTweets[tweet.id_str] = 1;
+
+    var text = tweet.full_text;
+
+    var user = "@" + tweet.user.screen_name + ": ";
+
+    var img = '';
+
+    var url = 'href="https://twitter.com/statuses/' + tweet.id_str + '" target="_blank"';
+
+    if ((typeof tweet.entities.media !== "undefined") && (tweet.entities.media !== null)) {
+
+        var media = tweet.entities.media;
+
+        img = '<div class="row">' +
+            '<div class="col">' +
+            '<img style="max-width: 75%; height: auto;" class="rounded mx-auto d-block" src=\'' + media[0].media_url_https + '\'/>' +
+            '</div></div>';
+
+        text = text.replace(' ' + tweet.entities.media[0].url, '');
+    }
+
+    return $('<a '+ url +'>' + img + '<div class="row"><div class="col text-left"><p style="margin-bottom: 0 !important;"><b>' + user + '</b>' + text + '</p></div></div></a>');
+}
+
+function themesAndEvents(e) {
+
+    var theme = 'tooltipster-' + EMOCIO.properties[lastEmotionPlayed].name.toString();
+
+    $(e).tooltipster('option', 'theme', theme);
+    $(e).tooltipster('option', 'trigger', 'click');
+
+    $(e).mouseenter(function () {
+        if (lastEmotionPlayed !== null) {
+            $(this).css("fill", EMOCIO.properties[lastEmotionPlayed].color).css("cursor", "pointer");
+            $(this).addClass("pathHover");
+        }
+    }).mouseleave(function () {
+        if (lastEmotionPlayed !== null) {
+            var gradient = "url(#gradient" + EMOCIO.properties[lastEmotionPlayed].name.toString().charAt(0).toUpperCase() + EMOCIO.properties[lastEmotionPlayed].name.substr(1) + ")";
+            $(this).css("fill", gradient).css("cursor", "default");
+            $(this).removeClass("pathHover");
+        }
+    });
+}
+
+function resetTooltips() {
+
+    usedTweets = {};
+
+    $.each(boletesPinya, function (i, e) {
+        $(e).tooltipster('destroy');
+        $(e).off();
+        $(e).unbind("mouseenter");
+        $(e).unbind("mouseleave");
+    });
+
+    $.each(boletesPinya, function (i, e) {
+        $(e).tooltipster({
+            delay: 100,
+            maxWidth: 500,
+            speed: 300,
+            interactive: true,
+            content: '',
+            contentAsHTML: true,
+            animation: 'grow',
+            trigger: 'custom',
+            contentCloning: false
+        });
     });
 }
